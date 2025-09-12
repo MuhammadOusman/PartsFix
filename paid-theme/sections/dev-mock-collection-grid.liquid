@@ -1,0 +1,58 @@
+{%- comment -%}
+  Development-only mock collection grid. Renders mock products when enable_mock_data is true.
+{%- endcomment -%}
+{%- assign mock_mode = settings.enable_mock_data -%}
+{%- if mock_mode -%}
+  {%- capture products_raw -%}{%- render 'mock-data-json' -%}{%- endcapture -%}
+{%- endif -%}
+<div class="dev-mock-section" data-mock="{{ mock_mode }}">
+  <h2 class="dev-mock-heading">Demo Products (Mock)</h2>
+  <div class="dev-mock-grid">
+    {%- if mock_mode -%}
+  <div class="dev-mock-pending" data-mock-json='{{ products_raw | replace: "'", "&#39;" }}'>Loading mock products…</div>
+    {%- else -%}
+      <p>Enable mock data in Theme settings to view demo products.</p>
+    {%- endif -%}
+  </div>
+</div>
+<style>
+.dev-mock-section{padding:40px 20px;background:#fafafa;border-top:1px solid #eee;border-bottom:1px solid #eee;margin:40px 0;font-family:var(--body-font-family,Arial,sans-serif)}
+.dev-mock-heading{margin:0 0 24px;font-size:24px;font-weight:700;text-align:center}
+.dev-mock-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:22px;max-width:1200px;margin:0 auto}
+.dev-mock-card{background:#fff;border:1px solid #e2e2e2;border-radius:6px;padding:14px;display:flex;flex-direction:column;align-items:flex-start;position:relative;box-shadow:0 1px 2px rgba(0,0,0,.05)}
+.dev-mock-card:hover{box-shadow:0 4px 14px rgba(0,0,0,.12)}
+.dev-mock-img{width:100%;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;margin-bottom:10px;overflow:hidden}
+.dev-mock-img img{max-width:100%;height:auto;object-fit:contain}
+.dev-mock-title{font-size:14px;margin:0 0 6px;line-height:1.3;font-weight:600}
+.dev-mock-vendor{font-size:12px;color:#555;margin-bottom:4px}
+.dev-mock-price{font-size:14px;font-weight:700;color:#222}
+.dev-mock-compare{font-size:12px;color:#999;text-decoration:line-through;margin-left:6px;font-weight:400}
+.dev-mock-btn{margin-top:auto;background:#ccc;color:#333;border:0;padding:8px 10px;font-size:12px;border-radius:4px;cursor:not-allowed}
+@media (max-width:600px){.dev-mock-grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));}}
+</style>
+<script>
+  document.addEventListener('DOMContentLoaded', function(){
+    var holder=document.querySelector('.dev-mock-pending');
+    if(!holder) return; var raw=holder.getAttribute('data-mock-json');
+    try { var data=JSON.parse(raw); if(data && data.products){
+      var take=data.products.slice(0,8); var out='';
+      take.forEach(function(p){
+        var price=(p.price/100).toFixed(2).replace(/\.00$/,'');
+        var compare=(p.compare_at && p.compare_at>p.price)?'<span class="dev-mock-compare">£'+(p.compare_at/100).toFixed(2).replace(/\.00$/,'')+'</span>':'';
+  var imgSrc='{{ "" | asset_url | split: "?" | first | replace: "\/assets\/", "/assets/" }}';
+  // base asset_url returns something like /cdn/shop/t/.../assets/ (strip after /assets/)
+  if(imgSrc.indexOf('/assets/')>-1){ imgSrc=imgSrc.split('/assets/')[0]+'/assets/'; }
+  out+=`<div class="dev-mock-card"><div class="dev-mock-img"><img src="${imgSrc}${p.image}" alt="${p.title}" loading="lazy" width="300" height="300"></div><h3 class="dev-mock-title">${p.title}</h3><div class="dev-mock-vendor">${p.vendor||''}</div><div class="dev-mock-price">£${price}${compare}</div><button class="dev-mock-btn" type="button" disabled>Add to cart</button></div>`;
+      });
+      holder.outerHTML=out;
+    } } catch(e){ holder.textContent='Mock data failed to load'; }
+  });
+</script>
+{% schema %}
+{
+  "name": "Dev: Mock Collection Grid",
+  "tag": "section",
+  "settings": [],
+  "disabled_on": {"groups": ["header", "footer"]}
+}
+{% endschema %}

@@ -1,0 +1,176 @@
+<style>
+.login-page {
+  padding: 40px 0;
+  background: #f8f9fa;
+  min-height: 60vh;
+}
+
+.login-container {
+  max-width: 500px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+
+.login-header {
+  background: #007bff;
+  color: white;
+  padding: 30px;
+  text-align: center;
+}
+
+.login-header h1 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.login-form {
+  padding: 30px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-label {
+  display: block;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0,123,255,0.25);
+}
+
+.btn-login {
+  width: 100%;
+  padding: 15px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.btn-login:hover {
+  background: #0056b3;
+}
+
+.login-links {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.login-links a {
+  color: #007bff;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.login-links a:hover {
+  text-decoration: underline;
+}
+
+.login-links .separator {
+  margin: 0 10px;
+  color: #666;
+}
+
+.register-prompt {
+  text-align: center;
+  margin-top: 30px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 4px;
+}
+
+.register-prompt p {
+  margin: 0 0 15px 0;
+  color: #666;
+}
+
+.btn-register {
+  padding: 12px 30px;
+  background: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.btn-register:hover {
+  background: #218838;
+}
+
+@media (max-width: 768px) {
+  .login-container {
+    margin: 20px;
+  }
+
+  .login-header {
+    padding: 20px;
+  }
+
+  .login-form {
+    padding: 20px;
+  }
+}
+</style>
+
+<div class="container">
+  <div class="login-page">
+    <div class="login-container">
+      <div class="login-header">
+        <h1>Sign In to Your Account</h1>
+      </div>
+
+      <div class="login-form">
+        {%- form 'customer_login' -%}
+          <div class="form-group">
+            <label for="customer_email" class="form-label">Email Address</label>
+            <input type="email" name="customer[email]" id="customer_email" class="form-input" required />
+          </div>
+
+          <div class="form-group">
+            <label for="customer_password" class="form-label">Password</label>
+            <input type="password" name="customer[password]" id="customer_password" class="form-input" required />
+          </div>
+
+          <button type="submit" class="btn-login">Sign In</button>
+        {%- endform -%}
+
+        <div class="login-links">
+          <a href="/pages/forgot-password">Forgot your password?</a>
+          <span class="separator">|</span>
+          <a href="/pages/register">Create an account</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="register-prompt">
+      <p>Don't have an account yet?</p>
+      <a href="/pages/register" class="btn-register">Create Your Account</a>
+    </div>
+  </div>
+</div>
+

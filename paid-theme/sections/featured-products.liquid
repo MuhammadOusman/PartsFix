@@ -1,0 +1,338 @@
+{%- assign featured_products = section.settings.featured_products | split: '|' -%}
+
+<style>
+.espares-featured-products {
+  padding: 60px 0;
+  background: white;
+}
+
+.espares-featured-products .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.espares-featured-products h2 {
+  text-align: center;
+  margin-bottom: 50px;
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.featured-products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+.featured-product-card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.featured-product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+  border-color: #ff6b35;
+}
+
+.product-image-container {
+  position: relative;
+  padding-top: 75%; /* 4:3 Aspect Ratio */
+  overflow: hidden;
+  background: #f8f9fa;
+}
+
+.product-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.featured-product-card:hover .product-image {
+  transform: scale(1.05);
+}
+
+.product-badge {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background: #ff6b35;
+  color: white;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.product-info {
+  padding: 20px;
+}
+
+.product-category {
+  color: #666;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.product-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 10px;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.product-description {
+  color: #666;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 15px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.product-price {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.current-price {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #ff6b35;
+}
+
+.original-price {
+  font-size: 1rem;
+  color: #999;
+  text-decoration: line-through;
+}
+
+.product-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-view-product {
+  flex: 1;
+  background: #ff6b35;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.btn-view-product:hover {
+  background: #e55a2b;
+  transform: translateY(-1px);
+  color: white;
+}
+
+.btn-add-cart {
+  background: white;
+  color: #ff6b35;
+  border: 2px solid #ff6b35;
+  padding: 10px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.btn-add-cart:hover {
+  background: #ff6b35;
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .featured-products-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  
+  .product-info {
+    padding: 15px;
+  }
+  
+  .espares-featured-products h2 {
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .featured-products-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .product-actions {
+    flex-direction: column;
+  }
+}
+</style>
+
+<div class="container">
+  <div class="espares-featured-products home-section">
+    <h2>{{ section.settings.title | default: "Featured Products" }}</h2>
+    <div class="featured-products-grid">
+      {%- if featured_products.size > 0 -%}
+        {%- for product in featured_products -%}
+          {%- assign product_data = product | split: ',' -%}
+          {%- assign product_title = product_data[0] -%}
+          {%- assign product_url = product_data[1] -%}
+          {%- assign product_image = product_data[2] -%}
+          {%- assign product_price = product_data[3] -%}
+          {%- assign product_category = product_data[4] -%}
+          {%- assign product_badge = product_data[5] -%}
+          <div class="featured-product-card">
+            <div class="product-image-container">
+              <img src="{{ product_image | default: 'https://via.placeholder.com/280x210/f8f9fa/666?text=Product+Image' | asset_url }}" alt="{{ product_title }}" class="product-image" loading="lazy" width="280" height="210"/>
+              {%- if product_badge != blank -%}
+                <div class="product-badge">{{ product_badge }}</div>
+              {%- endif -%}
+            </div>
+            <div class="product-info">
+              <div class="product-category">{{ product_category | default: "Spare Parts" }}</div>
+              <h3 class="product-title">{{ product_title }}</h3>
+              <p class="product-description">High-quality genuine spare part for your appliance</p>
+              <div class="product-price">
+                <span class="current-price">{{ product_price | default: "£12.99" }}</span>
+              </div>
+              <div class="product-actions">
+                <a href="{{ product_url | default: '#' }}" class="btn-view-product">View Product</a>
+                <button class="btn-add-cart" title="Add to Cart">🛒</button>
+              </div>
+            </div>
+          </div>
+        {%- endfor -%}
+      {%- else -%}
+        <!-- Default featured products -->
+        <div class="featured-product-card">
+          <div class="product-image-container">
+            <img src="https://via.placeholder.com/280x210/f8f9fa/666?text=Door+Seal" alt="Washing Machine Door Seal" class="product-image" loading="lazy" width="280" height="210"/>
+            <div class="product-badge">Best Seller</div>
+          </div>
+          <div class="product-info">
+            <div class="product-category">Washing Machine</div>
+            <h3 class="product-title">Universal Door Seal</h3>
+            <p class="product-description">High-quality replacement door seal suitable for most washing machine models</p>
+            <div class="product-price">
+              <span class="current-price">£24.99</span>
+              <span class="original-price">£32.99</span>
+            </div>
+            <div class="product-actions">
+              <a href="/products/washing-machine-door-seal" class="btn-view-product">View Product</a>
+              <button class="btn-add-cart" title="Add to Cart">🛒</button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="featured-product-card">
+          <div class="product-image-container">
+            <img src="https://via.placeholder.com/280x210/f8f9fa/666?text=Heating+Element" alt="Oven Heating Element" class="product-image" loading="lazy" width="280" height="210"/>
+            <div class="product-badge">Popular</div>
+          </div>
+          <div class="product-info">
+            <div class="product-category">Oven</div>
+            <h3 class="product-title">2500W Heating Element</h3>
+            <p class="product-description">Genuine replacement heating element for electric ovens</p>
+            <div class="product-price">
+              <span class="current-price">£18.99</span>
+            </div>
+            <div class="product-actions">
+              <a href="/products/oven-heating-element" class="btn-view-product">View Product</a>
+              <button class="btn-add-cart" title="Add to Cart">🛒</button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="featured-product-card">
+          <div class="product-image-container">
+            <img src="https://via.placeholder.com/280x210/f8f9fa/666?text=Filter" alt="Dishwasher Filter" class="product-image" loading="lazy" width="280" height="210"/>
+            <div class="product-badge">New</div>
+          </div>
+          <div class="product-info">
+            <div class="product-category">Dishwasher</div>
+            <h3 class="product-title">Mesh Filter Assembly</h3>
+            <p class="product-description">Complete filter assembly for optimal dishwasher performance</p>
+            <div class="product-price">
+              <span class="current-price">£15.99</span>
+            </div>
+            <div class="product-actions">
+              <a href="/products/dishwasher-filter" class="btn-view-product">View Product</a>
+              <button class="btn-add-cart" title="Add to Cart">🛒</button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="featured-product-card">
+          <div class="product-image-container">
+            <img src="https://via.placeholder.com/280x210/f8f9fa/666?text=Vacuum+Belt" alt="Vacuum Belt" class="product-image" loading="lazy" width="280" height="210"/>
+          </div>
+          <div class="product-info">
+            <div class="product-category">Vacuum Cleaner</div>
+            <h3 class="product-title">Drive Belt Set</h3>
+            <p class="product-description">Durable replacement drive belt for vacuum cleaners</p>
+            <div class="product-price">
+              <span class="current-price">£8.99</span>
+            </div>
+            <div class="product-actions">
+              <a href="/products/vacuum-drive-belt" class="btn-view-product">View Product</a>
+              <button class="btn-add-cart" title="Add to Cart">🛒</button>
+            </div>
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Featured Products",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Featured Products"
+    },
+    {
+      "type": "textarea",
+      "id": "featured_products",
+      "label": "Featured Products",
+      "info": "Format: Title,URL,Image,Price,Category,Badge|Title,URL,Image,Price,Category,Badge",
+      "default": "Washing Machine Door Seal,/products/door-seal,product-door-seal.jpg,£24.99,Washing Machine,Best Seller|Oven Heating Element,/products/heating-element,product-element.jpg,£18.99,Oven,Popular|Dishwasher Filter,/products/filter,product-filter.jpg,£15.99,Dishwasher,New|Vacuum Belt,/products/belt,product-belt.jpg,£8.99,Vacuum Cleaner,"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Products"
+    }
+  ]
+}
+{% endschema %}

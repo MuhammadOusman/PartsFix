@@ -1,0 +1,1733 @@
+// From jquery.group.js
+$(function() {
+		$('body').addClass('js');
+});  
+
+// Detect IOS devices
+function iOS() {
+  var iDevices = [
+	'iPad Simulator',
+	'iPhone Simulator',
+	'iPod Simulator',
+	'iPad',
+	'iPhone',
+	'iPod'
+  ];
+  if (!!navigator.platform) {
+	while (iDevices.length) {
+	  if (navigator.platform === iDevices.pop()){ return true; }
+	}
+  }
+  return false;
+}
+
+//Increase/decrease +/- quantity by 1
+$(document).ready(function(){
+	$(".minus-button").on('click', function(){
+		if ($(this).hasClass("minusJS")){
+			var myQuantity = $(this).first().next(".quantityJS");
+			var firstTime = true;
+			myQuantity.val(parseInt(myQuantity.val()) - 1);
+			myQuantity.attr('value', parseInt(myQuantity.val()));
+			quantityCheck(myQuantity, firstTime);
+		};
+	});
+
+	$(".plus-button").on('click', function(){
+		if ($(this).hasClass("plusJS")){
+			var myQuantity = $(this).first().prev(".quantityJS");
+			var firstTime = true;
+			myQuantity.val(parseInt(myQuantity.val()) + 1);
+			myQuantity.attr('value', parseInt(myQuantity.val()));
+			quantityCheck(myQuantity, firstTime);
+		};
+	});
+
+	$(".quantityJS").on('change', function(){
+		var myQuantity = $(this);
+		var firstTime = true;
+		quantityCheck(myQuantity, firstTime);
+	});
+
+	//Disables buttons if quantity is at limit on page load
+	$(".plus-minus").each(function(){
+		var firstTime = false;
+		var myQuantity      = $(this).find($(".quantityJS")),
+				minValue        = myQuantity.data("min") === undefined ? 1 : myQuantity.data("min"),
+				maxValue        = myQuantity.data("max") === undefined ? 99 : myQuantity.data("max"),
+				quantityValue   = myQuantity.attr('value');
+		currentStatus(quantityValue, myQuantity, minValue, maxValue, firstTime);
+	});
+});
+
+//Validates the entered value
+function quantityCheck(myQuantity, firstTime){
+
+	var minValue      = myQuantity.data("min") === undefined ? 1 : myQuantity.data("min"),
+			maxValue      = myQuantity.data("max") === undefined ? 99 : myQuantity.data("max"),
+			formSubmit    = myQuantity.data("formsubmit") === undefined ? false : myQuantity.data("formsubmit"),
+			quantityValue = myQuantity.val();
+
+	if (quantityValue.indexOf(".") != -1) {
+		quantityValue = Math.floor(quantityValue);
+		myQuantity.val(quantityValue);
+	}
+	
+	if ($.isNumeric(quantityValue)){
+	 currentStatus(quantityValue, myQuantity, minValue, maxValue, firstTime);
+	}
+	else {
+		//Lightbox if not a number was entered
+		$.featherlight($("#alert1"), {afterClose: function(event){
+			formSend(myQuantity);
+			featherlightAfterClose();
+		}});      
+		myQuantity.val(minValue);
+		buttonEnableDisable(myQuantity, 'minusJS', 'disabled', 'disabled', 'plusJS');
+	}
+}
+
+//Function for form submition
+function formSend (myQuantity) {
+	var formSubmit = myQuantity.data("formsubmit") === undefined ? false : myQuantity.data("formsubmit");
+	if (formSubmit){
+		myQuantity.parents(".formJS").submit();
+		// Disable click on plus / minus buttons when page is loading. Init by adding .plus-minus-disable-on-click to the .plus-minus div. Used on the Basket page
+		//myQuantity.parents(".plus-minus-disable-on-click").addClass("disabled");
+	}
+}
+
+//Checks quantity against min/max values and passes classes to add/remove to buttonEnableDisable() function
+function currentStatus(quantityValue, myQuantity, minValue, maxValue, firstTime) {
+	if (parseInt(quantityValue) < minValue){
+		//Lightbox if entered value is less than minimum value allowed
+		$("#alert2").find(".value").text(minValue);
+		$.featherlight($("#alert2"), {afterClose: function(event){
+			formSend(myQuantity);
+			featherlightAfterClose();
+		}});      
+		myQuantity.val(minValue);
+		buttonEnableDisable(myQuantity, 'minusJS', 'disabled', 'disabled', 'plusJS');
+	}
+	else if (parseInt(quantityValue) == minValue){
+		buttonEnableDisable(myQuantity, 'minusJS', 'disabled', 'disabled', 'plusJS');
+		if (firstTime) {
+			formSend(myQuantity);
+		}
+	}
+	else if (parseInt(quantityValue) > minValue && parseInt(quantityValue) < maxValue){
+		buttonEnableDisable(myQuantity, 'disabled', 'minusJS', 'disabled', 'plusJS');
+		if (firstTime) {
+			formSend(myQuantity);
+		}
+	}
+	else if (parseInt(quantityValue) == maxValue){
+		buttonEnableDisable(myQuantity, 'disabled', 'minusJS', 'plusJS', 'disabled');
+		if (firstTime) {
+			formSend(myQuantity);
+		}
+	}
+	else {
+		//Lightbox if entered value is bigger than maximum value allowed
+		$("#alert3").find(".value").text(maxValue);
+		$.featherlight($("#alert3"), {afterClose: function(event){
+			formSend(myQuantity);
+			featherlightAfterClose();
+		}});      
+		myQuantity.val(maxValue);    
+		buttonEnableDisable(myQuantity, 'disabled', 'minusJS', 'plusJS', 'disabled'); 
+	}
+}
+
+//Applies classes to the buttons
+function buttonEnableDisable(myQuantity, minusRemove, minusAdd, plusRemove, plusAdd){
+	myQuantity.prev(".minus-button").first().removeClass(minusRemove).addClass(minusAdd);
+	myQuantity.next(".plus-button").first().removeClass(plusRemove).addClass(plusAdd);
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// JQuery to conrtol slide animation of accordion
+jQuery(document).ready(function(){
+	var accordionsMenu = $('.accordion-menu');
+
+	if( accordionsMenu.length > 0 ) {
+		
+		accordionsMenu.each(function(){
+			var accordion = $(this);
+			//detect change in the input[type="checkbox"] value
+			accordion.on('change', 'input[type="checkbox"]', function(){
+				var checkbox = $(this);
+				( checkbox.prop('checked') ) ? checkbox.siblings('ul, .accordion-submenu').attr('style', 'display:none;').slideDown(300) : checkbox.siblings('ul, .accordion-submenu').attr('style', 'display:block;').slideUp(300);
+			});
+		});
+	}
+});
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+$(document).ready(function(){
+
+	////// Catalogue Intro - Toggle text reveal
+	$(document).on('click', '.hidden-text-toggle_js', function(e) {
+		if ( !$(this).next('.hidden-text-reveal_js').is(':animated') ) { //Prevent queued animations on fast clicking
+			var textVariable = $(this).data("toggle-text");     
+			$(this).toggleClass('active');     
+			$(this).data('toggle-text', $(this).text()).text(textVariable);
+			$(this).next('.hidden-text-reveal_js').slideToggle();
+		}
+		e.preventDefault();
+	});
+
+	////// Basket page promo code accordion
+	$('.basket-promocode-accordion-toggle').on('click',function(e) {
+		if ( !$(this).siblings('.basket-promocode').is(':animated') ) { //Prevent queued animations on fast clicking   
+			$(this).toggleClass('active');
+			$(this).siblings('.basket-promocode').slideToggle();
+		}
+		e.preventDefault();
+	});
+
+	$('.toggle__js').on('click',function(e) {
+		var target = $(this).data('toggle-target');
+		if (!$(target).is(':animated') ) {
+			$(this).toggleClass('open');
+			$(target).slideToggle();
+		}
+		e.preventDefault();
+	});
+
+	////// Side column - mobile reveal
+	$('.side-column-wrapper:not(.catalogue-filter) .side-column-wrapper-toggle').on('click',function() {
+		var parent = $(this).parent('.side-column-wrapper');
+		if ( !$(this).siblings('.side-column-wrapper-reveal').is(':animated') ) { //Prevent queued animations on fast clicking
+			if ($(parent).hasClass('open')) {
+				$(this).siblings('.side-column-wrapper-reveal').slideUp(200, function() {
+					$(parent).removeClass('open');
+				});
+			} else {
+				$(this).siblings('.side-column-wrapper-reveal').slideDown(200, function() {
+					$(parent).addClass('open');
+				});
+			}
+		}
+	});
+
+	$('.side-menu-title.accordion').on('click',function() {
+		var parent = $(this).parent('.side-menu');
+		if ( parent.hasClass('enabled') && !$(this).siblings('.side-menu-content').is(':animated') ) {  //Prevent queued animations on fast clicking
+			if ($(parent).hasClass('open')) {
+				$(this).siblings('.side-menu-content').slideUp(200, function() {
+					$(parent).removeClass('open');
+				});
+			} else {
+				$(this).siblings('.side-menu-content').slideDown(200, function() {
+					$(parent).addClass('open');
+				});
+			}
+		}
+	});
+
+	////// Lightboxes - Featherlight
+	$('.lightbox-iframe').on('click', function(e){
+		e.preventDefault();
+		$.featherlight( $('<div class="responsive-iframe"><iframe width="300" height="200" src="' + $(this).attr('href') + '"></iframe></div>'), { variant: 'featherlight-has-iframe' });
+	})
+
+	// Modernizr replacement script
+	document.documentElement.classList.add(
+		'ontouchstart' in window ||
+		(window.DocumentTouch && document instanceof window.DocumentTouch)
+		? 'touchevents'
+		: 'no-touchevents',
+	);
+});
+
+//Hamburger menu
+$(document).ready(function(){
+	$(".menu-tab").on("click", function(){
+		menuAdjust(true);
+		if ($("body").hasClass("nav-visible")) {
+			closeMenu();
+		}
+		else {
+			openMenu();
+		}
+	});
+
+	$(".has-links").on("click", function(){
+		var openSubMenuAtLessThan = 992;
+
+		if ($(window).width() < openSubMenuAtLessThan) {
+			openSubMenu($(this));
+		}
+	});
+
+	$(".back").on("click", function(e){
+		closeSubMenu($(this),e);
+	});
+
+	$(".close-mobile-nav").on("click", function(){
+		menuAdjust(false);
+		closeMenu();
+	});
+
+	//Touch devices menu
+	$(".touchevents .has-links").on("click", function(e){
+		if ($(window).width() >= 992) {
+			if ($(this).hasClass("hover")){
+
+			} else {
+				$(".level-one .hover").removeClass("hover");
+				$(this).addClass("hover");
+				e.preventDefault();
+			}
+		}
+	});
+});
+
+$(".touchevents").on('click', function(event) {
+	if( !$(event.target).closest('.top-nav .has-links').length ) {
+		$('.has-links.hover').removeClass('hover');
+	}
+});
+$(window).on('resize', function() {
+	menuAdjust(true);
+});
+
+function openMenu(){
+	$("body").addClass("nav-visible");
+	$(".close-mobile-nav").addClass("visible");
+	menuAlignment_Theme2();
+	menuAnimation();
+}
+
+function closeMenu(){
+	$("body").removeClass("nav-visible");
+	$(".close-mobile-nav").removeClass("visible");
+	menuAlignmentReset_Theme2();
+	menuAnimation();
+}
+
+function menuAnimation(){
+	setTimeout(function(){
+		if ($(".hamburger").hasClass("is-closed")){
+			$(".hamburger").removeClass("is-closed").addClass("is-open");
+		}
+		else {
+			$(".hamburger").addClass("is-closed").removeClass("is-open");
+		}
+	},300);
+}
+
+// Theme 2 specific. Set 'Left' css value depending on screen width
+function menuAlignment_Theme2() {
+	if ($(window).width() > 767 && $(window).width() < 992) {
+		var alignment = ($(window).width() - 720) / 2;
+		$('.header-theme-2 .header-desktop .top-nav').css('left', alignment);
+	}
+}
+function menuAlignmentReset_Theme2() {
+	if ($(window).width() > 767 && $(window).width() < 992) {
+		$('.header-theme-2 .header-desktop .top-nav').css('left', '');
+	}
+}
+
+//Prevent body to scroll when menu is active
+function menuAdjust(setHeight){
+	var myHeight = $(window).height(),
+	myWidth = $(window).width();
+	if (myWidth > 974) {
+		setHeight = false;
+	}
+	if (setHeight){
+		$(".level-two").height(myHeight);
+		$(".level-one").height(myHeight);
+		$("body").width(myWidth);
+	}
+	else {
+		$(".level-two").height("auto");
+		$(".level-one").height("auto");
+		$("body").width("auto");
+	}
+}
+
+function openSubMenu(clicked){
+	clicked.addClass("selected");
+	clicked.parent().addClass("selected");
+}
+
+function closeSubMenu(clicked,e){
+	if ($(clicked).hasClass('level-three-back')) {
+		$(clicked).parents('.level-two').removeClass('selected');
+		$(clicked).closest('.has-links').removeClass('selected');
+	} else {
+		clicked.parents(".level-one").removeClass("selected");
+		clicked.parents(".has-links").removeClass("selected");
+	}
+	e.stopPropagation();
+}
+
+$(document).ready(function(){
+	//Show/hide search box in a header for mobile
+	$(".search-tab").on("click", function(){
+		if ($("body").hasClass("nav-visible")) {
+			$(".search-tab").addClass("selected");
+			$(".header-search").show();
+			$(".my-account-tab").removeClass("selected");
+			$(".header-account").hide();
+			closeMenu();
+			$(".header-search .header-search-input").focus();
+		} else if ($(".my-account-tab").hasClass("selected")) {
+			$(".header-account").hide()
+			$(".my-account-tab").removeClass("selected");
+			$(".header-search").show();
+			$(".search-tab").addClass("selected");
+		} else {
+			$(".header-search").slideToggle(400, function(){
+				if($(".header-search").is(":visible")){
+					$(".header-search .header-search-input").focus();
+				}
+			});
+			$(".header-account").hide();
+			$(".my-account-tab").removeClass("selected");
+			$(".search-tab").toggleClass("selected");
+		}
+	});
+
+	//Show/hide my account in a header for mobile
+	$(".my-account-tab").on("click", function(){
+		if ($(".my-account-tab").hasClass("my-account-link")) {
+			// go to log in page avoiding animation
+		} else if ($("body").hasClass("nav-visible")) {
+			$(".my-account-tab").addClass("selected");
+			$(".header-account").show();
+			$(".search-tab").removeClass("selected");
+			$(".header-search").hide();
+			closeMenu();
+		} else if ($(".search-tab").hasClass("selected")) {
+			$(".header-search").hide()
+			$(".search-tab").removeClass("selected");
+			$(".header-account").show();
+			$(".my-account-tab").addClass("selected");
+		} else {
+			$(".my-account-tab").toggleClass("selected");
+			$(".header-account").slideToggle();
+			$(".header-search").hide()
+			$(".search-tab").removeClass("selected");
+		}
+	});
+
+	//IDO appendto functionality
+	$(".menu-tab").on("click", function(){
+		if ($(window).width() < 992){
+			idoInsert("mobile", idoContent("mobile"));
+			idoReset("mobile");
+		}
+	});
+
+	$(".ido-country").on("click", function(){
+		$(".header-desktop .ido-country .site-list").slideToggle();
+		if ($(this).parents().hasClass("header")){
+			return false;
+		}
+	});
+	$(".site-currency").on("click", function(){
+		$(".header-desktop .ido-currency .site-currency-list").slideToggle();
+	});
+
+	$(".flags").on("click", function(){
+		idoInsert("desktop", idoContent("desktop"));
+		idoReset("desktop");
+		$(".ido-desktop .site-list").css("display", "");
+		$(".ido-desktop").slideToggle();
+	});
+});
+
+//Return the li content with ido
+function idoContent(viewport){
+	var $content = "";
+	if ($(".ido-mobile .ido-link").length && viewport != "mobile") {
+		$content = $(".ido-mobile .ido-link");
+		return $content;
+	}
+	if ($(".ido-desktop .ido-link").length && viewport != "desktop") {
+		$content = $(".ido-desktop .ido-link");    
+		return $content;
+	}
+	return false;
+}
+
+//Insert provided ido content to the container based on viewport
+function idoInsert(viewport, content){
+	if (content) {
+		if (viewport == "mobile") {
+			content.insertAfter(".ido-mobile .home");
+		}
+		if (viewport == "desktop") {
+			content.appendTo(".ido-desktop ul");
+		}
+	}
+}
+
+//Reset styling for ido based on a viewport
+function idoReset(viewport){
+	if (viewport == "mobile"){
+		idoResetDesktop();
+	}
+	else if (viewport == "desktop"){
+		idoResetMobile();
+	}
+}
+
+function idoResetMobile(){
+}
+function idoResetDesktop(){
+	$(".ido-desktop").css("display", "");
+}
+
+//My Account
+$(document).ready(function(){
+	//Tablet
+	$(".account-tab").on("click", function(){
+		$(".account-tab").toggleClass("selected");
+		$(".my-account-list").toggle();
+	});
+
+	//Desktop
+	$(".account-desktop").on("click", function(){
+		$(".account-desktop-list").toggle();
+	});
+});
+
+//Cookie Policy
+$(document).ready(function(){
+	//API to interact with cookies
+	function getCookies() {
+		var cookies = decodeURIComponent(document.cookie).split('; ');
+		var c = {};
+
+		cookies.forEach(function(cookie){
+			var tmp = cookie.split('=',2);
+			c[tmp[0]] = tmp[1];
+		});
+
+		return c;
+	}
+
+	function getCookie(name) { 
+		return getCookies()[name];
+	}
+
+
+	function setCookie(name,value,expires,domain){
+		if(typeof(value) === 'object') {
+			value = JSON.stringify(value);
+		}
+		value = encodeURIComponent(value);
+
+		var date = new Date();
+		date.setTime(date.getTime() + expires * 24 * 60 * 60 * 1000);
+		expires = date.toGMTString();
+
+
+		if(domain){
+			document.cookie = name + '=' + value +'; domain=' + domain + '; path=/'  + '; expires=' + expires +'; secure' + '; samesite=None';
+		}else{
+			document.cookie = name + '=' + value +'; path=/'  + '; expires=' + expires +'; secure' + '; samesite=None';
+		}
+	}
+
+
+	function deleteCookie(cookieName){
+		console.log('Deleting cookie: ' + cookieName); //Remove before deploy
+		var hostname = window.location.hostname.split('.');
+
+		setCookie(cookieName,'expire', -1);
+		var i = 0;
+		for(i = 0; i < hostname.length; i++){
+			var domain = hostname.slice(i,hostname.length);
+			domain.unshift('');
+			domain = domain.join('.');
+			console.log('domain=' + domain); //Remove before deploy
+
+			setCookie(cookieName,'expire', -1, domain);
+		}
+	}
+
+	//Expose Cookie API globally
+	window.cdsCookie = {
+		getCookie    : getCookie,
+		setCookie    : setCookie,
+		deleteCookie : deleteCookie
+	};
+
+	var cookieControlBar = $('[data-cookie-control]');
+	var cookieControlModal = $('#cookie-control-modal');
+	var cookieControlCompliantMode = $(cookieControlBar).hasClass('cookie-control-screen');
+
+	if($(cookieControlBar).length > 0) {
+		var cs = getCookieSettings();
+		var initialAll = cs.all; // If all was not enabled initially, then the page should be reloaded when all cookies are accepted
+
+		function getCookieSettings(){
+			return JSON.parse(getCookie('cds_cs')||'{}');
+		}
+		
+		function findCookieSetting(name,inflate){
+			var path = name.split('-');
+			var leaf = path.pop();
+			var parent = cs;
+
+			path.forEach(function(p){		
+				parent.cookies = parent.cookies || {};
+				if(typeof(parent.cookies[p]) === 'undefined'){
+					if(inflate){
+						parent.cookies[p] = {};
+					}else{
+						parent = {}; //don't inflate
+					}
+				}else if(typeof(parent.cookies[p]) !== 'object'){
+					if(inflate){
+						parent = parent.cookies[p] = { enabled : parent.cookies[p], cookies : {} };
+					}else{
+						parent = { enabled : parent.cookies[p], cookies : {} };
+					}
+				}else{
+					parent = parent.cookies[p];
+				}
+			});
+
+			return {
+				path : path,
+				leaf : leaf,
+				parent : parent,
+				value : parent.cookies && parent.cookies[leaf],
+			};
+		}
+
+		function isCookieEnabled(name, effective) {
+			var setting = findCookieSetting(name);
+			var enabled = typeof(setting.value) === 'object' ? setting.value.enabled : setting.value;
+			
+			if(typeof(enabled) === 'undefined') {
+				enabled = 1;
+			}
+
+			if(effective){
+				if(name.indexOf('-') >= 0){
+					var pName    = name.substring(0, name.lastIndexOf('-'));
+					var pEnabled = isCookieEnabled(pName, 1);
+
+					enabled = enabled && pEnabled;
+				}
+			}
+
+			return enabled;
+		}
+
+		function anyCookieDisabled(settings){
+			if(typeof(settings) !== 'object') {
+				return settings ? false : true;
+			}
+
+			if((typeof(settings.enabled) === 'object') && !settings.enabled) {
+				return true;
+			}
+
+			var disabled = false;
+			if(settings.cookies){
+				for(i in settings.cookies){
+					if(anyCookieDisabled(settings.cookies[i])){
+						disabled = true;
+						break;
+					}
+				}
+			}
+
+			return disabled;
+		}
+
+		function setCookieSetting(name, value){
+			var setting = findCookieSetting(name, 1);
+
+			if(typeof(setting.value) === 'object'){
+				setting.value.enabled = value;
+			}else{
+				setting.parent.cookies[setting.leaf] = value;
+			}
+
+			//setCookie('cds_cs', cs, 90);
+		}
+
+		function savePreferences(){
+			delete cs.review;
+
+			setCookie('cds_cs', cs, 90);//Also hardcoded in backend library
+
+			if(cookieControlCompliantMode) {
+				var cookies_all = cs.all;
+				var cookies_functional = (cookies_all || cs.cookies.cookies_functional || cs.cookies.cookies_functional == undefined) ? true : false;
+				var cookies_marketing_targeting = (cookies_all || cs.cookies.cookies_marketing_targeting || cs.cookies.cookies_marketing_targeting == undefined) ? true : false;
+				var cookies_performance_analytics = (cookies_all || cs.cookies.cookies_performance_analytics || cs.cookies.cookies_performance_analytics == undefined) ? true : false;
+
+				fireGTMEvent(cookies_functional, cookies_marketing_targeting, cookies_performance_analytics);
+
+				[['cookies_functional', cookies_functional], ['cookies_marketing_targeting', cookies_marketing_targeting], ['cookies_performance_analytics', cookies_performance_analytics]].forEach(function(category) {
+					var [ name, enabled ] = category;
+					if(enabled && cookie_consent_functions && !cookie_consent_functions[name].init) {
+						cookie_consent_functions[name].functions.forEach(function(f) { f(); });
+						cookie_consent_functions[name].init = true;
+						$('[data-cookie-category="' + name + '"]').each(function(i, el) {
+							$(el).removeClass('hidden-no-consent');
+						});
+					}
+				});
+				if(cookies_performance_analytics && $('#benefits-bar-wrapper').hasClass('owl-loaded') && $('.benefits-bar-item-trustpilot').length) {
+					$('#benefits-bar-wrapper').owlCarousel('add', $('.benefits-bar-container .trustpilot-widget')).owlCarousel('update');
+				};
+				$('.featherlight-content #cookie-control-modal').closest('.featherlight-content').find('.featherlight-close').trigger('click');
+				$(cookieControlBar).hide();
+
+				initializeCheckboxes();
+			}
+
+			//Clear any cookies disabled by latest changes
+			clearCookies();
+		}
+
+		function allowAllCookies(reloadPage){
+			cs.all = 1;
+			cs.cookies = {};
+			savePreferences();
+			if(reloadPage && !cookieControlCompliantMode) {
+				window.location.reload();
+			} else {
+				$(cookieControlBar).hide();
+				$('#cloudlink-chat-overlay-buttons').css('bottom', 10);
+
+				initializeCheckboxes();
+			}
+		}
+
+		function rejectAllCookies(){
+			cs.all = 0;
+			cs.cookies = {};
+			$(cookieControlModal).find('input[type="checkbox"]').each(function(index, elem){
+				if(!$(elem).prop('disabled')) {
+					cs.cookies[elem.name] = 0;
+				}
+			});
+
+			savePreferences();
+			
+			if(cookieControlCompliantMode) {
+				$(cookieControlBar).hide();
+
+				initializeCheckboxes(); //Reinitialize checkboxes as were defaulted to disabled
+			} else {
+				window.location.reload();
+			}
+		}
+
+		function fireGTMEvent(cookies_functional, cookies_marketing_targeting, cookies_performance_analytics) {
+			if(typeof dataLayer != 'undefined' && Array.isArray(dataLayer)) {
+				dataLayer.push({
+					'event': 'consent_update',
+					cookies_functional,
+					cookies_marketing_targeting,
+					cookies_performance_analytics
+				});
+			}
+		}
+
+		function initializeCheckboxes() {
+			$(cookieControlModal).find('input[type="checkbox"]').each(function(index, elem){
+				var value     = isCookieEnabled(elem.name);
+				var effective = isCookieEnabled(elem.name, 1);
+
+				$(elem).prop('checked', effective ? true : false);
+
+				if(!effective){
+					$(elem).closest('.cookie-category').find('.cookie-child-options input[type="checkbox"]').each(function(i,child){
+						$(child).prop('disabled', true);
+					});
+				}
+			});
+		}
+		initializeCheckboxes();
+
+		$(cookieControlModal).find('input[type="checkbox"]').on("change", function(e){
+			var value = $(e.target).prop('checked') ? 1 : 0;
+
+			if(!value){
+				delete cs.all;
+			}else if(!anyCookieDisabled(cs)){
+				cs.all=1;
+			}
+				
+			setCookieSetting(e.target.name, value);
+
+			$(e.target).closest('.cookie-category').find('.cookie-child-options input[type="checkbox"]').each(function(i,elem){
+				var effective = isCookieEnabled(elem.name, 1);
+				$(elem).prop('checked', effective ? true : false);
+				$(elem).prop('disabled', value ? false : true);
+			});
+		});
+
+		$(cookieControlModal).find('.cookie-allow-all').on('click', function(e){
+			$('#cookie-control-modal.featherlight-inner').addClass('saving');
+			$(cookieControlBar).addClass('saving');
+			allowAllCookies(true);
+		});
+
+		$(cookieControlModal).find('.cookie-reject-all').on('click', function(e){
+			$('#cookie-control-modal.featherlight-inner').addClass('saving');
+			$(cookieControlBar).addClass('saving');
+			rejectAllCookies();
+		});
+
+		$(cookieControlModal).find('.cookie-save').on('click', function(e){
+			$('#cookie-control-modal.featherlight-inner').addClass('saving');
+			$(cookieControlBar).addClass('saving');
+			savePreferences();
+			if(!cookieControlCompliantMode) {
+				window.location.reload();
+			}
+		});
+
+		$(cookieControlBar).find('.cookie-allow-all').on('click', function(e){
+			$(cookieControlBar).addClass('saving');
+			allowAllCookies(!initialAll);
+		});
+
+		$(cookieControlBar).find('.cookie-reject-all').on('click', function(e){
+			$(cookieControlBar).addClass('saving');
+			rejectAllCookies();
+		});
+
+		if(cs.review){
+			$(cookieControlBar).show();
+
+			//Initial State change
+			//If review and there are cookies disabled then removed all
+			if(anyCookieDisabled(cs)){
+				//Need to do this in case the user just hits save
+				delete cs.all;
+			}
+
+			// Reposition live chat popup to above the cookie consent bar
+			var observer = new MutationObserver(function() {
+				if (document.querySelector('#cloudlink-chat-overlay-buttons')) {
+					observer.disconnect();
+
+					var outerHeight = $(cookieControlBar).outerHeight();
+					$('#cloudlink-chat-overlay-buttons').css('bottom', outerHeight + 10);
+				}
+			});
+
+			setTimeout(function() {
+				observer.disconnect();
+			}, 10000);
+
+			observer.observe(document.body, {
+				childList: true,
+				subtree: true
+			});
+		}
+
+		//Cookie Deletion
+		function  _getCookieWhitelist(config,settings,enabled) {
+			settings = settings || {};
+			enabled  = typeof(enabled) !== 'undefined' ? enabled : true;
+			config   = config || {};
+
+			var ret = {
+				names      : [],
+				patterns   : [],
+			};
+			for( key in config){
+				var info    = config[key];
+				var setting = (typeof(settings[key]) !== 'undefined') ? settings[key] : { };
+
+				if(typeof(setting) !== 'object')
+					setting = { enabled : setting };
+
+				var keyEnabled = enabled && (typeof(setting.enabled) !== 'undefined' ? setting.enabled : true) ? true : false;
+
+				//Always add key so code can find logic component by name rather than cookie name
+				ret.names.push([ key, keyEnabled ]); //Flag as a component name
+
+				if(typeof(info) !== 'object')
+					continue;
+
+				if(info.cookies){
+					//A group of cookies
+					var childCookies = _getCookieWhitelist(info.cookies, setting.cookies, keyEnabled);
+					['names','patterns'].forEach(function(i){
+						childCookies[i].forEach(function(c){
+							ret[i].push(c);
+						});
+					});
+				}
+				var pattern;
+				if(pattern = info.pattern){
+					if(!Array.isArray(pattern))
+						pattern = [ pattern ];
+
+					pattern.forEach(function(p){
+						ret.patterns.push([ p, keyEnabled ]);
+					});
+				}
+				var name;
+				if(name = info.name){
+					if(!Array.isArray(name))
+						name = [ name ];
+
+					name.forEach(function(n){
+						ret.names.push([ n, keyEnabled ]);
+					});
+				}
+			}
+
+			return ret;
+		}
+
+
+		function getCookieWhitelist(config, settings) {
+			if(settings.all)
+				return { all : 1 }; //Short circuit for case where all cookies are allowed
+
+
+			 var whitelist = _getCookieWhitelist(config.cookies, settings.cookies);
+
+			 var all = 1;
+			 [ 'names', 'patterns' ].forEach(function(i){
+				 //Unflag if even a single cookie is disabled
+				 if(whitelist[i].filter(function(cookie){
+					return cookie[1] ? false : true;
+				 }).length > 0){
+				 	all = 0;
+				 }
+			 });
+
+			if(all)
+				return { all : 1 }; //Keep the same as earlier short circuit
+
+			//Convert name to map for fast lookup
+			var nameObj = {};
+			whitelist.names.forEach(function(n){
+				nameObj[n[0]] = n[1];
+			});
+
+			whitelist.names = nameObj;
+
+			//Convert patterns to Regex
+			whitelist.patterns = whitelist.patterns.map(function(p){ return [ new RegExp(p[0]), p[1] ]; });
+
+			whitelist.other = whitelist.names.OTHER;
+			delete whitelist.names.OTHER;
+
+			return whitelist;
+		}
+
+		function isCookieWhitelisted(whitelist, cookieName){
+			if(whitelist.all)
+				return true;
+
+			if(typeof(whitelist.names[cookieName]) !== 'undefined')
+				return whitelist.names[cookieName];
+
+			var allowed = 1, matched = false;
+			whitelist.patterns.forEach(function(p){
+				if(cookieName.search(p[0]) >= 0){
+					matched = true;
+					if(!p[1])
+						allowed = 0;
+				}
+			});
+
+			if(matched)
+				return allowed;
+
+			return whitelist.other ? true : false;
+		}
+
+
+
+
+
+		function clearCookies(){
+			var csCopy    = getCookieSettings();
+
+			var whitelist = getCookieWhitelist(cookieConfig, csCopy);
+
+			var cookies   = getCookies();
+
+			for(cookie in cookies){
+				if(isCookieWhitelisted(whitelist, cookie))
+					continue;
+
+				deleteCookie(cookie);
+			}
+		}
+
+
+		setTimeout(function (){
+			clearCookies();
+		}, 300);
+	}
+
+	//Cookie categories for initialising
+	function _generate_component_category(config,category) {
+		var names = [];
+		for( key in config){
+			var info    = config[key];
+			names.push([ key, category ]);
+
+			if(typeof(info) !== 'object')
+				continue;
+
+			if(info.cookies){
+				names = names.concat(_generate_component_category(info.cookies, category));
+			}
+		}
+
+		return names;
+	}
+
+	function generate_component_categories() {
+		var names = [];
+		for( category in cookieConfig.cookies){
+			names = names.concat(_generate_component_category(cookieConfig.cookies[category].cookies, category));
+		}
+
+		var nameObj = {};
+		names.forEach(function(n){
+			nameObj[n[0]] = n[1];
+		});
+
+		return nameObj;
+	}
+
+	var cookie_categories = generate_component_categories();
+
+	// Replace data-cookie-category with real category
+	$('[data-cookie-category]').each(function(i, el) {
+		var name = $(el).attr('data-cookie-category');
+		if(cookie_categories[name]) {
+			$(el).attr('data-cookie-category', cookie_categories[name]);
+		}
+	});
+
+	function cookieRegisterFunction(name,callback) {
+		var category = cookie_categories[name];
+		if(category && cookie_consent_functions && cookie_consent_functions[category]) {
+			cookie_consent_functions[category].functions.push(callback);
+		}
+	}
+
+	window.cookieRegisterFunction = cookieRegisterFunction;
+});
+
+//Catalogue 
+// URL example: /baumatic/microwave-turntables/catalogue.pl?shop=baumatic&path=454018
+function validateFinderModel(f) {
+	var r = true;
+	if (!(f.mid.value != '' && f.mid.value > 0)) {
+		alert('Please ensure you have entered a finder model from the drop down list provided.');
+		r = false;
+	}
+	return r;
+}
+
+/*
+ * Get addresses from AJAX call
+ *
+ *  postcode_element  input element containing postcode
+ *  select_list   select element, to hold addresses
+ *  display_element   HTML element holding select list (to show/hide)
+ */
+function find_address(postcode_element, select_list, display_element) {
+	var valid_postcode = validPostCode(postcode_element.value);
+	if (postcode_element.value == '') {
+		alert('Please enter a postcode.');
+		return;
+	} else {
+		if (valid_postcode == false) {  // validate post code
+			if (!confirm('The postcode you have entered does not appear to be a valid postcode. Would you like to continue with the search anyway?'))
+				return;
+		} else {
+			postcode_element.value = valid_postcode;
+		}
+	}
+	
+	// clear old entries
+	for (var i = select_list.length; i>=0; i--)
+		select_list.options[i] = null;
+	
+	select_list.options.add(new Option('Searching for addresses...', '', '', true));
+	
+	// show list
+	$(display_element).show();
+	
+	// show card holder's address fields
+	$('.ch_address_row').show();
+	var data = {  postcode: postcode_element.value,
+			select_list: select_list  };
+
+	// set up AJAX call
+	$.ajax({type  : 'GET',
+		url : '/ajax-handler.pl',
+		data  : 'handler=pc&r=5&pc=' + data.postcode,
+		dataType: 'json',
+		success : function(result){
+			for (var i = data.select_list.length; i>=0; i--)
+				data.select_list.options[i] = null;
+			if (result.address.length > 0) {  // results found
+				data.select_list.options.add(new Option('Select your address...', '', '', true));
+				for(var i=0; i<result.address.length; i++) {
+					var display = result.address[i].display;
+					var js      = result.address[i].js;
+					data.select_list.options.add(new Option(display, js));
+				}
+			}
+			else {  // no results found
+				data.select_list.options.add(new Option('No addresses found', '', '', true));
+			}
+		},
+		error : function() {
+			for (var i = data.select_list.length; i>=0; i--)
+				data.select_list.options[i] = null;
+				data.select_list.options.add(new Option('An error occurred whilst retrieving address details.', '', '', true));
+			}
+		});
+}
+
+/*
+ * Set selected address in address input fields
+ *
+ *  address_list    select element containing addresses
+ *  fields      array of address input fields
+ *  include_postcode  is the post code field included in fields?
+ *  display_element   HTML element holding select list (to show/hide) (optional)
+ */
+function set_address(address_list, fields, include_postcode, display_element) {
+	
+	var selindex = address_list.selectedIndex;
+	
+	if (selindex >= 0) {
+		
+		var address = address_list.options[selindex].value;
+		var addarray = address.split("|");
+		
+		if (include_postcode) {   // set field
+			fields[fields.length - 1].value = addarray.pop();
+		} else {      // discard
+			addarray.pop()
+		}
+		for (var i = 0; i < fields.length - 1; i++) {
+			var addr_field = addarray[i];
+			if (addr_field == null) {
+				addr_field = '';
+			}
+			fields[i].value = addr_field;
+		}
+		if (display_element)
+			$(display_element).hide();
+	}
+}
+
+/*
+ * Set selected address in address input fields
+ *
+ *  address_list    select element containing addresses
+ *  fields      array of address input fields
+ *  include_postcode  is the post code field included in fields?
+ *  display_element   HTML element holding select list (to show/hide) (optional)
+ */
+function set_address_addressbook(address_book, fields, include_postcode, del_name, nickname) {
+	
+	var selindex = address_book.selectedIndex;
+	
+	if (selindex >= 0) {
+		
+		var address = address_book.options[selindex].value;
+		
+		var addarray = address.split("\n");
+		
+		var address_id = addarray.shift() || '';
+		del_name.value = addarray.shift() || '';
+		nickname.value = addarray.shift() || '';
+		
+		if (include_postcode) {   // set field
+			fields[fields.length - 1].value = addarray.pop() || '';
+		} else {      // discard
+			addarray.pop()
+		}
+		for (var i = 0; i < fields.length - 1; i++) {
+			var addr_field = addarray[i];
+			if (addr_field == null) {
+				addr_field = '';
+			}
+			if (fields[i]) {
+				fields[i].value = addr_field;
+			}
+		}
+	}
+}
+
+/*==============================================================================
+http://www.braemoor.co.uk/software/postcodes.shtml
+
+Application:   Utiity Function
+Author:        John Gardner
+
+Version:       V1.0
+Date:          18th November 2003
+Description:   Used to check the validity of a UK postcode
+
+Version:       V2.0
+Date:          8th March 2005
+Description:   BFPO postcodes implemented.
+							 The rules concerning which alphabetic characters are alllowed in 
+							 which part of the postcode were more stringently implementd.
+	
+Parameters:    toCheck - postcodeto be checked. 
+
+This function checks the value of the parameter for a valid postcode format. The 
+space between the inward part and the outward part is optional, although is 
+inserted if not there as it is part of the official postcode.
+
+If the postcode is found to be in a valid format, the function returns the 
+postcode properly formatted (in capitals with the outward code and the inward
+code separated by a space. If the postcode is deemed to be incorrect a value of 
+false is returned.
+	
+Example call:
+	if (checkPostCode (myPostCode)) {
+		alert ("Postcode has a valid format")
+	} 
+	else {alert ("Postcode has invalid format")};
+------------------------------------------------------------------------------*/
+
+function validPostCode (toCheck) {
+	// Permitted letters depend upon their position in the postcode.
+	var alpha1 = "[abcdefghijklmnoprstuwyz]";                       // Character 1
+	var alpha2 = "[abcdefghklmnopqrstuvwxy]";                       // Character 2
+	var alpha3 = "[abcdefghjkstuw]";                                // Character 3
+	var alpha4 = "[abehmnprvwxy]";                                  // Character 4
+	var alpha5 = "[abdefghjlnpqrstuwxyz]";                          // Character 5
+	// Array holds the regular expressions for the valid postcodes
+	var pcexp = new Array ();
+	// Expression for postcodes: AN NAA, ANN NAA, AAN NAA, and AANN NAA
+	pcexp.push (new RegExp ("^(" + alpha1 + "{1}" + alpha2 + "?[0-9]{1,2})(\\s*)([0-9]{1}" + alpha5 + "{2})$","i"));
+	// Expression for postcodes: ANA NAA
+	pcexp.push (new RegExp ("^(" + alpha1 + "{1}[0-9]{1}" + alpha3 + "{1})(\\s*)([0-9]{1}" + alpha5 + "{2})$","i"));
+	// Expression for postcodes: AANA  NAA
+	pcexp.push (new RegExp ("^(" + alpha1 + "{1}" + alpha2 + "?[0-9]{1}" + alpha4 +"{1})(\\s*)([0-9]{1}" + alpha5 + "{2})$","i"));
+	// Exception for the special postcode GIR 0AA
+	pcexp.push (/^(GIR)(\s*)(0AA)$/i);
+	// Standard BFPO numbers
+	pcexp.push (/^(bfpo)(\s*)([0-9]{1,4})$/i);
+	// c/o BFPO numbers
+	pcexp.push (/^(bfpo)(\s*)(c\/o\s*[0-9]{1,3})$/i);
+	// Load up the string to check
+	var postCode = toCheck;
+	// Assume we're not going to find a valid postcode
+	var valid = false;
+	// Check the string against the types of post codes
+	for ( var i=0; i<pcexp.length; i++) {
+		if (pcexp[i].test(postCode)) {
+			// The post code is valid - split the post code into component parts
+			pcexp[i].exec(postCode);
+			// Copy it back into the original string, converting it to uppercase and
+			// inserting a space between the inward and outward codes
+			postCode = RegExp.$1.toUpperCase() + " " + RegExp.$3.toUpperCase();
+			// If it is a BFPO c/o type postcode, tidy up the "c/o" part
+			postCode = postCode.replace (/C\/O\s*/,"c/o ");
+			// Load new postcode back into the form element
+			valid = true;
+			// Remember that we have found that the code is valid and break from loop
+			break;
+		}
+	}
+	// Return with either the reformatted valid postcode or the original invalid 
+	// postcode
+	if (valid) {return postCode;} else return false;
+}
+
+function open_popup(URLlink, windowname, features) {
+	if (!window.focus)
+		return true;
+	var href;
+	if (typeof(URLlink) == 'string')
+		href=URLlink;
+	else
+		href=URLlink.href;
+	var popup = window.open(href, windowname, features + ' scrollbars=yes');
+	popup.focus();
+	return false;
+}
+
+/*
+ * Purpose: Disables fields by Id
+ * Author:  A Harvey
+ * Date:  22/07/2011
+ */
+function setElementAvailability(id,status) {
+	document.getElementById(id).disabled = status;
+};
+
+/* Delivery Information Page - Display list of carriage options for selected country. */
+$(document).ready(function(){
+	
+	$('#delivery_country').on('change', function() {  // on change of country selection ...
+		var country_id = this.value;
+		if (country_id > 0) {
+			// clear out all old rows from table
+			$('.country_carriage_table_row').remove();
+			var carriage_options = carriage[country_id];  // carriage array is defined within page itself
+			if (carriage_options != null) {
+				// append each carriage option from newly selected country onto table
+				for (var i = 0; i < carriage_options.length; i++) {
+					$('#country_carriage_table > tbody:last').append('<tr class="country_carriage_table_row"><td>' + carriage_options[i][0] + '</td><td>' + carriage_options[i][1] + '</td><td>' + carriage_options[i][2] + '</td></tr>');
+				}
+				$('#country_carriage').show();
+			}
+		} else {
+			$('#country_carriage').hide();
+		}
+	});
+});
+
+// Form error class toggle
+function formErrorToggle(classname,status) { // Target class name. Status: true = add error class, false = remove error class
+	var arr = classname.split(',');
+
+	var i;
+	for (var i = arr.length - 1; i >= 0; i--) {
+
+		if ( status ) {
+			$(arr[i]).addClass('form-error');
+		} else {
+			$(arr[i]).removeClass('form-error');
+		};
+	}
+
+};
+
+// Change image source between mobile and desktop versions. 
+// Element = img selector
+// Width = browser width when to trigger the swap in pixels
+// <img> must have data-mobile-image="" data-desktop-image="" src=""
+// Add <noscript> with the regular desktop image if required
+// Call once in document ready, and again on a window resize if it must update
+function imageSwap (element,width) {
+	var bodyWidth = $('body').width();
+
+	$(element).each(function() {
+		var mobileImg = $(this).data('mobile-image');
+		var desktopImg = $(this).data('desktop-image');
+
+		if (bodyWidth >= width ) { 
+			$(this).attr('src', desktopImg);
+		} else {
+			$(this).attr('src', mobileImg);
+		};
+	});
+
+};
+
+//Scroll to element (animation effect)
+$(document).on('click', 'a[href*="#"]:not([href="#"])', function(e) {
+		if (location.pathname.replace(/^\//,'') === this.pathname.replace(/^\//,'') && location.hostname === this.hostname) {
+				var target = $(this.hash);
+				target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+				if (target.length) {
+						$('html, body').animate({
+								scrollTop: target.offset().top
+						}, 1000);
+						e.preventDefault();
+				}
+		}
+});
+
+$(document).on('click', '*[data-scroll-to*="#"]', function(e) {
+	e.preventDefault();
+
+	var scrollTo = $(this).data('scroll-to'),
+		offset = 0,
+		offsetElement = $(this).data('scroll-offset');
+
+	if($(offsetElement).length) {
+		offset = $(offsetElement).height();
+	}
+
+	$('html, body').animate({
+		scrollTop: $(scrollTo).offset().top - offset
+	}, 1000);
+});
+
+// Custom select menu
+$(document).ready(function() {
+	$('select').each(function(i, el) {
+		if($(el).attr('disabled')) {
+			$(el).wrap('<div class="custom-select disabled"></div>');
+		} else {
+			$(el).wrap('<div class="custom-select"></div>');
+		}
+	});
+});
+
+// Used to show / hide operator details field on sc login page
+function loginShowOperator(action) {
+	
+	if (action) {
+		$('#accountDetailsOpeartor').show();
+		
+	} else {
+		$('#accountDetailsOpeartor').hide();
+	}
+	
+	return false;
+	
+}
+
+// Used to remove scrollbar when lightbox is open to prevent the background from being able to scroll
+$(document).ready(function() {
+	$.featherlight.defaults.afterOpen = function(event) {
+		var bodyScrolledY = window.pageYOffset;
+		document.body.classList.add('prevent-scroll');
+		document.body.setAttribute('data-y-offset', bodyScrolledY);
+		document.body.style.top = (bodyScrolledY * -1) + 'px';
+	},
+	$.featherlight.defaults.afterClose = function() {
+		featherlightAfterClose();
+	}
+});
+
+function featherlightAfterClose() {
+	var bodyScrolledY = document.body.getAttribute('data-y-offset');
+	document.body.classList.remove('prevent-scroll');
+	document.body.style.removeProperty('top');
+	window.scrollTo(0, bodyScrolledY || 0);
+}
+
+//When one or more items are added to basket, an overlay will appear to preview items. If no items are present the overlay wont appear
+$(document).ready(function(){	
+	var hoverTimeout, keepOpen = false, stayOpen = $('.view-basket.basket-has-items'); 
+	$(document).on('mouseenter','.basket-overlay',function(){
+		clearTimeout(hoverTimeout);
+		stayOpen.addClass('show');
+	}).on('mouseleave','.basket-overlay',function(){
+		clearTimeout(hoverTimeout);
+		hoverTimeout = setTimeout(function(){
+			if(!keepOpen){
+				stayOpen.removeClass('show');   
+			}
+		},100);
+	});
+
+	$(document).on('mouseenter','.view-basket.basket-has-items',function(){
+		keepOpen = true;
+		setTimeout(function(){
+			keepOpen = false;
+		},100);
+	}).on('mouseleave','.view-basket.basket-has-items',function(){
+		keepOpen = false;
+		stayOpen.removeClass('show');
+	});
+});
+
+$(document).ready(function(){
+
+	// Variables used for mobile refine
+	const sideColumnObserver = document.querySelector('.side-column-wrapper-toggle');
+	const sideColumnWrapperReveal = document.querySelector('.side-column-wrapper-reveal');
+	const mobileRefineToggleSearch = document.querySelector('.mobile-refine-search-btn');
+	const mobileRefineToggleCat = document.querySelector('.mobile-refine-catalogue-btn');
+	const options = {
+		root: null,
+		threshold: 0
+	};
+	
+	// Intersection observer to control mobile refine button showing on search pages
+	const mobileRefineToggleSearchObserver = new IntersectionObserver(function(entries, mobileRefineToggleSearchObserver) {
+		entries.forEach(entry => {
+			if(!mobileRefineToggleSearch) {
+				return;
+			}
+			if (entry.isIntersecting) {
+				mobileRefineToggleSearch.style.display = 'none';
+			} else {
+				mobileRefineToggleSearch.style.display = 'flex';
+			}
+		});
+	}, options);
+
+	if (sideColumnObserver) {
+		mobileRefineToggleSearchObserver.observe(sideColumnObserver);
+	}
+
+	// Intersection observer to close mobile refine window if side column wrapper reveal is open
+	const sideColumnWrapperRevealObserver = new IntersectionObserver(function(entries, sideColumnWrapperRevealObserver) {
+		entries.forEach(entry => {
+			if (entry.isIntersecting) {
+				document.body.classList.remove('mobile-refine-open');
+			}
+		})
+	}, options);
+
+	if (sideColumnWrapperReveal) {
+		sideColumnWrapperRevealObserver.observe(sideColumnWrapperReveal);
+	}
+
+	// Intersection observer to control mobile refine button showing on catalogue pages
+	const mobileRefineToggleCatObserver = new IntersectionObserver(function(entries, mobileRefineToggleCatObserver) {
+		if(!mobileRefineToggleCat) {
+			return;
+		}
+		entries.forEach(entry => {
+			if (entry.isIntersecting) {
+				mobileRefineToggleCat.style.display = 'none';
+			} else {
+				mobileRefineToggleCat.style.display = 'flex';
+			}
+		});
+	}, options);
+
+	// Display side-column-wrapper-reveal
+	if (sideColumnWrapperReveal) {
+		if(sideColumnWrapperReveal.offsetParent === null) {
+			mobileRefineToggleCatObserver.observe(sideColumnObserver);
+		} else {
+			mobileRefineToggleCatObserver.observe(sideColumnWrapperReveal);
+		}
+	}
+
+	// JS used to control mobile refine pop up and close button
+	
+		// open / close refine selection
+		const refineToggle = document.querySelector('.mobile-refine-toggle-btn');
+		if(!refineToggle) {
+			return;
+		}
+		refineToggle.addEventListener('click', () => {
+			document.body.classList.toggle('mobile-refine-open');
+		});
+
+		// close refine selection using close button
+		// toggle icon arrow icon when close button is pressed
+		const refineSelectionClose = document.querySelector('.mobile-refine-selection-close');
+		const mobileRefineToggleIcon = document.querySelector('.mobile-refine-toggle-btn');
+	
+		refineSelectionClose.addEventListener('click', () => {
+			document.body.classList.remove('mobile-refine-open');
+			mobileRefineToggleIcon.classList.remove('mobile-refine-icon-toggle');
+		});
+	
+		// toggle icon
+		mobileRefineToggleIcon.addEventListener('click', (e) => {
+			e.target.classList.toggle('mobile-refine-icon-toggle');
+		});
+
+});
+
+// USED ON 4LG MOBILE VIEWPORT TO SHOW/HIDE PRODUCTS
+$(document).ready(function(){
+	const homeProductsBtn = document.querySelector('.home-products-btn');
+	if(homeProductsBtn) {
+		homeProductsBtn.addEventListener('click', () => {
+			document.querySelectorAll('.home-products-item:nth-of-type(n+5)').forEach((item) => {
+				item.classList.toggle('is-visible');
+			});
+			if (homeProductsBtn.innerHTML === 'More') {
+				homeProductsBtn.innerHTML = 'Less';
+			} else {
+				homeProductsBtn.innerHTML = 'More';
+			}
+			homeProductsBtn.classList.toggle('icon-toggle');
+		});
+	}
+});
+
+// USED TO CONTROL EXPANDING SEARCH BAR ON 4LG SITE
+$(document).ready(function(){
+	const expandingSearch = document.querySelector('.desktop-expanding-search');
+	const expandingSearchBtn = document.querySelector('.expanding-search-btn');
+	const expandingSearchInput = document.querySelector('.expanding-search-input');
+
+	if(expandingSearchBtn) {
+		expandingSearchBtn.addEventListener('click', (e) => {
+			if (expandingSearchInput.value == '') {
+				e.preventDefault();
+				expandingSearch.classList.toggle('active');
+				expandingSearchInput.focus();
+				expandingSearchInput.value = '';
+			};
+		});
+	}
+});
+
+window.onload = function() {
+	const expandingSearchBtn = document.querySelector('.expanding-search-btn');
+	if(expandingSearchBtn) {
+		document.querySelector('.expanding-search-input').value = '';
+	}
+}
+
+$(document).ready(function(){
+	if (document.querySelector('.add_to_basket')) { 
+
+		var ids = [];
+
+		document.querySelectorAll('[id^=pr-productsnippet-]').forEach(function(el) {
+			if(!ids.includes(el.getAttribute('id'))) {
+				ids.push(el.getAttribute('id'));
+			}
+		});
+
+		ids.forEach(function(id) {
+			const mobile = document.querySelector('.mobile-add-to-basket #' + id);
+			const tablet = document.querySelector('.desktop-add-to-basket .associates-section .associates-list-repeat #' + id);
+			const desktop = document.querySelector('.desktop-add-to-basket .associated-new-section #' + id);
+	
+			var prevWidth = window.innerWidth;
+			window.addEventListener('resize', function() {
+		
+				if (window.innerWidth !== prevWidth ) {
+					prevWidth = innerWidth;
+					const pwrStars = document.querySelector('#' + id + ' .p-w-r');
+
+					if (pwrStars) {
+						tablet.querySelector('.pr-placeholder').style.display = 'none';
+						desktop.querySelector('.pr-placeholder').style.display = 'none';
+					}
+		
+					if (prevWidth >= 768 &&  prevWidth <= 991) {
+						tablet.append(pwrStars);
+					} else if (prevWidth >= 992) {
+						desktop.append(pwrStars);
+					} else if (prevWidth <= 767) {
+						mobile.append(pwrStars);
+					}
+				}
+			});
+			var targetNode = mobile;
+			const config = { childList: true, characterData: true, subtree: true, attributes: true, };
+		
+			const callback = function () {
+				const pwrStars = document.querySelector('#' + id + ' .p-w-r');
+
+				if (pwrStars){
+					if (window.innerWidth >= 768 && window.innerWidth <= 991) {
+						tablet.append(pwrStars);
+						tablet.querySelector('.pr-placeholder').style.display = 'none';
+					} else if (window.innerWidth >= 992) {
+						desktop.append(pwrStars);
+						desktop.querySelector('.pr-placeholder').style.display = 'none';
+					}
+				}
+			};
+		
+			const observer = new MutationObserver(callback);
+		
+			observer.observe(targetNode, config);
+
+		});
+	}
+});
+
+// Jotform
+var jotformInit = function () {
+	var jotformLinks = $('body').find('[data-jotform-lightbox-init]');
+	if (jotformLinks.length) {
+		// Only initialise Jotform if there are links that will NOT be in a lightbox
+		var init = false;
+		jotformLinks.each(function(i, link) {
+			if(!link.closest('.lightbox') || link.closest('.featherlight-content')) {
+				init = true;
+			}
+		});
+
+		if(init) {
+			var jotformScript = document.createElement('script');
+			jotformScript.src = '/sites/responsive/scripts/jotform.js';
+			jotformScript.id = 'jotform-js';
+
+			document.body.appendChild(jotformScript);
+		}
+	}
+};
+
+$(document).ready(function() {
+	jotformInit()
+});
+
+// Postcode restrictions based off country
+function isRestrictedPostcode(postcode, country) {
+	if(country == '7:France') {
+		if(/^(974|975|971|972|973)/.test(postcode.trim())) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+// Guest Checkout
+$(document).ready(function () {
+	$('.checkout-form-container').on('click', function () {
+		$('.checkout-form-container').each(function (i, obj) {
+			$(this).find('input[type=radio]').prop('checked', false);
+		});
+		$(this).find('input[type=radio]').prop('checked', true);
+		$('.guest-checkout-submit').prop('disabled', false).removeClass('btn-disabled');
+		if (document.querySelector('#radio_gaga').checked) {
+			document.querySelector('#email_address_guest').style.display = 'block';
+			document.querySelector('#email_address').style.display = 'none';
+			document.querySelector('#u_password').style.display = 'none';
+			document.querySelector('#create_account').style.display = 'none';
+			document.querySelector('#frm_checkout_signin_guest_error').style.display = 'block';
+			document.querySelector('#frm_checkout_existing_error').style.display = 'none';
+			document.querySelector('#frm_checkout_create_error').style.display = 'none';
+			document.querySelector('#guest-checkout-submit').style.display = 'block';
+			document.querySelector('#sign-in-submit').style.display = 'none';
+			document.querySelector('#create-account-submit').style.display = 'none';
+			document.querySelector('.forgotten-password-link').style.display = 'none';
+			document.querySelector('#frm_checkout_existing .form-row').classList.remove('form-error');
+			document.querySelector('#frm_checkout_create .form-row').classList.remove('form-error');
+		}
+		else if (document.querySelector('#radio_gaga2').checked) {
+			document.querySelector('#email_address_guest').style.display = 'none';
+			document.querySelector('#email_address').style.display = 'block';
+			document.querySelector('#u_password').style.display = 'block';
+			document.querySelector('#create_account').style.display = 'none';
+			document.querySelector('#frm_checkout_signin_guest_error').style.display = 'none';
+			document.querySelector('#frm_checkout_existing_error').style.display = 'block';
+			document.querySelector('#frm_checkout_create_error').style.display = 'none';
+			document.querySelector('#guest-checkout-submit').style.display = 'none';
+			document.querySelector('#sign-in-submit').style.display = 'block';
+			document.querySelector('#create-account-submit').style.display = 'none';
+			document.querySelector('.forgotten-password-link').style.display = 'block';
+			document.querySelector('#frm_checkout_signin_guest .form-row').classList.remove('form-error');
+			document.querySelector('#frm_checkout_create .form-row').classList.remove('form-error');
+		} else {
+			document.querySelector('#email_address_guest').style.display = 'none';
+			document.querySelector('#email_address').style.display = 'none';
+			document.querySelector('#u_password').style.display = 'none';
+			document.querySelector('#create_account').style.display = 'block';
+			document.querySelector('#frm_checkout_signin_guest_error').style.display = 'none';
+			document.querySelector('#frm_checkout_existing_error').style.display = 'none';
+			document.querySelector('#frm_checkout_create_error').style.display = 'block';
+			document.querySelector('#guest-checkout-submit').style.display = 'none';
+			document.querySelector('#sign-in-submit').style.display = 'none';
+			document.querySelector('#create-account-submit').style.display = 'block';
+			document.querySelector('.forgotten-password-link').style.display = 'none';
+			document.querySelector('#frm_checkout_signin_guest .form-row').classList.remove('form-error');
+			document.querySelector('#frm_checkout_existing .form-row').classList.remove('form-error');
+		}
+	});
+});

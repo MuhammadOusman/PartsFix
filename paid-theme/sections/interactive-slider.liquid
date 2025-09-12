@@ -1,0 +1,278 @@
+{%- assign tips = section.settings.tips | split: '|' -%}
+
+<style>
+.espares-tips-section {
+  padding: 60px 0;
+  background: #f8f9fa;
+}
+
+.espares-tips-section .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.espares-tips-section h2 {
+  text-align: center;
+  margin-bottom: 50px;
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.tips-slider-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  background: white;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.tips-slider {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+.tip-slide {
+  min-width: 100%;
+  padding: 40px;
+  text-align: center;
+  background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
+  color: white;
+  position: relative;
+}
+
+.tip-slide::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="1" fill="white" opacity="0.1"/><circle cx="90" cy="40" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>') repeat;
+  pointer-events: none;
+}
+
+.tip-icon {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  opacity: 0.9;
+}
+
+.tip-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.tip-description {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  opacity: 0.95;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.slider-controls {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 12px;
+}
+
+.slider-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.4);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.slider-dot.active {
+  background: white;
+  transform: scale(1.2);
+}
+
+.slider-dot:hover {
+  background: rgba(255,255,255,0.7);
+}
+
+.slider-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.2);
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  padding: 15px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.slider-nav:hover {
+  background: rgba(255,255,255,0.3);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.slider-nav.prev {
+  left: 20px;
+}
+
+.slider-nav.next {
+  right: 20px;
+}
+
+@media (max-width: 768px) {
+  .tip-slide {
+    padding: 30px 20px;
+  }
+  
+  .tip-icon {
+    font-size: 2.5rem;
+  }
+  
+  .tip-title {
+    font-size: 1.5rem;
+  }
+  
+  .tip-description {
+    font-size: 1rem;
+  }
+  
+  .slider-nav {
+    padding: 12px;
+    font-size: 1.2rem;
+  }
+  
+  .espares-tips-section h2 {
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+  }
+}
+</style>
+
+<div class="container">
+  <div class="espares-tips-section home-section">
+    <h2>{{ section.settings.title | default: "Energy-Saving Tips" }}</h2>
+    <div class="tips-slider-container">
+      <div class="tips-slider" id="tipsSlider">
+        {%- if tips.size > 0 -%}
+          {%- for tip in tips -%}
+            {%- assign tip_data = tip | split: ',' -%}
+            {%- assign tip_title = tip_data[0] -%}
+            {%- assign tip_description = tip_data[1] -%}
+            {%- assign tip_icon = tip_data[2] | default: "💡" -%}
+            <div class="tip-slide">
+              <div class="tip-icon">{{ tip_icon }}</div>
+              <h3 class="tip-title">{{ tip_title }}</h3>
+              <p class="tip-description">{{ tip_description }}</p>
+            </div>
+          {%- endfor -%}
+        {%- else -%}
+          <div class="tip-slide">
+            <div class="tip-icon">💡</div>
+            <h3 class="tip-title">Save Energy & Money</h3>
+            <p class="tip-description">Learn smart tips to reduce your energy bills and help the environment with efficient appliance usage.</p>
+          </div>
+          <div class="tip-slide">
+            <div class="tip-icon">🌱</div>
+            <h3 class="tip-title">Reduce Waste</h3>
+            <p class="tip-description">Proper maintenance of your appliances extends their lifespan and reduces electronic waste.</p>
+          </div>
+          <div class="tip-slide">
+            <div class="tip-icon">🔧</div>
+            <h3 class="tip-title">Regular Maintenance</h3>
+            <p class="tip-description">Keep your appliances running efficiently with regular cleaning and genuine spare parts.</p>
+          </div>
+        {%- endif -%}
+      </div>
+      
+      <button class="slider-nav prev" onclick="prevTip()">‹</button>
+      <button class="slider-nav next" onclick="nextTip()">›</button>
+      
+      <div class="slider-controls">
+        {%- if tips.size > 0 -%}
+          {%- for tip in tips -%}
+            <button class="slider-dot" onclick="goToTip({{ forloop.index0 }})"></button>
+          {%- endfor -%}
+        {%- else -%}
+          <button class="slider-dot" onclick="goToTip(0)"></button>
+          <button class="slider-dot" onclick="goToTip(1)"></button>
+          <button class="slider-dot" onclick="goToTip(2)"></button>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+let currentTip = 0;
+const totalTips = {%- if tips.size > 0 -%}{{ tips.size }}{%- else -%}3{%- endif -%};
+const slider = document.getElementById('tipsSlider');
+const dots = document.querySelectorAll('.slider-dot');
+
+function updateSlider() {
+  slider.style.transform = `translateX(-${currentTip * 100}%)`;
+  
+  dots.forEach((dot, index) => {
+    dot.classList.toggle('active', index === currentTip);
+  });
+}
+
+function nextTip() {
+  currentTip = (currentTip + 1) % totalTips;
+  updateSlider();
+}
+
+function prevTip() {
+  currentTip = (currentTip - 1 + totalTips) % totalTips;
+  updateSlider();
+}
+
+function goToTip(index) {
+  currentTip = index;
+  updateSlider();
+}
+
+// Auto-advance tips every 6 seconds
+setInterval(nextTip, 6000);
+
+// Initialize
+document.addEventListener('DOMContentLoaded', function() {
+  updateSlider();
+});
+</script>
+
+{% schema %}
+{
+  "name": "Interactive Slider",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Energy-Saving Tips"
+    },
+    {
+      "type": "textarea",
+      "id": "tips",
+      "label": "Tips (Format: Title,Description,Icon|Title,Description,Icon)",
+      "info": "Separate multiple tips with | symbol. Format each tip as: Title,Description,Icon",
+      "default": "Save Energy,Reduce your energy bills with smart appliance usage,💡|Reduce Waste,Extend appliance lifespan with proper maintenance,🌱|Regular Service,Keep appliances efficient with genuine parts,🔧"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Interactive Slider"
+    }
+  ]
+}
+{% endschema %}

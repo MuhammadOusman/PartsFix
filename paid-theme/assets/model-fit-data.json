@@ -1,0 +1,50 @@
+{
+  "appliances": [
+    {
+      "name": "Cooker / Oven",
+      "slug": "cooker-oven",
+      "brands": [
+        { "name": "Bosch", "models": ["HBN331E4B", "HBA13R150B", "HBF113BR0B"] },
+        { "name": "Beko", "models": ["BDC5422AW", "XDC653W", "KDG611K"] },
+        { "name": "Hotpoint", "models": ["HAG60K", "HUD61G", "HUE61PS"] },
+        { "name": "Indesit", "models": ["ID60C2", "ID60G2X", "IS5E4KHW"] }
+      ]
+    },
+    {
+      "name": "Dishwasher",
+      "slug": "dishwasher",
+      "brands": [
+        { "name": "Bosch", "models": ["SMS25EW00G", "SMV40C30GB", "SMS24AW01G"] },
+        { "name": "Beko", "models": ["DFN05310W", "DIN16410", "DEN59420DX"] },
+        { "name": "Hotpoint", "models": ["HFC2B19", "HIO3C26W", "HFC3C26"] }
+      ]
+    },
+    {
+      "name": "Fridge / Freezer",
+      "slug": "fridge-freezer",
+      "brands": [
+        { "name": "Samsung", "models": ["RB29FWRNDSA", "RL38A776ASR", "RS68A884CB1"] },
+        { "name": "Bosch", "models": ["KGN34NWEAG", "KSV29VWEPG", "KGN27NWEAG"] },
+        { "name": "Beko", "models": ["CFG3582W", "CNG3582VW", "CF1300APW"] }
+      ]
+    },
+    {
+      "name": "Washing Machine",
+      "slug": "washing-machine",
+      "brands": [
+        { "name": "Samsung", "models": ["WW90T534DAW", "WW80TA046AE", "WW90TA046AX"] },
+        { "name": "Bosch", "models": ["WAN28250GB", "WAJ28002GB", "WGG04409GB"] },
+        { "name": "Beko", "models": ["WDL742441W", "WTIK74111", "WTK72041W"] }
+      ]
+    },
+    {
+      "name": "Vacuum Cleaner",
+      "slug": "vacuum-cleaner",
+      "brands": [
+        { "name": "Dyson", "models": ["V8", "V10", "V11", "V15"] },
+        { "name": "Bosch", "models": ["BGS7MS64", "BBH3251GB", "BCH85N"] },
+        { "name": "Bissell", "models": ["CleanView", "PowerWash", "SpotClean Pro"] }
+      ]
+    }
+  ]
+}

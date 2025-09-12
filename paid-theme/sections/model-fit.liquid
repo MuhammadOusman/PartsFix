@@ -1,0 +1,101 @@
+<style>
+.model-fit-section { background:#f5f5f5; padding:40px 0; }
+.modelfit-input-container { max-width:1200px; margin:0 auto; padding:0 20px; }
+.modelfit-inputs { display:flex; flex-wrap:wrap; gap:12px; align-items:flex-start; }
+.modelfit-select, .modelfit-text-box { padding:10px 12px; min-width:200px; font-size:14px; }
+.modelfit-select-button { padding:11px 18px; background:#ff6b35; color:#fff; border:none; cursor:pointer; font-weight:600; }
+.btn-disabled { opacity:.55; cursor:not-allowed; }
+.autocomplete-wrapper { position:relative; flex:1 1 260px; }
+.modelfit-suggestions li:hover, .modelfit-suggestions li:focus { background:#ffd200; outline:none; }
+.model-number p { margin:6px 0 0; font-size:12px; }
+</style>
+
+<div class="model-fit-section">
+	<div class="modelfit-input-container">
+		<div class="form">
+			<h2>Find the right part for you&hellip;</h2>
+			<div class="modelfit-inputs">
+				<select id="appliance-select-menu" class="modelfit-select">
+					<option value="">Choose your appliance</option>
+				</select>
+				<select id="brand-select-menu" class="modelfit-select" disabled>
+					<option value="">Choose your brand</option>
+				</select>
+				<div id="model-container" class="autocomplete-wrapper">
+					<input id="model-select-menu" class="modelfit-text-box" type="text" placeholder="Start typing your model" disabled autocomplete="off">
+					<div class="model-number"><a href="/find-your-model-number/help.pl"><p>Where can I find my model number?</p></a></div>
+				</div>
+				<button id="model-search" type="button" class="btn btn-continue modelfit-select-button btn-disabled" disabled>Find my part</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+	const applianceSel=document.getElementById('appliance-select-menu');
+	const brandSel=document.getElementById('brand-select-menu');
+	const modelInput=document.getElementById('model-select-menu');
+	const submitBtn=document.getElementById('model-search');
+	const wrapper=document.querySelector('.autocomplete-wrapper');
+	if(!applianceSel) return;
+
+	// Suggestion list
+	const sugg=document.createElement('ul');
+	sugg.className='modelfit-suggestions';
+	Object.assign(sugg.style,{position:'absolute',top:'100%',left:0,right:0,zIndex:20,background:'#fff',border:'1px solid #ddd',borderTop:'none',maxHeight:'220px',overflowY:'auto',listStyle:'none',margin:0,padding:'4px 0',display:'none'});
+	wrapper.appendChild(sugg);
+
+	let DATA=null,currentAppliance=null,currentBrand=null,modelPool=[];
+	fetch('{{ 'model-fit-data.json' | asset_url }}')
+		.then(r=>r.json())
+		.then(json=>{ DATA=json.appliances; populateAppliances(); })
+		.catch(()=>{});
+
+	function populateAppliances(){ clearSelect(applianceSel,'Choose your appliance'); DATA.forEach(a=>addOption(applianceSel,a.name,a.slug)); }
+	function populateBrands(app){ clearSelect(brandSel,'Choose your brand'); app.brands.forEach(b=>addOption(brandSel,b.name,b.name)); }
+	function clearSelect(sel,placeholder){ sel.innerHTML=''; const o=document.createElement('option'); o.textContent=placeholder; o.value=''; sel.appendChild(o); }
+	function addOption(sel,label,val){ const o=document.createElement('option'); o.textContent=label; o.value=val; sel.appendChild(o); }
+
+	applianceSel.addEventListener('change',()=>{
+		const slug=applianceSel.value; brandSel.disabled=true; modelInput.disabled=true; submitBtn.disabled=true; modelInput.value=''; hideSuggestions();
+		currentAppliance = DATA ? DATA.find(a=>a.slug===slug) : null;
+		if(currentAppliance){ populateBrands(currentAppliance); brandSel.disabled=false; brandSel.focus(); }
+	});
+
+	brandSel.addEventListener('change',()=>{
+		const name=brandSel.options[brandSel.selectedIndex].textContent;
+		currentBrand = currentAppliance ? currentAppliance.brands.find(b=>b.name===name) : null;
+		modelPool = currentBrand ? currentBrand.models : [];
+		modelInput.disabled = modelPool.length===0; submitBtn.disabled=true; modelInput.value=''; hideSuggestions(); if(!modelInput.disabled) modelInput.focus();
+	});
+
+	modelInput.addEventListener('input',()=>{
+		const q=modelInput.value.trim();
+		if(q.length<1){ hideSuggestions(); submitBtn.disabled=true; submitBtn.classList.add('btn-disabled'); return; }
+		const matches=modelPool.filter(m=>m.toLowerCase().includes(q.toLowerCase())).slice(0,25);
+		renderSuggestions(matches);
+		submitBtn.disabled = q.length < 3; submitBtn.classList.toggle('btn-disabled', submitBtn.disabled);
+	});
+
+	modelInput.addEventListener('keydown',e=>{
+		if(e.key==='ArrowDown'){ const first=sugg.querySelector('li'); if(first){ first.focus(); e.preventDefault(); }}
+	});
+
+	submitBtn.addEventListener('click',()=>{
+		if(submitBtn.disabled) return;
+		const q=encodeURIComponent([currentBrand && currentBrand.name, modelInput.value.trim()].filter(Boolean).join(' '));
+		window.location.href='/search?q='+q;
+	});
+
+	function renderSuggestions(items){
+		if(!items.length){ hideSuggestions(); return; }
+		sugg.innerHTML='';
+		items.forEach(m=>{ const li=document.createElement('li'); li.tabIndex=0; li.textContent=m; Object.assign(li.style,{padding:'6px 10px',cursor:'pointer'}); li.addEventListener('click',()=>selectModel(m)); li.addEventListener('keydown',e=>{ if(e.key==='Enter'){ selectModel(m);} }); sugg.appendChild(li); });
+		sugg.style.display='block';
+	}
+	function hideSuggestions(){ sugg.style.display='none'; }
+	function selectModel(m){ modelInput.value=m; hideSuggestions(); submitBtn.disabled=false; submitBtn.classList.remove('btn-disabled'); submitBtn.focus(); }
+	document.addEventListener('click',e=>{ if(!wrapper.contains(e.target)) hideSuggestions(); });
+});
+</script>

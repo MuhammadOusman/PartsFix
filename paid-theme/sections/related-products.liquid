@@ -1,0 +1,61 @@
+{% comment %} Related products section (self-contained – no nested section call) {% endcomment %}
+<div class="related-products-wrapper" data-section-id="{{ section.id }}">
+  {% if section.settings.heading != blank %}
+    <h2 class="related-products-heading">{{ section.settings.heading }}</h2>
+  {% endif %}
+  {% assign rec_limit = section.settings.products_to_show | default: 4 %}
+  <product-recommendations
+    class="related-grid"
+    data-section-id="{{ section.id }}"
+    data-product-id="{{ product.id }}"
+    data-limit="{{ rec_limit }}">
+    <div class="loading">{{ 'general.loading' | t | default: 'Loading…' }}</div>
+  </product-recommendations>
+</div>
+<style>
+.related-products-wrapper { margin-top:40px; }
+.related-products-heading { font-size:2rem; font-weight:700; text-align:center; margin-bottom:25px; }
+.related-grid .loading { text-align:center; padding:20px; font-size:14px; color:#555; }
+.related-grid-items { display:grid; gap:18px; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); }
+.related-card { text-align:center; font-size:14px; }
+.related-card img { width:100%; height:160px; object-fit:contain; background:#fafafa; border:1px solid #eee; border-radius:4px; }
+.related-card-title { margin:8px 0 4px; font-weight:600; line-height:1.3; }
+.related-card-price { color:#d25a00; font-weight:700; }
+@media (max-width:680px){ .related-products-heading { font-size:1.5rem; } }
+</style>
+<script>
+  (function(){
+    const root = document.currentScript.closest('.related-products-wrapper');
+    if(!root) return;
+    const container = root.querySelector('product-recommendations');
+    if(!container) return;
+    const pid = container.getAttribute('data-product-id');
+    const limit = container.getAttribute('data-limit');
+    const url = '/recommendations/products.json?product_id='+pid+'&limit='+limit;
+    fetch(url)
+      .then(r=>r.json())
+      .then(data=>{
+        if(!data || !data.products || !data.products.length){ container.innerHTML = '<p class="loading">{{ section.settings.none_text | escape }}</p>'; return; }
+        const items = data.products.map(p=>{
+          const img = (p.images[0] && p.images[0].src) || '{{ 'product-placeholder.svg' | asset_url }}';
+          const variant = p.variants && p.variants[0];
+          const price = variant ? (new Intl.NumberFormat('{{ shop.locale }}',{style:'currency',currency:'{{ shop.currency }}'}).format(variant.price)) : '';
+          return '<div class="related-card">\n  <a href="/products/'+p.handle+'"><img src="'+img+'" alt="'+p.title.replace(/"/g,'&quot;')+'"></a>\n  <div class="related-card-title">'+p.title+'</div>\n  <div class="related-card-price">'+price+'</div>\n</div>';
+        }).join('');
+        container.innerHTML = '<div class="related-grid-items">'+items+'</div>';
+      })
+      .catch(()=>{ container.innerHTML = '<p class="loading">{{ section.settings.error_text | escape }}</p>'; });
+  })();
+</script>
+{% schema %}
+{
+  "name": "Related products",
+  "settings": [
+    {"id":"heading","type":"text","label":"Heading","default":"You may also like"},
+    {"id":"products_to_show","type":"range","min":2,"max":8,"step":1,"label":"Products to show","default":4},
+    {"id":"none_text","type":"text","label":"No recommendations text","default":"No related products found."},
+    {"id":"error_text","type":"text","label":"Error text","default":"Could not load related products."}
+  ],
+  "presets": [ {"name":"Related products"} ]
+}
+{% endschema %}

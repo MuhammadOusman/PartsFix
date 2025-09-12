@@ -1,0 +1,29 @@
+{%- comment -%}
+  Simplified mock-data snippet (no unsupported filters). Returns a JSON array string for the requested type.
+  Usage (unchanged):
+    {% render 'mock-data', type: 'products', limit: 4 as mock_products %}
+  Output: mock_products will be a JSON array (string); parse in JS where needed.
+{%- endcomment -%}
+{%- assign mock_enabled = settings.enable_mock_data -%}
+{%- if mock_enabled and type -%}
+  {%- capture raw_mock_data -%}{%- render 'mock-data-json' -%}{%- endcapture -%}
+  {%- comment -%}Naive extraction: find key "type": [ ... ] by splitting.{%- endcomment -%}
+  {%- assign key_fragment = '"' | append: type | append: '"' -%}
+  {%- assign tail = raw_mock_data | split: key_fragment | last -%}
+  {%- assign tail_after_bracket = tail | split: '[' | last -%}
+  {%- assign array_content = tail_after_bracket | split: ']' | first -%}
+  {%- capture output -%}[{{ array_content }}]{%- endcapture -%}
+  {%- if limit -%}
+    {%- comment -%}Rudimentary limiting: split objects on '},{' (assumes no nested objects using that pattern).{%- endcomment -%}
+    {%- assign trimmed = '' -%}
+    {%- assign parts = output | remove_first: '[' | remove: ']' | split: '},{' -%}
+    {%- for p in parts -%}
+      {%- if forloop.index0 < limit -%}
+        {%- if trimmed != '' -%}{%- assign trimmed = trimmed | append: '},{' -%}{%- endif -%}
+        {%- assign trimmed = trimmed | append: p -%}
+      {%- endif -%}
+    {%- endfor -%}
+    {%- capture output -%}[{{ trimmed }}]{%- endcapture -%}
+  {%- endif -%}
+  {{ output }}
+{%- endif -%}

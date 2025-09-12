@@ -1,0 +1,63 @@
+{
+  "sections": {
+    "benefits-bar-section": {
+      "type": "benefits-bar",
+      "settings": {
+        "show_benefits_bar": true
+      }
+    },
+    "home-slider-section": {
+      "type": "home-slider",
+      "settings": {
+        "title": "KEEP YOUR WASHER HAPPY & HEALTHY",
+        "subtitle": "With our wide range of washing machine parts and laundry essentials!",
+        "cta_text": "Shop now »",
+        "cta_url": "/collections/washing-machine-parts"
+      }
+    },
+    "model-fit-section": {
+      "type": "model-fit",
+      "settings": {}
+    },
+    "popular-brands-section": {
+      "type": "popular-brands",
+      "settings": {
+        "title": "Popular Brands",
+        "brands": "Beko|/collections/beko|brand-beko.png,Bosch|/collections/bosch|brand-bosch.png,DeLonghi|/collections/delonghi|brand-delonghi.png,Dyson|/collections/dyson|brand-dyson.png,Electrolux|/collections/electrolux|brand-electrolux.png,Flymo|/collections/flymo|brand-flymo.png,Hoover|/collections/hoover|brand-hoover.png,Hotpoint|/collections/hotpoint|brand-hotpoint.png,Indesit|/collections/indesit|brand-indesit.png,Karcher|/collections/karcher|brand-karcher.png,Kenwood|/collections/kenwood|brand-kenwood.png,Neff|/collections/neff|brand-neff.png,Rangemaster|/collections/rangemaster|brand-rangemaster.png,Samsung|/collections/samsung|brand-samsung.png,Smeg|/collections/smeg|brand-smeg.png,Stoves|/collections/stoves|brand-stoves.png,Whirlpool|/collections/whirlpool|brand-whirlpool.png,Zanussi|/collections/zanussi|brand-zanussi.png",
+        "view_all_text": "View all brands"
+      }
+    },
+    "spare-parts-categories-section": {
+      "type": "spare-parts-categories",
+      "settings": {
+        "title": "Spare Parts By Category",
+        "categories": "Cooker,/collections/cooker-parts,category-cooker.jpg|Cooker Hood,/collections/cooker-hood-parts,category-cooker-hood.jpg|Dishwasher,/collections/dishwasher-parts,category-dishwasher.jpg|Fridge,/collections/fridge-parts,category-fridge.jpg|Microwave,/collections/microwave-parts,category-microwave.jpg|Tumble Dryer,/collections/tumble-dryer-parts,category-tumble-dryer.jpg|Vacuum Cleaner,/collections/vacuum-parts,category-vacuum.jpg|Washing Machine,/collections/washing-machine-parts,category-washing-machine.jpg|Blender & Mixer,/collections/blender-parts,category-blender.jpg|Coffee Machine,/collections/coffee-machine-parts,category-coffee.jpg|Lawnmower,/collections/lawnmower-parts,category-lawnmower.jpg|Pressure Washer,/collections/pressure-washer-parts,category-pressure-washer.jpg"
+      }
+    },
+    "interactive-slider-section": {
+      "type": "interactive-slider",
+      "settings": {
+        "title": "Energy-Saving Tips",
+        "background_color": "#f5d916"
+      }
+    },
+    "trustpilot-reviews-section": {
+      "type": "trustpilot-reviews",
+      "settings": {
+        "title": "Think Fix First",
+        "subtitle": "think eSpares",
+        "review_text": "Many people are surprised to learn that repairs are actually quite easy, requiring only a little knowledge about the appliance and ofcourse a little patience!",
+        "reviewer_name": "Matt Betteridge, eSpares eXpert"
+      }
+    }
+  },
+  "order": [
+    "benefits-bar-section",
+    "home-slider-section",
+    "model-fit-section",
+    "popular-brands-section",
+    "spare-parts-categories-section",
+    "interactive-slider-section",
+    "trustpilot-reviews-section"
+  ]
+}

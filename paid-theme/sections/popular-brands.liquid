@@ -1,0 +1,335 @@
+{%- assign brands = section.settings.brands | split: ',' -%}
+
+<style>
+.espares-brands-section {
+  padding: 60px 0;
+  background: white;
+}
+
+.espares-brands-section .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.espares-brands-section h2 {
+  text-align: center;
+  margin-bottom: 50px;
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.brands-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.brand-card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 20px 15px;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+.brand-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+  border-color: #ff6b35;
+}
+
+.brand-card a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.brand-logo {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.brand-logo img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+  filter: grayscale(0.2);
+}
+
+.brand-card:hover .brand-logo img {
+  transform: scale(1.05);
+  filter: grayscale(0);
+}
+
+.brand-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.view-all-section {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.view-all-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: #f5d916;
+  color: #333;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  border: 2px solid #f5d916;
+}
+
+.view-all-btn:hover {
+  background: #e6c614;
+  border-color: #e6c614;
+  transform: translateY(-1px);
+  color: #333;
+}
+
+@media (max-width: 768px) {
+  .brands-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+  }
+  
+  .brand-card {
+    padding: 15px 10px;
+  }
+  
+  .brand-logo {
+    height: 40px;
+  }
+  
+  .espares-brands-section h2 {
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .brands-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  
+  .brand-card {
+    padding: 12px 8px;
+  }
+  
+  .brand-name {
+    font-size: 0.8rem;
+  }
+}
+</style>
+
+<div class="espares-brands-section">
+  <div class="container">
+    <h2>{{ section.settings.title | default: "Popular Brands" }}</h2>
+    <div class="brands-grid">
+      <!-- Default brands matching eSpares layout -->
+      <div class="brand-card">
+        <a href="/collections/beko" title="Beko">
+          <div class="brand-logo">
+            <img loading="lazy" src="https://via.placeholder.com/100x50/f8f9fa/1e9ae0?text=beko" alt="Beko" width="100" height="50"/>
+          </div>
+          <div class="brand-name">Beko</div>
+        </a>
+      </div>
+      <div class="brand-card">
+        <a href="/collections/bosch" title="Bosch">
+          <div class="brand-logo">
+            <img loading="lazy" src="https://via.placeholder.com/100x50/f8f9fa/e60012?text=BOSCH" alt="Bosch" width="100" height="50"/>
+          </div>
+          <div class="brand-name">Bosch</div>
+        </a>
+      </div>
+      <div class="brand-card">
+        <a href="/collections/delonghi" title="DeLonghi">
+          <div class="brand-logo">
+            <img loading="lazy" src="https://via.placeholder.com/100x50/f8f9fa/333?text=DeLonghi" alt="DeLonghi" width="100" height="50"/>
+          </div>
+          <div class="brand-name">DeLonghi</div>
+        </a>
+      </div>
+      <div class="brand-card">
+        <a href="/collections/dyson" title="Dyson">
+          <div class="brand-logo">
+            <img loading="lazy" src="https://via.placeholder.com/100x50/f8f9fa/666?text=dyson" alt="Dyson" width="100" height="50"/>
+          </div>
+          <div class="brand-name">Dyson</div>
+        </a>
+      </div>
+      <div class="brand-card">
+        <a href="/collections/electrolux" title="Electrolux">
+          <div class="brand-logo">
+            <img loading="lazy" src="https://via.placeholder.com/100x50/f8f9fa/0066cc?text=Electrolux" alt="Electrolux" width="100" height="50"/>
+          </div>
+          <div class="brand-name">Electrolux</div>
+        </a>
+      </div>
+      <div class="brand-card">
+        <a href="/collections/flymo" title="Flymo">
+          <div class="brand-logo">
+            <img loading="lazy" src="https://via.placeholder.com/100x50/ff6600/fff?text=Flymo" alt="Flymo" width="100" height="50"/>
+          </div>
+          <div class="brand-name">Flymo</div>
+        </a>
+      </div>
+      <div class="brand-card">
+        <a href="/collections/hoover" title="Hoover">
+          <div class="brand-logo">
+            <img loading="lazy" src="https://via.placeholder.com/100x50/f8f9fa/333?text=Hoover" alt="Hoover" width="100" height="50"/>
+          </div>
+          <div class="brand-name">Hoover</div>
+        </a>
+      </div>
+      <div class="brand-card">
+        <a href="/collections/hotpoint" title="Hotpoint">
+          <div class="brand-logo">
+            <img loading="lazy" src="https://via.placeholder.com/100x50/f8f9fa/e60012?text=Hotpoint" alt="Hotpoint" width="100" height="50"/>
+          </div>
+          <div class="brand-name">Hotpoint</div>
+        </a>
+      </div>
+      <div class="brand-card">
+        <a href="/collections/indesit" title="Indesit">
+          <div class="brand-logo">
+            <img loading="lazy" src="https://via.placeholder.com/100x50/f8f9fa/0066ff?text=indesit" alt="Indesit" width="100" height="50"/>
+          </div>
+          <div class="brand-name">Indesit</div>
+        </a>
+      </div>
+      <div class="brand-card">
+        <a href="/collections/karcher" title="Karcher">
+          <div class="brand-logo">
+            <img loading="lazy" src="https://via.placeholder.com/100x50/ffdd00/333?text=KARCHER" alt="Karcher" width="100" height="50"/>
+          </div>
+          <div class="brand-name">Karcher</div>
+        </a>
+      </div>
+      <div class="brand-card">
+        <a href="/collections/kenwood" title="Kenwood">
+          <div class="brand-logo">
+            <img loading="lazy" src="https://via.placeholder.com/100x50/f8f9fa/333?text=KENWOOD" alt="Kenwood" width="100" height="50"/>
+          </div>
+          <div class="brand-name">Kenwood</div>
+        </a>
+      </div>
+      <div class="brand-card">
+        <a href="/collections/neff" title="Neff">
+          <div class="brand-logo">
+            <img loading="lazy" src="https://via.placeholder.com/100x50/f8f9fa/e60012?text=NEFF" alt="Neff" width="100" height="50"/>
+          </div>
+          <div class="brand-name">Neff</div>
+        </a>
+      </div>
+      <div class="brand-card">
+        <a href="/collections/rangemaster" title="Rangemaster">
+          <div class="brand-logo">
+            <img loading="lazy" src="https://via.placeholder.com/100x50/f8f9fa/666?text=rangemaster" alt="Rangemaster" width="100" height="50"/>
+          </div>
+          <div class="brand-name">Rangemaster</div>
+        </a>
+      </div>
+      <div class="brand-card">
+        <a href="/collections/samsung" title="Samsung">
+          <div class="brand-logo">
+            <img loading="lazy" src="https://via.placeholder.com/100x50/f8f9fa/333?text=SAMSUNG" alt="Samsung" width="100" height="50"/>
+          </div>
+          <div class="brand-name">Samsung</div>
+        </a>
+      </div>
+      <div class="brand-card">
+        <a href="/collections/smeg" title="Smeg">
+          <div class="brand-logo">
+            <img loading="lazy" src="https://via.placeholder.com/100x50/f8f9fa/333?text=smeg" alt="Smeg" width="100" height="50"/>
+          </div>
+          <div class="brand-name">Smeg</div>
+        </a>
+      </div>
+      <div class="brand-card">
+        <a href="/collections/stoves" title="Stoves">
+          <div class="brand-logo">
+            <img loading="lazy" src="https://via.placeholder.com/100x50/333/fff?text=STOVES" alt="Stoves" width="100" height="50"/>
+          </div>
+          <div class="brand-name">Stoves</div>
+        </a>
+      </div>
+      <div class="brand-card">
+        <a href="/collections/whirlpool" title="Whirlpool">
+          <div class="brand-logo">
+            <img loading="lazy" src="https://via.placeholder.com/100x50/f8f9fa/666?text=Whirlpool" alt="Whirlpool" width="100" height="50"/>
+          </div>
+          <div class="brand-name">Whirlpool</div>
+        </a>
+      </div>
+      <div class="brand-card">
+        <a href="/collections/zanussi" title="Zanussi">
+          <div class="brand-logo">
+            <img loading="lazy" src="https://via.placeholder.com/100x50/f8f9fa/e60012?text=ZANUSSI" alt="Zanussi" width="100" height="50"/>
+          </div>
+          <div class="brand-name">Zanussi</div>
+        </a>
+      </div>
+    </div>
+    
+    <div class="view-all-section">
+      <a href="{{ section.settings.view_all_url | default: '/collections' }}" class="view-all-btn">
+        <span>{{ section.settings.view_all_text | default: "View all brands" }}</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Popular Brands",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Popular Brands"
+    },
+    {
+      "type": "url",
+      "id": "view_all_url",
+      "label": "View All URL"
+    },
+    {
+      "type": "text",
+      "id": "view_all_text",
+      "label": "View All Text",
+      "default": "View all brands"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Popular Brands"
+    }
+  ]
+}
+{% endschema %}

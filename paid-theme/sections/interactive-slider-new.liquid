@@ -1,0 +1,137 @@
+<style>
+.home-interactive-slider {
+  padding: 60px 0;
+  background: #f8f9fa;
+}
+
+.ho              <img src="{{ 'placeholder-appliance.svg' | asset_url }}" alt="Appliance" width="600" height="400" />e-interactive-slider .slide {
+  display: flex;
+  align-items: center;
+  min-height: 500px;
+  position: relative;
+}
+
+.home-interactive-slider .content {
+  flex: 1;
+  padding: 0 40px;
+  position: relative;
+  z-index: 2;
+}
+
+.home-interactive-slider .title h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 30px;
+  line-height: 1.2;
+}
+
+.home-interactive-slider .title .white-bg {
+  background: white;
+  padding: 5px 15px;
+  border-radius: 4px;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.home-interactive-slider .title .black-bg {
+  background: #333;
+  color: white;
+  padding: 5px 15px;
+  border-radius: 4px;
+  display: block;
+}
+
+.home-interactive-slider .appliance-image {
+  flex: 1;
+  position: relative;
+  text-align: center;
+}
+
+.home-interactive-slider .appliance-image img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+  .home-interactive-slider .slide {
+    flex-direction: column;
+    min-height: auto;
+    padding: 20px;
+  }
+
+  .home-interactive-slider .content {
+    padding: 0;
+    margin-bottom: 30px;
+  }
+
+  .home-interactive-slider .title h2 {
+    font-size: 2rem;
+  }
+}
+</style>
+
+<div class="container">
+  <div class="home-interactive-slider home-section">
+    <div class="slide">
+      <div class="content">
+        <div class="title">
+          <h2>
+            <span class="white-bg">{{ section.settings.title_white }}</span>
+            <span class="black-bg">{{ section.settings.title_black }}</span>
+          </h2>
+        </div>
+        <p>{{ section.settings.description }}</p>
+      </div>
+      <div class="appliance-image">
+        {%- if section.settings.image != blank -%}
+          <img src="{{ section.settings.image | image_url: width: 600 }}" alt="{{ section.settings.image_alt }}" width="600" height="400" />
+        {%- else -%}
+          <img src="{{ 'placeholder-appliance.svg' | asset_url }}" alt="Appliance" width="600" height="400" />
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Interactive Slider",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title_white",
+      "label": "Title (White Background)",
+      "default": "Save money and"
+    },
+    {
+      "type": "text",
+      "id": "title_black",
+      "label": "Title (Black Background)",
+      "default": "reduce waste"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Learn energy-saving tips to reduce your bills and help the environment."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Appliance Image"
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Image Alt Text",
+      "default": "Appliance"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Interactive Slider"
+    }
+  ]
+}
+{% endschema %}

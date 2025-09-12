@@ -1,0 +1,32 @@
+{%- comment -%}
+  Reusable mock product card snippet. Expects a 'p' variable (hash from mock JSON).
+{%- endcomment -%}
+{%- liquid
+  assign cents = p.price | plus: 0
+  assign major = cents | divided_by: 100.0
+-%}
+<div class="mock-card" data-mock-product>
+  <div class="mock-card__media">
+    <img src="{{ p.image | asset_url }}" alt="{{ p.title }}" loading="lazy" width="300" height="300">
+  </div>
+  <div class="mock-card__body">
+    <h3 class="mock-card__title">{{ p.title }}</h3>
+    <div class="mock-card__vendor">{{ p.vendor }}</div>
+    <div class="mock-card__price">£{{ major }}
+      {%- if p.compare_at and p.compare_at > p.price -%}
+        <span class="mock-card__compare">£{{ p.compare_at | divided_by: 100.0 }}</span>
+      {%- endif -%}
+    </div>
+    <button class="mock-card__btn" type="button" disabled>Add to cart</button>
+  </div>
+</div>
+<style>
+.mock-card{background:#fff;border:1px solid #e1e1e1;border-radius:5px;padding:12px;display:flex;flex-direction:column;font-family:var(--body-font-family,Arial,sans-serif);position:relative}
+.mock-card__media{width:100%;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;margin-bottom:8px;overflow:hidden}
+.mock-card__media img{max-width:100%;height:auto;object-fit:contain}
+.mock-card__title{font-size:14px;margin:0 0 4px;line-height:1.3;font-weight:600}
+.mock-card__vendor{font-size:11px;color:#666;margin-bottom:4px}
+.mock-card__price{font-size:14px;font-weight:700;color:#222}
+.mock-card__compare{font-size:11px;color:#9a9a9a;text-decoration:line-through;margin-left:4px;font-weight:400}
+.mock-card__btn{margin-top:auto;background:#ccc;color:#333;border:0;padding:6px 8px;font-size:11px;border-radius:4px;cursor:not-allowed}
+</style>

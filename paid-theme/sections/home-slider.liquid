@@ -1,0 +1,153 @@
+<style>
+.home-slider { position:relative; margin-bottom:40px; }
+.home-slider__viewport { overflow:hidden; position:relative; }
+.home-slider__track { display:flex; transition:transform .6s ease; }
+.home-slider__slide { min-width:100%; position:relative; }
+.home-slider__slide img { width:100%; height:auto; display:block; }
+.home-slider__dots { position:absolute; bottom:12px; left:50%; transform:translateX(-50%); display:flex; gap:6px; }
+.home-slider__dot { width:10px; height:10px; border-radius:50%; background:rgba(255,255,255,.5); border:none; cursor:pointer; padding:0; }
+.home-slider__dot[aria-current="true"] { background:#ff6b35; }
+.home-slider__btn { position:absolute; top:50%; transform:translateY(-50%); background:rgba(0,0,0,.35); border:none; color:#fff; width:40px; height:40px; display:flex; align-items:center; justify-content:center; cursor:pointer; backdrop-filter:blur(4px); }
+.home-slider__btn:hover { background:rgba(0,0,0,.55); }
+.home-slider__btn--prev { left:8px; }
+.home-slider__btn--next { right:8px; }
+@media (max-width:740px){ .home-slider__btn { width:32px; height:32px; } }
+</style>
+
+<div class="home-slider container" data-section-id="{{ section.id }}">
+  <div class="home-slider__viewport">
+    <div class="home-slider__track" id="slider-track-{{ section.id }}">
+      {%- for slide in section.blocks -%}
+        {%- if slide.type == 'slide' -%}
+          <div class="home-slider__slide" {{ slide.shopify_attributes }}>
+            <a href="{{ slide.settings.link | default: '#' }}" aria-label="{{ slide.settings.title | escape }}">
+              <picture>
+                {%- if slide.settings.image_desktop -%}
+                  <source media="(min-width: 992px)" srcset="{{ slide.settings.image_desktop | image_url: width: 1600 }}">
+                {%- endif -%}
+                {%- if slide.settings.image_tablet -%}
+                  <source media="(min-width: 620px) and (max-width: 991px)" srcset="{{ slide.settings.image_tablet | image_url: width: 1100 }}">
+                {%- endif -%}
+                {%- if slide.settings.image_mobile -%}
+                  <source media="(max-width: 619px)" srcset="{{ slide.settings.image_mobile | image_url: width: 740 }}">
+                {%- endif -%}
+                <img loading="lazy" src="{{ slide.settings.image_desktop | default: slide.settings.image_mobile | image_url: width: 1200 }}" alt="{{ slide.settings.title | escape }}" width="1200" height="480" />
+              </picture>
+            </a>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+    <button class="home-slider__btn home-slider__btn--prev" aria-label="Previous slide" hidden>&#10094;</button>
+    <button class="home-slider__btn home-slider__btn--next" aria-label="Next slide" hidden>&#10095;</button>
+    <div class="home-slider__dots" id="slider-dots-{{ section.id }}"></div>
+  </div>
+</div>
+
+<script>
+(()=>{
+  const id='{{ section.id }}';
+  const track=document.getElementById('slider-track-'+id);
+  if(!track) return; 
+  const slides=Array.from(track.children); 
+  if(slides.length<=1) return; 
+  
+  let current=0;
+  const autoplayDelay = 5000; // 5 seconds
+  let autoplayInterval;
+  
+  // Create dots
+  const dotsContainer=document.getElementById('slider-dots-'+id);
+  slides.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'home-slider__dot';
+    dot.setAttribute('aria-current', i === 0 ? 'true' : 'false');
+    dot.addEventListener('click', () => goToSlide(i));
+    dotsContainer.appendChild(dot);
+  });
+  
+  const dots = dotsContainer.children;
+  const prevBtn = document.querySelector('.home-slider__btn--prev');
+  const nextBtn = document.querySelector('.home-slider__btn--next');
+  
+  if(slides.length > 1) {
+    prevBtn.hidden = false;
+    nextBtn.hidden = false;
+  }
+  
+  function updateSlider() {
+    track.style.transform = `translateX(-${current * 100}%)`;
+    Array.from(dots).forEach((dot, i) => {
+      dot.setAttribute('aria-current', i === current ? 'true' : 'false');
+    });
+  }
+  
+  function goToSlide(index) {
+    current = index;
+    updateSlider();
+    restartAutoplay();
+  }
+  
+  function nextSlide() {
+    current = (current + 1) % slides.length;
+    updateSlider();
+  }
+  
+  function prevSlide() {
+    current = (current - 1 + slides.length) % slides.length;
+    updateSlider();
+  }
+  
+  function startAutoplay() {
+    autoplayInterval = setInterval(nextSlide, autoplayDelay);
+  }
+  
+  function stopAutoplay() {
+    clearInterval(autoplayInterval);
+  }
+  
+  function restartAutoplay() {
+    stopAutoplay();
+    startAutoplay();
+  }
+  
+  // Event listeners
+  nextBtn.addEventListener('click', () => {
+    nextSlide();
+    restartAutoplay();
+  });
+  
+  prevBtn.addEventListener('click', () => {
+    prevSlide();
+    restartAutoplay();
+  });
+  
+  // Pause autoplay on hover
+  track.parentElement.addEventListener('mouseenter', stopAutoplay);
+  track.parentElement.addEventListener('mouseleave', startAutoplay);
+  
+  // Start autoplay
+  startAutoplay();
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Home Slider",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title" },
+        { "type": "image_picker", "id": "image_desktop", "label": "Desktop image" },
+        { "type": "image_picker", "id": "image_tablet", "label": "Tablet image" },
+        { "type": "image_picker", "id": "image_mobile", "label": "Mobile image" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "presets": [ { "name": "Home Slider" } ]
+}
+{% endschema %}

@@ -1,0 +1,189 @@
+<style>
+.espares-benefits-bar {
+  background: #f8f9fa;
+  padding: 20px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.espares-benefits-bar .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.benefits-scroll-container {
+  overflow: hidden;
+  position: relative;
+}
+
+.benefits-scroll {
+  display: flex;
+  animation: scroll-benefits 20s linear infinite;
+}
+
+.benefits-scroll:hover {
+  animation-play-state: paused;
+}
+
+.benefit-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  white-space: nowrap;
+  padding: 0 40px;
+  color: #333;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.benefit-item:first-child {
+  padding-left: 0;
+}
+
+.benefit-icon {
+  font-size: 1.2rem;
+  color: #ff6b35;
+  flex-shrink: 0;
+}
+
+.benefit-text {
+  font-weight: 600;
+}
+
+.benefit-separator {
+  width: 1px;
+  height: 20px;
+  background: #e5e7eb;
+  margin: 0 20px;
+}
+
+@keyframes scroll-benefits {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@media (max-width: 768px) {
+  .espares-benefits-bar {
+    padding: 15px 0;
+  }
+  
+  .benefit-item {
+    font-size: 0.85rem;
+    padding: 0 30px;
+  }
+  
+  .benefit-separator {
+    margin: 0 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .benefit-item {
+    padding: 0 20px;
+  }
+  
+  .benefit-separator {
+    margin: 0 10px;
+  }
+}
+</style>
+
+<div class="espares-benefits-bar">
+  <div class="container">
+    <div class="benefits-scroll-container">
+      <div class="benefits-scroll">
+        <!-- First set of benefits -->
+        <div class="benefit-item">
+          <span class="benefit-icon">📦</span>
+          <span class="benefit-text">Over 1 million products</span>
+        </div>
+        <div class="benefit-separator"></div>
+        
+        <div class="benefit-item">
+          <span class="benefit-icon">🏭</span>
+          <span class="benefit-text">Over 500 brands</span>
+        </div>
+        <div class="benefit-separator"></div>
+        
+        <div class="benefit-item">
+          <span class="benefit-icon">🚚</span>
+          <span class="benefit-text">Next day delivery order by 9pm*</span>
+        </div>
+        <div class="benefit-separator"></div>
+        
+        <div class="benefit-item">
+          <span class="benefit-icon">✅</span>
+          <span class="benefit-text">Genuine spare parts & accessories</span>
+        </div>
+        <div class="benefit-separator"></div>
+        
+        <div class="benefit-item">
+          <span class="benefit-icon">💰</span>
+          <span class="benefit-text">Low prices guaranteed</span>
+        </div>
+        <div class="benefit-separator"></div>
+        
+        <div class="benefit-item">
+          <span class="benefit-icon">🔧</span>
+          <span class="benefit-text">Expert advice & support</span>
+        </div>
+        <div class="benefit-separator"></div>
+        
+        <!-- Duplicate set for seamless loop -->
+        <div class="benefit-item">
+          <span class="benefit-icon">📦</span>
+          <span class="benefit-text">Over 1 million products</span>
+        </div>
+        <div class="benefit-separator"></div>
+        
+        <div class="benefit-item">
+          <span class="benefit-icon">🏭</span>
+          <span class="benefit-text">Over 500 brands</span>
+        </div>
+        <div class="benefit-separator"></div>
+        
+        <div class="benefit-item">
+          <span class="benefit-icon">🚚</span>
+          <span class="benefit-text">Next day delivery order by 9pm*</span>
+        </div>
+        <div class="benefit-separator"></div>
+        
+        <div class="benefit-item">
+          <span class="benefit-icon">✅</span>
+          <span class="benefit-text">Genuine spare parts & accessories</span>
+        </div>
+        <div class="benefit-separator"></div>
+        
+        <div class="benefit-item">
+          <span class="benefit-icon">💰</span>
+          <span class="benefit-text">Low prices guaranteed</span>
+        </div>
+        <div class="benefit-separator"></div>
+        
+        <div class="benefit-item">
+          <span class="benefit-icon">🔧</span>
+          <span class="benefit-text">Expert advice & support</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Benefits Bar",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_benefits_bar",
+      "label": "Show Benefits Bar",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Benefits Bar"
+    }
+  ]
+}
+{% endschema %}

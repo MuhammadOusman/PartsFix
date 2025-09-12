@@ -1,0 +1,37 @@
+function cutoffCountdown(targetDateTime, text, targetContainer) {
+	var targetElement = $(targetContainer).find('.countdown-timer-text');
+	
+	var interval = setInterval(function() {
+		var timeParts = targetDateTime.split(/\D+/);
+		var distance = new Date(
+			Date.UTC(
+				timeParts[0],
+				--timeParts[1],
+				timeParts[2],
+				timeParts[3],
+				timeParts[4],
+				timeParts[5]
+			)
+		).getTime() - new Date().getTime();
+
+		if (distance < 0) {
+			clearInterval(interval);
+			$(targetContainer).hide();
+		} else {
+			var countdownText = text;
+			var hour = Math.floor(distance / (1000 * 60 * 60));
+			var min  = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+			var sec  = Math.floor((distance % (1000 * 60)) / 1000);
+			if (hour < 10) {hour = '0' + hour}
+			if (min  < 10) {min  = '0' + min }
+			if (sec  < 10) {sec  = '0' + sec }
+
+			countdownText = countdownText.replace(/:hour:/,   hour);
+			countdownText = countdownText.replace(/:minute:/, min);
+			countdownText = countdownText.replace(/:second:/, sec);
+
+			$(targetElement).html(countdownText);
+			$(targetContainer).show();
+		}
+	}, 1000);
+}

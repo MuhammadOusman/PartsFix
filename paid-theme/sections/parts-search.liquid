@@ -1,0 +1,114 @@
+{% comment %} Parts Search Section (integrated from backend findmypart.liquid) {% endcomment %}
+<style>
+  .parts-search-widget { margin: 25px 0; background-color: #f5f5f5; border: 1px solid #ddd; padding: 15px 15px 5px; }
+  .parts-search-header { padding: 0 15px; }
+  .parts-search { display: flex; gap: 10px; align-items: center; font-family: Arial, sans-serif; margin: 20px 0; padding: 0 15px; flex-wrap: wrap; }
+  .parts-search select, .parts-search input[type="text"] { padding: 10px; border: 1px solid #ccc; font-size: 14px; width: 190px; }
+  .parts-search button { padding: 10px 20px; background-color: #f05a28; color: #000; font-weight: bold; border: none; cursor: pointer; }
+  .parts-search button:disabled { opacity: .6; cursor: not-allowed; }
+  .model-help { font-size: 12px; color: #000; display: block; margin: 5px 15px 10px; }
+  .product-container { display: flex; flex-wrap: wrap; justify-content: flex-start; margin: 0 5px 15px; }
+  .parts-search-results-title { font-size:16px; font-weight:600; margin:15px 15px 5px; }
+  .product-card { width: 220px; background: #fff; border-radius: 8px; border: 1px solid #ddd; box-shadow: 0 2px 5px rgba(0,0,0,.08); margin: 10px; padding: 10px; text-align: center; display: flex; flex-direction: column; }
+  .product-card img { width:100%; height: 160px; object-fit: contain; background:#fafafa; border-radius:4px; }
+  .product-title { font-size: 14px; font-weight: 600; color: #333; margin: 10px 0 4px; line-height:1.3; }
+  .product-vendor { font-size: 12px; color: #777; }
+  .product-price { font-size: 14px; font-weight: 700; color: #f05a28; margin-top: 6px; }
+  .no-results { margin:15px; font-size:14px; color:#444; }
+  @media (max-width: 1024px){ .product-card { width: calc(33.333% - 20px);} }
+  @media (max-width: 768px){ .product-card { width: calc(50% - 20px);} }
+  @media (max-width: 560px){ .product-card { width: 100%; } .parts-search { flex-direction: column; align-items: stretch; } .parts-search select, .parts-search input { width:100%; } }
+</style>
+<div class="parts-search-widget" data-section-id="{{ section.id }}">
+  <div class="parts-search-header">
+    <h2>{{ section.settings.heading | default: 'Find the Right Part' }}</h2>
+  </div>
+  <div class="parts-search">
+    <select name="appliance" id="appliance-select-{{ section.id }}">
+      <option disabled selected value="">{{ section.settings.appliance_placeholder }}</option>
+      {% for c in collections %}
+        {% unless c.products_count == 0 %}
+          <option value="{{ c.handle }}">{{ c.title }}</option>
+        {% endunless %}
+      {% endfor %}
+    </select>
+    <select name="brand" id="brand-select-{{ section.id }}" disabled>
+      <option disabled selected value="">{{ section.settings.brand_placeholder }}</option>
+    </select>
+    <input type="text" id="model-input-{{ section.id }}" placeholder="{{ section.settings.model_placeholder }}" disabled>
+    <button id="find-part-btn-{{ section.id }}" disabled>{{ section.settings.button_label }}</button>
+  </div>
+  <span class="model-help">
+    <a href="{{ section.settings.model_help_link }}">{{ section.settings.model_help_text }}</a>
+  </span>
+  <div class="parts-search-dynamic" id="parts-search-dynamic-{{ section.id }}"></div>
+</div>
+<script>
+(function(){
+  const sid='{{ section.id }}';
+  const root = document.querySelector('[data-section-id="'+sid+'"]');
+  if(!root) return;
+  const applianceSelect = root.querySelector('#appliance-select-'+sid);
+  const brandSelect = root.querySelector('#brand-select-'+sid);
+  const modelInput = root.querySelector('#model-input-'+sid);
+  const findBtn = root.querySelector('#find-part-btn-'+sid);
+  const dynamic = root.querySelector('#parts-search-dynamic-'+sid);
+
+  applianceSelect.addEventListener('change', () => {
+    brandSelect.disabled = true; modelInput.disabled = true; findBtn.disabled = true; brandSelect.innerHTML = '<option disabled selected value="">'+ '{{ section.settings.brand_loading_text }}' +'</option>';
+    fetch('/collections/'+applianceSelect.value+'/products.json?limit=250')
+      .then(r=>r.json())
+      .then(data=>{
+        const vendors=[...new Set(data.products.map(p=>p.vendor).filter(Boolean))].sort();
+        brandSelect.innerHTML = '<option disabled selected value="">{{ section.settings.brand_placeholder }}<\/option>' + vendors.map(v=>'\n<option value="'+v.replace(/"/g,'&quot;')+'">'+v+'</option>').join('');
+        brandSelect.disabled = false;
+      }).catch(()=>{ brandSelect.innerHTML='<option disabled>{{ section.settings.brand_error_text }}<\/option>'; });
+  });
+  brandSelect.addEventListener('change', ()=>{ modelInput.disabled=false; modelInput.focus(); });
+  modelInput.addEventListener('input', ()=>{ findBtn.disabled = modelInput.value.trim()===''; });
+  findBtn.addEventListener('click', ()=>{
+    const handle = applianceSelect.value; const vendor = brandSelect.value; const model = modelInput.value.trim(); if(!handle||!vendor||!model) return;
+    findBtn.disabled = true; findBtn.textContent='{{ section.settings.searching_text }}';
+    fetch('/collections/'+handle+'/products.json?limit=250')
+      .then(r=>r.json())
+      .then(d=>{
+        const matches = d.products.filter(p=> p.vendor===vendor && (p.tags||[]).includes(model));
+        renderResults(matches, model, vendor);
+      })
+      .catch(()=>{ dynamic.innerHTML='<p class="no-results">{{ section.settings.fetch_error_text }}</p>'; })
+      .finally(()=>{ findBtn.disabled=false; findBtn.textContent='{{ section.settings.button_label }}'; });
+  });
+  function money(amount){ try { return new Intl.NumberFormat('{{ shop.locale }}',{ style:'currency', currency:'{{ shop.currency }}'}).format(amount); } catch(e){ return amount; } }
+  function renderResults(list, model, vendor){
+    if(!list.length){ dynamic.innerHTML='<p class="no-results">'+ model +' - {{ section.settings.no_results_text }}' +'</p>'; return; }
+    const cards = list.map(p=>{
+      const img = (p.images[0]&&p.images[0].src)||'{{ 'product-placeholder.svg' | asset_url }}';
+      const variant = p.variants && p.variants[0];
+      const price = variant ? money(variant.price) : '';
+      return `<div class="product-card"><a href="/products/${p.handle}"><img src="${img}" alt="${p.title}"></a><div class="product-title">${p.title}</div><div class="product-vendor">${vendor}</div><div class="product-price">${price}</div></div>`;
+    }).join('');
+    dynamic.innerHTML = '<div class="parts-search-results-title">'+ model +' - {{ section.settings.results_heading_text }} ('+ list.length +')</div><div class="product-container">'+cards+'</div>';
+  }
+})();
+</script>
+{% schema %}
+{
+  "name": "Parts search",
+  "settings": [
+    {"id":"heading","type":"text","label":"Heading","default":"Find the Right Part"},
+    {"id":"appliance_placeholder","type":"text","label":"Appliance placeholder","default":"Choose your appliance"},
+    {"id":"brand_placeholder","type":"text","label":"Brand placeholder","default":"Choose your brand"},
+    {"id":"model_placeholder","type":"text","label":"Model number","default":"Type your model"},
+    {"id":"button_label","type":"text","label":"Button label","default":"Find my part"},
+    {"id":"model_help_text","type":"text","label":"Model help text","default":"Where to find model number?"},
+    {"id":"model_help_link","type":"url","label":"Model help link"},
+    {"id":"brand_loading_text","type":"text","label":"Brand loading text","default":"Loading brands..."},
+    {"id":"brand_error_text","type":"text","label":"Brand error text","default":"Error loading brands"},
+    {"id":"searching_text","type":"text","label":"Searching text","default":"Searching..."},
+    {"id":"no_results_text","type":"text","label":"No results text","default":"No matching parts found"},
+    {"id":"results_heading_text","type":"text","label":"Results heading suffix","default":"matching parts"},
+    {"id":"fetch_error_text","type":"text","label":"Fetch error text","default":"Unable to retrieve products right now."}
+  ],
+  "presets": [ {"name":"Parts search"} ]
+}
+{% endschema %}

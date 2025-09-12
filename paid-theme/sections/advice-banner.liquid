@@ -1,0 +1,163 @@
+<style>
+.espares-advice-banner {
+  background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
+  padding: 40px 0;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.espares-advice-banner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="advice-pattern" width="50" height="50" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="2" fill="white" opacity="0.1"/><circle cx="5" cy="45" r="1" fill="white" opacity="0.05"/><circle cx="45" cy="5" r="1.5" fill="white" opacity="0.08"/></pattern></defs><rect width="100" height="100" fill="url(%23advice-pattern)"/></svg>') repeat;
+  pointer-events: none;
+}
+
+.espares-advice-banner .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.advice-content {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  text-align: left;
+}
+
+.advice-text {
+  flex: 1;
+}
+
+.advice-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.advice-description {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  opacity: 0.95;
+}
+
+.advice-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: white;
+  color: #ff6b35;
+  padding: 12px 25px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.advice-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+  color: #e55a2b;
+}
+
+.advice-icon {
+  font-size: 4rem;
+  opacity: 0.9;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .advice-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 25px;
+  }
+  
+  .advice-title {
+    font-size: 1.6rem;
+  }
+  
+  .advice-description {
+    font-size: 1rem;
+  }
+  
+  .advice-icon {
+    font-size: 3rem;
+  }
+  
+  .espares-advice-banner {
+    padding: 30px 0;
+  }
+}
+</style>
+
+<div class="espares-advice-banner">
+  <div class="container">
+    <div class="advice-content">
+      <div class="advice-text">
+        <h2 class="advice-title">{{ section.settings.title | default: "Need Help? We're Here For You!" }}</h2>
+        <p class="advice-description">{{ section.settings.description | default: "Get expert advice, installation guides, and troubleshooting tips from our team of appliance specialists." }}</p>
+        <a href="{{ section.settings.cta_url | default: '/pages/advice-centre' }}" class="advice-cta">
+          <span>{{ section.settings.cta_text | default: "Visit Advice Centre" }}</span>
+          <span>→</span>
+        </a>
+      </div>
+      <div class="advice-icon">
+        {{ section.settings.icon | default: "🔧" }}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Advice Banner",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Banner Title",
+      "default": "Need Help? We're Here For You!"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Banner Description",
+      "default": "Get expert advice, installation guides, and troubleshooting tips from our team of appliance specialists."
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Call-to-Action URL"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Call-to-Action Text",
+      "default": "Visit Advice Centre"
+    },
+    {
+      "type": "text",
+      "id": "icon",
+      "label": "Banner Icon (Emoji)",
+      "default": "🔧"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Advice Banner"
+    }
+  ]
+}
+{% endschema %}

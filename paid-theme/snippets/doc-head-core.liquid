@@ -1,0 +1,48 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>
+  {%- if request.page_type == 'password' -%}
+    {{- shop.name -}}
+  {%- else -%}
+    {{- page_title -}}
+    {%- if current_tags %}{% assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags }}{% endif -%}
+    {%- if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif -%}
+    {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+  {%- endif -%}
+</title>
+
+{%- if canonical_url != blank -%}
+  <link rel="canonical" href="{{ canonical_url }}">
+{%- endif -%}
+
+{%- if settings.favicon != blank -%}
+  {%- liquid
+    assign image_type = settings.favicon | split: '?' | first | split: '.' | last | downcase
+    if image_type == 'svg'
+      assign image_type = 'svg+xml'
+    endif
+  -%}
+  <link rel="icon" href="{{ settings.favicon | image_url: width: 48, height: 48 }}" type="image/{{ image_type }}">
+  <link rel="apple-touch-icon" href="{{ settings.favicon | image_url: width: 180, height: 180 }}">
+{%- endif -%}
+
+{%- if page_description -%}
+  <meta name="description" content="{{ page_description | escape }}">
+{%- endif -%}
+
+{%- comment %} eSpares original meta keywords (mirrored for 1:1) {% endcomment -%}
+{%- if request.page_type == 'index' -%}
+  <meta name="keywords" content="appliance parts, spares, eSpares, next day delivery, cookers, fridge freezers, washing machines, tumble dryers, vacuums, Dyson, Samsung, Beko, Bosch, genuine, replacement parts">
+{%- endif -%}
+
+{%- comment %} Hreflang alternates (mirroring observed production pattern) {% endcomment -%}
+{%- if request.page_type == 'index' -%}
+  <link rel="alternate" hreflang="en-GB" href="{{ shop.url }}/" />
+  <link rel="alternate" hreflang="en-IE" href="https://www.espares.com/" />
+  <link rel="alternate" hreflang="de-DE" href="https://www.espares.de/" />
+  <link rel="alternate" hreflang="fr-FR" href="https://www.espares.fr/" />
+  <link rel="alternate" hreflang="it-IT" href="https://www.espares.it/" />
+  <link rel="alternate" hreflang="es-ES" href="https://www.espares.es/" />
+  <link rel="alternate" hreflang="de-AT" href="https://www.espares.at/" />
+  <link rel="alternate" hreflang="x-default" href="{{ shop.url }}/" />
+{%- endif -%}

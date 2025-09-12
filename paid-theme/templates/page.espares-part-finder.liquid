@@ -1,0 +1,567 @@
+{% comment %}
+  eSpares Part Finder Page Template
+{% endcomment %}
+
+<style>
+.espares-part-finder {
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+.hero-section {
+  background: linear-gradient(135deg, #ff6b35 0%, #e55a2b 100%);
+  color: white;
+  padding: 80px 0;
+  text-align: center;
+}
+
+.hero-title {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.hero-subtitle {
+  font-size: 1.2rem;
+  margin-bottom: 40px;
+  opacity: 0.9;
+}
+
+.finder-container {
+  background: white;
+  border-radius: 12px;
+  padding: 40px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.finder-tabs {
+  display: flex;
+  margin-bottom: 30px;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.finder-tab {
+  background: none;
+  border: none;
+  padding: 15px 25px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all 0.3s;
+  color: #666;
+}
+
+.finder-tab.active {
+  color: #ff6b35;
+  border-bottom-color: #ff6b35;
+}
+
+.finder-content {
+  display: none;
+}
+
+.finder-content.active {
+  display: block;
+}
+
+.search-form {
+  display: grid;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-label {
+  font-weight: 600;
+  color: #333;
+}
+
+.form-input,
+.form-select {
+  padding: 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: border-color 0.3s;
+}
+
+.form-input:focus,
+.form-select:focus {
+  outline: none;
+  border-color: #ff6b35;
+}
+
+.search-btn {
+  background: #ff6b35;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 6px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s;
+  margin-top: 20px;
+}
+
+.search-btn:hover {
+  background: #e55a2b;
+}
+
+.popular-searches {
+  padding: 60px 0;
+  background: #f8f9fa;
+}
+
+.popular-title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 40px;
+}
+
+.popular-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.popular-item {
+  background: white;
+  border-radius: 8px;
+  padding: 30px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
+
+.popular-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.popular-icon {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 20px;
+  background: #ff6b35;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 24px;
+}
+
+.popular-item-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.popular-item-desc {
+  color: #666;
+  font-size: 14px;
+}
+
+.categories-section {
+  padding: 60px 0;
+}
+
+.categories-title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 50px;
+}
+
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.category-card {
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 25px;
+  text-align: center;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.category-card:hover {
+  border-color: #ff6b35;
+  transform: translateY(-3px);
+}
+
+.category-icon {
+  width: 50px;
+  height: 50px;
+  margin: 0 auto 15px;
+  background: #f0f0f0;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: #666;
+}
+
+.category-title {
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.category-count {
+  color: #666;
+  font-size: 14px;
+}
+
+.tips-section {
+  background: #e8f4fd;
+  padding: 60px 0;
+}
+
+.tips-title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 40px;
+}
+
+.tips-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.tip-card {
+  background: white;
+  border-radius: 8px;
+  padding: 25px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.tip-number {
+  background: #ff6b35;
+  color: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.tip-title {
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.tip-text {
+  color: #666;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2rem;
+  }
+  
+  .finder-container {
+    margin: 20px;
+    padding: 25px;
+  }
+  
+  .finder-tabs {
+    flex-wrap: wrap;
+  }
+  
+  .popular-grid,
+  .categories-grid,
+  .tips-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+
+<div class="espares-part-finder">
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <div class="container">
+      <h1 class="hero-title">Find Your Perfect Part</h1>
+      <p class="hero-subtitle">Search by model number, brand, or appliance type to find the exact spare part you need</p>
+      
+      <div class="finder-container">
+        <div class="finder-tabs">
+          <button class="finder-tab active" onclick="showFinderTab('model')">By Model Number</button>
+          <button class="finder-tab" onclick="showFinderTab('appliance')">By Appliance</button>
+          <button class="finder-tab" onclick="showFinderTab('part')">By Part Type</button>
+        </div>
+        
+        <!-- Model Number Search -->
+        <div id="model-finder" class="finder-content active">
+          <form class="search-form" onsubmit="searchByModel(event)">
+            <div class="form-group">
+              <label class="form-label">Enter Your Model Number</label>
+              <input type="text" class="form-input" placeholder="e.g. WAE24461GB, Series 4, WIS28460" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Brand (Optional)</label>
+              <select class="form-select">
+                <option value="">All Brands</option>
+                <option value="bosch">Bosch</option>
+                <option value="hotpoint">Hotpoint</option>
+                <option value="beko">Beko</option>
+                <option value="indesit">Indesit</option>
+                <option value="whirlpool">Whirlpool</option>
+                <option value="samsung">Samsung</option>
+                <option value="lg">LG</option>
+              </select>
+            </div>
+            <button type="submit" class="search-btn">Find Parts</button>
+          </form>
+        </div>
+        
+        <!-- Appliance Type Search -->
+        <div id="appliance-finder" class="finder-content">
+          <form class="search-form" onsubmit="searchByAppliance(event)">
+            <div class="form-group">
+              <label class="form-label">Appliance Type</label>
+              <select class="form-select" required>
+                <option value="">Select Appliance</option>
+                <option value="washing-machine">Washing Machine</option>
+                <option value="cooker">Cooker & Oven</option>
+                <option value="dishwasher">Dishwasher</option>
+                <option value="fridge-freezer">Fridge Freezer</option>
+                <option value="tumble-dryer">Tumble Dryer</option>
+                <option value="microwave">Microwave</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Brand</label>
+              <select class="form-select" required>
+                <option value="">Select Brand</option>
+                <option value="bosch">Bosch</option>
+                <option value="hotpoint">Hotpoint</option>
+                <option value="beko">Beko</option>
+                <option value="indesit">Indesit</option>
+                <option value="whirlpool">Whirlpool</option>
+                <option value="samsung">Samsung</option>
+                <option value="lg">LG</option>
+              </select>
+            </div>
+            <button type="submit" class="search-btn">Browse Parts</button>
+          </form>
+        </div>
+        
+        <!-- Part Type Search -->
+        <div id="part-finder" class="finder-content">
+          <form class="search-form" onsubmit="searchByPart(event)">
+            <div class="form-group">
+              <label class="form-label">Part Category</label>
+              <select class="form-select" required>
+                <option value="">Select Category</option>
+                <option value="door-seals">Door Seals</option>
+                <option value="light-bulbs">Light Bulbs</option>
+                <option value="filters">Filters</option>
+                <option value="belts">Drive Belts</option>
+                <option value="pumps">Pumps</option>
+                <option value="thermostats">Thermostats</option>
+                <option value="elements">Heating Elements</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">For Appliance</label>
+              <select class="form-select">
+                <option value="">Any Appliance</option>
+                <option value="washing-machine">Washing Machine</option>
+                <option value="cooker">Cooker & Oven</option>
+                <option value="dishwasher">Dishwasher</option>
+                <option value="fridge-freezer">Fridge Freezer</option>
+                <option value="tumble-dryer">Tumble Dryer</option>
+              </select>
+            </div>
+            <button type="submit" class="search-btn">Find Parts</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Popular Searches -->
+  <div class="popular-searches">
+    <div class="container">
+      <h2 class="popular-title">Popular Searches</h2>
+      <div class="popular-grid">
+        <div class="popular-item" onclick="quickSearch('washing-machine-door-seal')">
+          <div class="popular-icon">🚪</div>
+          <div class="popular-item-title">Washing Machine Door Seals</div>
+          <div class="popular-item-desc">Most searched spare part</div>
+        </div>
+        <div class="popular-item" onclick="quickSearch('oven-light-bulb')">
+          <div class="popular-icon">💡</div>
+          <div class="popular-item-title">Oven Light Bulbs</div>
+          <div class="popular-item-desc">Quick and easy fix</div>
+        </div>
+        <div class="popular-item" onclick="quickSearch('dishwasher-filter')">
+          <div class="popular-icon">🔧</div>
+          <div class="popular-item-title">Dishwasher Filters</div>
+          <div class="popular-item-desc">Essential maintenance part</div>
+        </div>
+        <div class="popular-item" onclick="quickSearch('tumble-dryer-belt')">
+          <div class="popular-icon">⚙️</div>
+          <div class="popular-item-title">Tumble Dryer Belts</div>
+          <div class="popular-item-desc">Common replacement part</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Categories -->
+  <div class="categories-section">
+    <div class="container">
+      <h2 class="categories-title">Browse by Category</h2>
+      <div class="categories-grid">
+        <div class="category-card" onclick="browseCategory('washing-machine')">
+          <div class="category-icon">🌊</div>
+          <div class="category-title">Washing Machine</div>
+          <div class="category-count">150+ parts</div>
+        </div>
+        <div class="category-card" onclick="browseCategory('cooker-oven')">
+          <div class="category-icon">🔥</div>
+          <div class="category-title">Cooker & Oven</div>
+          <div class="category-count">200+ parts</div>
+        </div>
+        <div class="category-card" onclick="browseCategory('dishwasher')">
+          <div class="category-icon">🍽️</div>
+          <div class="category-title">Dishwasher</div>
+          <div class="category-count">120+ parts</div>
+        </div>
+        <div class="category-card" onclick="browseCategory('fridge-freezer')">
+          <div class="category-icon">❄️</div>
+          <div class="category-title">Fridge Freezer</div>
+          <div class="category-count">180+ parts</div>
+        </div>
+        <div class="category-card" onclick="browseCategory('tumble-dryer')">
+          <div class="category-icon">🌪️</div>
+          <div class="category-title">Tumble Dryer</div>
+          <div class="category-count">100+ parts</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tips Section -->
+  <div class="tips-section">
+    <div class="container">
+      <h2 class="tips-title">Finding Your Model Number</h2>
+      <div class="tips-grid">
+        <div class="tip-card">
+          <div class="tip-number">1</div>
+          <div class="tip-title">Check the Rating Plate</div>
+          <div class="tip-text">Look for a sticker or metal plate on your appliance. It's usually located on the door frame, back, or inside the door.</div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-number">2</div>
+          <div class="tip-title">Common Locations</div>
+          <div class="tip-text">Washing machines: inside the door or on the back. Ovens: on the door frame. Fridges: inside on the side wall.</div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-number">3</div>
+          <div class="tip-title">What to Look For</div>
+          <div class="tip-text">Model numbers can be letters and numbers like "WAE24461GB" or "Series 4". Serial numbers are different and longer.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Tab functionality
+function showFinderTab(tab) {
+  // Hide all tabs
+  document.querySelectorAll('.finder-content').forEach(content => {
+    content.classList.remove('active');
+  });
+  
+  // Remove active class from all buttons
+  document.querySelectorAll('.finder-tab').forEach(btn => {
+    btn.classList.remove('active');
+  });
+  
+  // Show selected tab
+  document.getElementById(tab + '-finder').classList.add('active');
+  
+  // Activate clicked button
+  event.target.classList.add('active');
+}
+
+// Search functions
+function searchByModel(event) {
+  event.preventDefault();
+  const modelNumber = event.target.querySelector('input').value;
+  const brand = event.target.querySelector('select').value;
+  
+  let searchUrl = `/collections/all?q=${encodeURIComponent(modelNumber)}`;
+  if (brand) {
+    searchUrl += `&filter.v.vendor=${brand}`;
+  }
+  
+  window.location.href = searchUrl;
+}
+
+function searchByAppliance(event) {
+  event.preventDefault();
+  const appliance = event.target.querySelector('select[required]').value;
+  const brand = event.target.querySelectorAll('select')[1].value;
+  
+  let collectionUrl = `/collections/${appliance}-parts`;
+  if (brand) {
+    collectionUrl += `?filter.v.vendor=${brand}`;
+  }
+  
+  window.location.href = collectionUrl;
+}
+
+function searchByPart(event) {
+  event.preventDefault();
+  const partType = event.target.querySelector('select[required]').value;
+  const appliance = event.target.querySelectorAll('select')[1].value;
+  
+  let collectionUrl = `/collections/${partType}`;
+  if (appliance) {
+    collectionUrl += `?filter.p.tag=${appliance}`;
+  }
+  
+  window.location.href = collectionUrl;
+}
+
+// Quick search function
+function quickSearch(searchTerm) {
+  window.location.href = `/collections/all?q=${encodeURIComponent(searchTerm)}`;
+}
+
+// Browse category function
+function browseCategory(category) {
+  window.location.href = `/collections/${category}-parts`;
+}
+</script>

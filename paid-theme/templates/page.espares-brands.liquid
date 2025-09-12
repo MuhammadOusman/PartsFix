@@ -1,0 +1,683 @@
+{% comment %}
+  eSpares Brands Page Template - A-Z Brand Listing
+{% endcomment %}
+
+<style>
+.espares-brands-page {
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+.brands-hero {
+  background: linear-gradient(135deg, #ff6b35 0%, #e55a2b 100%);
+  color: white;
+  padding: 60px 0;
+  text-align: center;
+}
+
+.brands-hero h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.brands-hero p {
+  font-size: 1.2rem;
+  opacity: 0.9;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.alphabet-nav {
+  background: #f8f9fa;
+  padding: 20px 0;
+  border-bottom: 2px solid #e9ecef;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.alphabet-letters {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.alphabet-letter {
+  display: inline-block;
+  padding: 8px 12px;
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  text-decoration: none;
+  color: #333;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-width: 40px;
+  text-align: center;
+}
+
+.alphabet-letter:hover,
+.alphabet-letter.active {
+  background: #ff6b35;
+  color: white;
+  border-color: #ff6b35;
+}
+
+.alphabet-letter.disabled {
+  background: #f0f0f0;
+  color: #ccc;
+  cursor: not-allowed;
+  border-color: #f0f0f0;
+}
+
+.brands-content {
+  padding: 60px 0;
+}
+
+.popular-brands {
+  margin-bottom: 80px;
+}
+
+.popular-brands h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.popular-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.popular-brand {
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 30px;
+  text-align: center;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.popular-brand:hover {
+  border-color: #ff6b35;
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.brand-logo {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 20px;
+  background: #f8f9fa;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #666;
+}
+
+.brand-name {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.brand-info {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.brand-btn {
+  background: #ff6b35;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.brand-btn:hover {
+  background: #e55a2b;
+}
+
+.all-brands-section {
+  border-top: 2px solid #e9ecef;
+  padding-top: 60px;
+}
+
+.brand-letter-section {
+  margin-bottom: 60px;
+}
+
+.letter-heading {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ff6b35;
+  margin-bottom: 30px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #ff6b35;
+  display: inline-block;
+}
+
+.brands-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.brand-card {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.brand-card:hover {
+  border-color: #ff6b35;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.brand-card-logo {
+  width: 50px;
+  height: 50px;
+  margin: 0 auto 15px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #666;
+}
+
+.brand-card-name {
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.brand-card-count {
+  color: #666;
+  font-size: 12px;
+}
+
+.search-section {
+  background: #f8f9fa;
+  padding: 40px 0;
+  margin: 60px 0;
+  border-radius: 12px;
+}
+
+.search-container {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.search-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.search-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.search-input {
+  flex: 1;
+  padding: 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+.search-btn {
+  background: #ff6b35;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.no-brands {
+  text-align: center;
+  color: #666;
+  font-style: italic;
+  padding: 40px;
+}
+
+@media (max-width: 768px) {
+  .brands-hero h1 {
+    font-size: 2rem;
+  }
+  
+  .alphabet-letters {
+    gap: 5px;
+  }
+  
+  .alphabet-letter {
+    padding: 6px 8px;
+    min-width: 30px;
+    font-size: 14px;
+  }
+  
+  .popular-grid,
+  .brands-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+  }
+  
+  .search-form {
+    flex-direction: column;
+  }
+}
+</style>
+
+<div class="espares-brands-page">
+  <!-- Hero Section -->
+  <div class="brands-hero">
+    <div class="container">
+      <h1>Shop by Brand</h1>
+      <p>Find genuine spare parts for all major appliance brands. From Bosch to Zanussi, we stock parts for over 200 brands.</p>
+    </div>
+  </div>
+
+  <!-- Alphabet Navigation -->
+  <div class="alphabet-nav">
+    <div class="container">
+      <div class="alphabet-letters">
+        {% assign letters = 'A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z' | split: ',' %}
+        {% for letter in letters %}
+          <a href="#letter-{{ letter }}" class="alphabet-letter" onclick="scrollToLetter('{{ letter }}')">{{ letter }}</a>
+        {% endfor %}
+        <a href="#numbers" class="alphabet-letter" onclick="scrollToLetter('numbers')">0-9</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="brands-content">
+    <div class="container">
+      
+      <!-- Popular Brands -->
+      <div class="popular-brands">
+        <h2>Popular Brands</h2>
+        <div class="popular-grid">
+          <div class="popular-brand" onclick="browseBrand('bosch')">
+            <div class="brand-logo">B</div>
+            <div class="brand-name">Bosch</div>
+            <div class="brand-info">150+ spare parts available</div>
+            <button class="brand-btn">View Parts</button>
+          </div>
+          
+          <div class="popular-brand" onclick="browseBrand('hotpoint')">
+            <div class="brand-logo">H</div>
+            <div class="brand-name">Hotpoint</div>
+            <div class="brand-info">200+ spare parts available</div>
+            <button class="brand-btn">View Parts</button>
+          </div>
+          
+          <div class="popular-brand" onclick="browseBrand('beko')">
+            <div class="brand-logo">B</div>
+            <div class="brand-name">Beko</div>
+            <div class="brand-info">120+ spare parts available</div>
+            <button class="brand-btn">View Parts</button>
+          </div>
+          
+          <div class="popular-brand" onclick="browseBrand('indesit')">
+            <div class="brand-logo">I</div>
+            <div class="brand-name">Indesit</div>
+            <div class="brand-info">180+ spare parts available</div>
+            <button class="brand-btn">View Parts</button>
+          </div>
+          
+          <div class="popular-brand" onclick="browseBrand('whirlpool')">
+            <div class="brand-logo">W</div>
+            <div class="brand-name">Whirlpool</div>
+            <div class="brand-info">140+ spare parts available</div>
+            <button class="brand-btn">View Parts</button>
+          </div>
+          
+          <div class="popular-brand" onclick="browseBrand('samsung')">
+            <div class="brand-logo">S</div>
+            <div class="brand-name">Samsung</div>
+            <div class="brand-info">100+ spare parts available</div>
+            <button class="brand-btn">View Parts</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Search Section -->
+      <div class="search-section">
+        <div class="search-container">
+          <h3 class="search-title">Can't find your brand?</h3>
+          <div class="search-form">
+            <input type="text" class="search-input" placeholder="Search for a brand..." id="brand-search">
+            <button class="search-btn" onclick="searchBrands()">Search</button>
+          </div>
+          <p style="font-size: 14px; color: #666;">Try searching for your appliance brand name</p>
+        </div>
+      </div>
+
+      <!-- All Brands A-Z -->
+      <div class="all-brands-section">
+        
+        <!-- Letter A -->
+        <div class="brand-letter-section" id="letter-A">
+          <h3 class="letter-heading">A</h3>
+          <div class="brands-grid">
+            <div class="brand-card" onclick="browseBrand('aeg')">
+              <div class="brand-card-logo">A</div>
+              <div class="brand-card-name">AEG</div>
+              <div class="brand-card-count">95 parts</div>
+            </div>
+            <div class="brand-card" onclick="browseBrand('ariston')">
+              <div class="brand-card-logo">A</div>
+              <div class="brand-card-name">Ariston</div>
+              <div class="brand-card-count">87 parts</div>
+            </div>
+            <div class="brand-card" onclick="browseBrand('atag')">
+              <div class="brand-card-logo">A</div>
+              <div class="brand-card-name">Atag</div>
+              <div class="brand-card-count">42 parts</div>
+            </div>
+            <div class="brand-card" onclick="browseBrand('amica')">
+              <div class="brand-card-logo">A</div>
+              <div class="brand-card-name">Amica</div>
+              <div class="brand-card-count">35 parts</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Letter B -->
+        <div class="brand-letter-section" id="letter-B">
+          <h3 class="letter-heading">B</h3>
+          <div class="brands-grid">
+            <div class="brand-card" onclick="browseBrand('bosch')">
+              <div class="brand-card-logo">B</div>
+              <div class="brand-card-name">Bosch</div>
+              <div class="brand-card-count">150 parts</div>
+            </div>
+            <div class="brand-card" onclick="browseBrand('beko')">
+              <div class="brand-card-logo">B</div>
+              <div class="brand-card-name">Beko</div>
+              <div class="brand-card-count">120 parts</div>
+            </div>
+            <div class="brand-card" onclick="browseBrand('bauknecht')">
+              <div class="brand-card-logo">B</div>
+              <div class="brand-card-name">Bauknecht</div>
+              <div class="brand-card-count">68 parts</div>
+            </div>
+            <div class="brand-card" onclick="browseBrand('blomberg')">
+              <div class="brand-card-logo">B</div>
+              <div class="brand-card-name">Blomberg</div>
+              <div class="brand-card-count">45 parts</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Letter C -->
+        <div class="brand-letter-section" id="letter-C">
+          <h3 class="letter-heading">C</h3>
+          <div class="brands-grid">
+            <div class="brand-card" onclick="browseBrand('candy')">
+              <div class="brand-card-logo">C</div>
+              <div class="brand-card-name">Candy</div>
+              <div class="brand-card-count">78 parts</div>
+            </div>
+            <div class="brand-card" onclick="browseBrand('currys')">
+              <div class="brand-card-logo">C</div>
+              <div class="brand-card-name">Currys</div>
+              <div class="brand-card-count">52 parts</div>
+            </div>
+            <div class="brand-card" onclick="browseBrand('creda')">
+              <div class="brand-card-logo">C</div>
+              <div class="brand-card-name">Creda</div>
+              <div class="brand-card-count">65 parts</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Letter D -->
+        <div class="brand-letter-section" id="letter-D">
+          <h3 class="letter-heading">D</h3>
+          <div class="brands-grid">
+            <div class="brand-card" onclick="browseBrand('daewoo')">
+              <div class="brand-card-logo">D</div>
+              <div class="brand-card-name">Daewoo</div>
+              <div class="brand-card-count">38 parts</div>
+            </div>
+            <div class="brand-card" onclick="browseBrand('dyson')">
+              <div class="brand-card-logo">D</div>
+              <div class="brand-card-name">Dyson</div>
+              <div class="brand-card-count">25 parts</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Continue with more letters... -->
+        <div class="brand-letter-section" id="letter-E">
+          <h3 class="letter-heading">E</h3>
+          <div class="brands-grid">
+            <div class="brand-card" onclick="browseBrand('electrolux')">
+              <div class="brand-card-logo">E</div>
+              <div class="brand-card-name">Electrolux</div>
+              <div class="brand-card-count">112 parts</div>
+            </div>
+            <div class="brand-card" onclick="browseBrand('eurotech')">
+              <div class="brand-card-logo">E</div>
+              <div class="brand-card-name">Eurotech</div>
+              <div class="brand-card-count">47 parts</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Add more letters as needed -->
+        <div class="brand-letter-section" id="letter-H">
+          <h3 class="letter-heading">H</h3>
+          <div class="brands-grid">
+            <div class="brand-card" onclick="browseBrand('hotpoint')">
+              <div class="brand-card-logo">H</div>
+              <div class="brand-card-name">Hotpoint</div>
+              <div class="brand-card-count">200 parts</div>
+            </div>
+            <div class="brand-card" onclick="browseBrand('haier')">
+              <div class="brand-card-logo">H</div>
+              <div class="brand-card-name">Haier</div>
+              <div class="brand-card-count">55 parts</div>
+            </div>
+            <div class="brand-card" onclick="browseBrand('hoover')">
+              <div class="brand-card-logo">H</div>
+              <div class="brand-card-name">Hoover</div>
+              <div class="brand-card-count">85 parts</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="brand-letter-section" id="letter-I">
+          <h3 class="letter-heading">I</h3>
+          <div class="brands-grid">
+            <div class="brand-card" onclick="browseBrand('indesit')">
+              <div class="brand-card-logo">I</div>
+              <div class="brand-card-name">Indesit</div>
+              <div class="brand-card-count">180 parts</div>
+            </div>
+            <div class="brand-card" onclick="browseBrand('ignis')">
+              <div class="brand-card-logo">I</div>
+              <div class="brand-card-name">Ignis</div>
+              <div class="brand-card-count">42 parts</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="brand-letter-section" id="letter-L">
+          <h3 class="letter-heading">L</h3>
+          <div class="brands-grid">
+            <div class="brand-card" onclick="browseBrand('lg')">
+              <div class="brand-card-logo">L</div>
+              <div class="brand-card-name">LG</div>
+              <div class="brand-card-count">92 parts</div>
+            </div>
+            <div class="brand-card" onclick="browseBrand('liebherr')">
+              <div class="brand-card-logo">L</div>
+              <div class="brand-card-name">Liebherr</div>
+              <div class="brand-card-count">33 parts</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="brand-letter-section" id="letter-M">
+          <h3 class="letter-heading">M</h3>
+          <div class="brands-grid">
+            <div class="brand-card" onclick="browseBrand('miele')">
+              <div class="brand-card-logo">M</div>
+              <div class="brand-card-name">Miele</div>
+              <div class="brand-card-count">110 parts</div>
+            </div>
+            <div class="brand-card" onclick="browseBrand('matsui')">
+              <div class="brand-card-logo">M</div>
+              <div class="brand-card-name">Matsui</div>
+              <div class="brand-card-count">28 parts</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="brand-letter-section" id="letter-S">
+          <h3 class="letter-heading">S</h3>
+          <div class="brands-grid">
+            <div class="brand-card" onclick="browseBrand('samsung')">
+              <div class="brand-card-logo">S</div>
+              <div class="brand-card-name">Samsung</div>
+              <div class="brand-card-count">100 parts</div>
+            </div>
+            <div class="brand-card" onclick="browseBrand('siemens')">
+              <div class="brand-card-logo">S</div>
+              <div class="brand-card-name">Siemens</div>
+              <div class="brand-card-count">125 parts</div>
+            </div>
+            <div class="brand-card" onclick="browseBrand('smeg')">
+              <div class="brand-card-logo">S</div>
+              <div class="brand-card-name">Smeg</div>
+              <div class="brand-card-count">75 parts</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="brand-letter-section" id="letter-W">
+          <h3 class="letter-heading">W</h3>
+          <div class="brands-grid">
+            <div class="brand-card" onclick="browseBrand('whirlpool')">
+              <div class="brand-card-logo">W</div>
+              <div class="brand-card-name">Whirlpool</div>
+              <div class="brand-card-count">140 parts</div>
+            </div>
+            <div class="brand-card" onclick="browseBrand('westinghouse')">
+              <div class="brand-card-logo">W</div>
+              <div class="brand-card-name">Westinghouse</div>
+              <div class="brand-card-count">35 parts</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="brand-letter-section" id="letter-Z">
+          <h3 class="letter-heading">Z</h3>
+          <div class="brands-grid">
+            <div class="brand-card" onclick="browseBrand('zanussi')">
+              <div class="brand-card-logo">Z</div>
+              <div class="brand-card-name">Zanussi</div>
+              <div class="brand-card-count">95 parts</div>
+            </div>
+            <div class="brand-card" onclick="browseBrand('zoppas')">
+              <div class="brand-card-logo">Z</div>
+              <div class="brand-card-name">Zoppas</div>
+              <div class="brand-card-count">22 parts</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Smooth scroll to letter section
+function scrollToLetter(letter) {
+  const element = document.getElementById('letter-' + letter);
+  if (element) {
+    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    
+    // Update active letter in navigation
+    document.querySelectorAll('.alphabet-letter').forEach(link => {
+      link.classList.remove('active');
+    });
+    event.target.classList.add('active');
+  }
+}
+
+// Browse brand function
+function browseBrand(brand) {
+  window.location.href = `/collections/${brand}-parts`;
+}
+
+// Search brands function
+function searchBrands() {
+  const searchTerm = document.getElementById('brand-search').value.trim();
+  if (searchTerm) {
+    window.location.href = `/collections/all?q=${encodeURIComponent(searchTerm)}&filter.v.vendor=${encodeURIComponent(searchTerm)}`;
+  }
+}
+
+// Handle search on Enter key
+document.getElementById('brand-search').addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') {
+    searchBrands();
+  }
+});
+
+// Highlight current letter in viewport
+window.addEventListener('scroll', function() {
+  const sections = document.querySelectorAll('.brand-letter-section');
+  const navLinks = document.querySelectorAll('.alphabet-letter');
+  
+  let current = '';
+  
+  sections.forEach(section => {
+    const sectionTop = section.offsetTop;
+    const sectionHeight = section.clientHeight;
+    if (window.pageYOffset >= sectionTop - 200) {
+      current = section.getAttribute('id');
+    }
+  });
+  
+  navLinks.forEach(link => {
+    link.classList.remove('active');
+    if (link.getAttribute('href') === '#' + current) {
+      link.classList.add('active');
+    }
+  });
+});
+</script>

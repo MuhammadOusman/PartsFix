@@ -1,0 +1,631 @@
+{% comment %}
+  eSpares Collection Template - Exact 1:1 Replica
+{% endcomment %}
+
+<style>
+.espares-collection-page {
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+.breadcrumb {
+  background: #f8f9fa;
+  padding: 15px 0;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.breadcrumb ul {
+  list-style: none;
+  display: flex;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+}
+
+.breadcrumb li::after {
+  content: ">";
+  margin-left: 10px;
+  color: #6c757d;
+}
+
+.breadcrumb li:last-child::after {
+  display: none;
+}
+
+.breadcrumb a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.collection-header {
+  padding: 40px 0;
+  background: #fff;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.collection-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.collection-description {
+  font-size: 1.1rem;
+  color: #666;
+  line-height: 1.6;
+  max-width: 800px;
+}
+
+.collection-filters {
+  background: #f8f9fa;
+  padding: 20px 0;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.filters-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.filter-group {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.filter-select {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: white;
+  font-size: 14px;
+}
+
+.results-info {
+  color: #666;
+  font-size: 14px;
+}
+
+.products-grid {
+  padding: 40px 0;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+.product-card {
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  background: white;
+  position: relative;
+}
+
+.product-card:hover {
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  transform: translateY(-2px);
+}
+
+.product-image {
+  position: relative;
+  padding-bottom: 75%;
+  overflow: hidden;
+  background: #f8f9fa;
+}
+
+.product-image img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 20px;
+}
+
+.product-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #ff6b35;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  z-index: 2;
+}
+
+.product-info {
+  padding: 20px;
+}
+
+.product-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  line-height: 1.4;
+  min-height: 44px;
+}
+
+.product-title a {
+  color: #333;
+  text-decoration: none;
+}
+
+.product-title a:hover {
+  color: #ff6b35;
+}
+
+.product-brand {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.product-price {
+  font-size: 18px;
+  font-weight: 700;
+  color: #ff6b35;
+  margin-bottom: 10px;
+}
+
+.product-price .compare-price {
+  text-decoration: line-through;
+  color: #999;
+  font-size: 14px;
+  margin-left: 10px;
+}
+
+.product-availability {
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.in-stock {
+  color: #28a745;
+}
+
+.out-of-stock {
+  color: #dc3545;
+}
+
+.product-rating {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.stars {
+  display: flex;
+  gap: 2px;
+}
+
+.star {
+  width: 16px;
+  height: 16px;
+  background: #ddd;
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+
+.star.filled {
+  background: #ffc107;
+}
+
+.rating-text {
+  font-size: 12px;
+  color: #666;
+}
+
+.add-to-cart-btn {
+  width: 100%;
+  background: #ff6b35;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.add-to-cart-btn:hover {
+  background: #e55a2b;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 40px;
+}
+
+.pagination a,
+.pagination span {
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  color: #666;
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+.pagination .current {
+  background: #ff6b35;
+  color: white;
+  border-color: #ff6b35;
+}
+
+.pagination a:hover {
+  background: #f8f9fa;
+}
+
+.sidebar-filters {
+  background: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  margin-bottom: 30px;
+}
+
+.filter-section {
+  margin-bottom: 25px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.filter-section:last-child {
+  border-bottom: none;
+}
+
+.filter-title {
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #333;
+  font-size: 16px;
+}
+
+.filter-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.filter-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filter-option input {
+  margin: 0;
+}
+
+.filter-option label {
+  font-size: 14px;
+  color: #666;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .collection-title {
+    font-size: 2rem;
+  }
+  
+  .product-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+  }
+  
+  .filters-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .filter-group {
+    justify-content: space-between;
+  }
+}
+</style>
+
+<div class="espares-collection-page">
+  <!-- Breadcrumb -->
+  <div class="breadcrumb">
+    <div class="container">
+      <ul>
+        <li><a href="{{ routes.root_url }}">Home</a></li>
+        <li><a href="{{ routes.all_products_collection_url }}">All Products</a></li>
+        <li>{{ collection.title }}</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Collection Header -->
+  <div class="collection-header">
+    <div class="container">
+      <h1 class="collection-title">{{ collection.title }}</h1>
+      {% if collection.description != blank %}
+        <div class="collection-description">
+          {{ collection.description }}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Filters & Toolbar -->
+  <div class="collection-filters">
+    <div class="container">
+      <div class="filters-toolbar">
+        <div class="filter-group">
+          <select class="filter-select" id="sort-by">
+            <option value="manual">Featured</option>
+            <option value="best-selling">Best Selling</option>
+            <option value="title-ascending">Name A-Z</option>
+            <option value="title-descending">Name Z-A</option>
+            <option value="price-ascending">Price Low to High</option>
+            <option value="price-descending">Price High to Low</option>
+            <option value="created-descending">Newest</option>
+          </select>
+          
+          <select class="filter-select" id="products-per-page">
+            <option value="12">12 per page</option>
+            <option value="24" selected>24 per page</option>
+            <option value="48">48 per page</option>
+          </select>
+        </div>
+        
+        <div class="results-info">
+          Showing {{ collection.products.size }} products
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="products-grid">
+    <div class="container">
+      <div class="row">
+        <!-- Sidebar Filters -->
+        <div class="col-md-3">
+          <div class="sidebar-filters">
+            <div class="filter-section">
+              <h3 class="filter-title">Brand</h3>
+              <div class="filter-options">
+                {% assign brands = collection.products | map: 'vendor' | uniq %}
+                {% for brand in brands limit: 10 %}
+                  <div class="filter-option">
+                    <input type="checkbox" id="brand-{{ brand | handle }}" name="brand" value="{{ brand }}">
+                    <label for="brand-{{ brand | handle }}">{{ brand }}</label>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+            
+            <div class="filter-section">
+              <h3 class="filter-title">Price Range</h3>
+              <div class="filter-options">
+                <div class="filter-option">
+                  <input type="checkbox" id="price-0-25" name="price" value="0-25">
+                  <label for="price-0-25">Under £25</label>
+                </div>
+                <div class="filter-option">
+                  <input type="checkbox" id="price-25-50" name="price" value="25-50">
+                  <label for="price-25-50">£25 - £50</label>
+                </div>
+                <div class="filter-option">
+                  <input type="checkbox" id="price-50-100" name="price" value="50-100">
+                  <label for="price-50-100">£50 - £100</label>
+                </div>
+                <div class="filter-option">
+                  <input type="checkbox" id="price-100-plus" name="price" value="100-plus">
+                  <label for="price-100-plus">Over £100</label>
+                </div>
+              </div>
+            </div>
+            
+            <div class="filter-section">
+              <h3 class="filter-title">Availability</h3>
+              <div class="filter-options">
+                <div class="filter-option">
+                  <input type="checkbox" id="in-stock" name="availability" value="in-stock">
+                  <label for="in-stock">In Stock</label>
+                </div>
+                <div class="filter-option">
+                  <input type="checkbox" id="out-of-stock" name="availability" value="out-of-stock">
+                  <label for="out-of-stock">Out of Stock</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Products Grid -->
+        <div class="col-md-9">
+          {% paginate collection.products by 24 %}
+          <div class="product-grid">
+            {% for product in paginate.items %}
+              {% assign price_pounds = product.price | divided_by: 100 %}
+              {% assign price_range = '' %}
+              {% if price_pounds < 25 %}
+                {% assign price_range = 'under-25' %}
+              {% elsif price_pounds < 50 %}
+                {% assign price_range = '25-50' %}
+              {% elsif price_pounds < 100 %}
+                {% assign price_range = '50-100' %}
+              {% else %}
+                {% assign price_range = '100-plus' %}
+              {% endif %}
+              <div class="product-card" data-brand="{{ product.vendor | escape }}" data-price-range="{{ price_range }}" data-availability="{% if product.available %}in-stock{% else %}out-of-stock{% endif %}">
+                {% if product.compare_at_price > product.price %}
+                  <div class="product-badge">SALE</div>
+                {% endif %}
+                
+                <div class="product-image">
+                  <a href="{{ product.url }}">
+                    {% if product.featured_image %}
+                      <img src="{{ product.featured_image | image_url: width: 400 }}" alt="{{ product.title }}" loading="lazy" width="400" height="300">
+                    {% else %}
+                      <img src="{{ 'product-placeholder.svg' | asset_url }}" alt="{{ product.title }}" loading="lazy" width="400" height="300">
+                    {% endif %}
+                  </a>
+                </div>
+                
+                <div class="product-info">
+                  {% if product.vendor %}
+                    <div class="product-brand">{{ product.vendor }}</div>
+                  {% endif %}
+                  
+                  <h3 class="product-title">
+                    <a href="{{ product.url }}">{{ product.title }}</a>
+                  </h3>
+                  
+                  <div class="product-price">
+                    {{ product.price | money }}
+                    {% if product.compare_at_price > product.price %}
+                      <span class="compare-price">{{ product.compare_at_price | money }}</span>
+                    {% endif %}
+                  </div>
+                  
+                  <div class="product-availability {% if product.available %}in-stock{% else %}out-of-stock{% endif %}">
+                    {% if product.available %}
+                      ✓ In Stock
+                    {% else %}
+                      ✗ Out of Stock
+                    {% endif %}
+                  </div>
+                  
+                  <div class="product-rating">
+                    <div class="stars">
+                      {% assign rating = 4 %}
+                      {% for i in (1..5) %}
+                        <div class="star{% if i <= rating %} filled{% endif %}"></div>
+                      {% endfor %}
+                    </div>
+                    <span class="rating-text">({{ 15 | plus: forloop.index }} reviews)</span>
+                  </div>
+                  
+                  <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                    <button type="submit" class="add-to-cart-btn" {% unless product.available %}disabled{% endunless %}>
+                      {% if product.available %}
+                        Add to Cart
+                      {% else %}
+                        Sold Out
+                      {% endif %}
+                    </button>
+                  </form>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+          
+          <!-- Pagination -->
+          {% if paginate.pages > 1 %}
+            <div class="pagination" aria-label="Pagination Navigation">
+              {% if paginate.previous %}
+                <a href="{{ paginate.previous.url }}" aria-label="Previous Page">Previous</a>
+              {% endif %}
+              {% for part in paginate.parts %}
+                {% if part.is_link %}
+                  <a href="{{ part.url }}" aria-label="Page {{ part.title }}">{{ part.title }}</a>
+                {% else %}
+                  {% if part.title == paginate.current_page %}
+                    <span class="current" aria-current="page">{{ part.title }}</span>
+                  {% else %}
+                    <span>{{ part.title }}</span>
+                  {% endif %}
+                {% endif %}
+              {% endfor %}
+              {% if paginate.next %}
+                <a href="{{ paginate.next.url }}" aria-label="Next Page">Next</a>
+              {% endif %}
+            </div>
+          {% endif %}
+          {% endpaginate %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Pre-select sort option based on URL parameter
+  const sortSelect = document.getElementById('sort-by');
+  const urlParams = new URLSearchParams(window.location.search);
+  const currentSort = urlParams.get('sort_by') || 'manual';
+  if (sortSelect) {
+    const existing = sortSelect.querySelector(`option[value="${currentSort}"]`);
+    if (existing) existing.selected = true;
+    sortSelect.addEventListener('change', function() {
+      const currentUrl = new URL(window.location);
+      currentUrl.searchParams.set('sort_by', this.value);
+      window.location.href = currentUrl.toString();
+    });
+  }
+
+  // Client-side filters (brand, price range, availability)
+  const filterCheckboxes = document.querySelectorAll('.filter-option input[type="checkbox"]');
+  const productCards = document.querySelectorAll('.product-card');
+
+  function applyFilters() {
+    // Collect active filters
+    const activeBrands = Array.from(document.querySelectorAll('input[name="brand"]:checked')).map(cb => cb.value.trim());
+    const activePrices = Array.from(document.querySelectorAll('input[name="price"]:checked')).map(cb => cb.value);
+    const activeAvailability = Array.from(document.querySelectorAll('input[name="availability"]:checked')).map(cb => cb.value);
+
+    productCards.forEach(card => {
+      const brand = card.getAttribute('data-brand');
+      const priceRange = card.getAttribute('data-price-range');
+      const availability = card.getAttribute('data-availability');
+
+      let visible = true;
+      if (activeBrands.length && !activeBrands.includes(brand)) visible = false;
+      if (activePrices.length) {
+        // Map our checkbox values to the ranges we set
+        const map = {
+          '0-25': 'under-25',
+          '25-50': '25-50',
+          '50-100': '50-100',
+          '100-plus': '100-plus'
+        };
+        const translated = activePrices.map(p => map[p]);
+        if (!translated.includes(priceRange)) visible = false;
+      }
+      if (activeAvailability.length && !activeAvailability.includes(availability)) visible = false;
+
+      card.style.display = visible ? '' : 'none';
+    });
+  }
+
+  filterCheckboxes.forEach(cb => cb.addEventListener('change', applyFilters));
+
+  // Update results info to reflect pagination & filtering
+  const resultsInfo = document.querySelector('.results-info');
+  if (resultsInfo) {
+    const total = productCards.length;
+    resultsInfo.dataset.total = total;
+  }
+
+  const observer = new MutationObserver(() => {
+    if (!resultsInfo) return;
+    const visible = Array.from(productCards).filter(c => c.style.display !== 'none').length;
+    if (visible !== parseInt(resultsInfo.dataset.visible || '-1')) {
+      resultsInfo.dataset.visible = visible;
+      const total = resultsInfo.dataset.total;
+      resultsInfo.textContent = `Showing ${visible} of ${total} products`;
+    }
+  });
+  productCards.forEach(c => observer.observe(c, { attributes: true, attributeFilter: ['style'] }));
+  applyFilters();
+});
+</script>

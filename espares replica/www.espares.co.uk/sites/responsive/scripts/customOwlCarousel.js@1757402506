@@ -1,0 +1,93 @@
+(function ($) {
+	$.fn.customOwlCarousel = function (options) {
+
+		// Set default variables
+		var settings = $.extend({
+			defaultOptions: {loop: true, margin: 10, mouseDrag: false, navText: ['<span class="icon-slide-left"></span>','<span class="icon-slide-right"></span>']},
+			defaultResponsive: {items: 1, nav: true, dots: true},
+			disableFrom: '', // Which viewport to turn off the carousel from. Will affect all viewports greater than this. 'tabone','tabtwo' or 'desktop'.
+			mobtwoOptions: '',
+			taboneOptions: '',
+			tabtwoOptions: '',
+			desktopOptions: '',
+		}, options);
+
+		return this.each(function() {
+			var element = $(this);
+			var owl = $(element);
+
+			if ( !$(element).hasClass('owl-carousel') ) {
+				$(element).addClass('owl-carousel');
+			}
+
+			// Load in the custom options when initialising plugin.
+			var carouselTheme = settings.carouselTheme;
+			var defaultOptions = settings.defaultOptions;
+			var defaultResponsive = settings.defaultResponsive;
+			var disableFrom = settings.disableFrom;
+			var mobtwoOptions = settings.mobtwoOptions;
+			var taboneOptions = settings.taboneOptions;
+			var tabtwoOptions = settings.tabtwoOptions;
+			var desktopOptions = settings.desktopOptions;
+
+			var customLoop = settings.customLoop;
+
+			// If any of the viewport specific options are left empty, then grab the previous viewport settings.
+			if (mobtwoOptions == '') {mobtwoOptions = defaultResponsive;}
+			if (taboneOptions == '') {taboneOptions = defaultResponsive;}
+			if (tabtwoOptions == '') {tabtwoOptions = taboneOptions;}
+			if (desktopOptions == '') {desktopOptions = tabtwoOptions;}
+
+			// Create the owl carousel, build/load custom options.
+			var owlOptions = defaultOptions;
+			var owlResponsiveOptions = {
+				0: defaultResponsive,
+				550: mobtwoOptions,
+				768: taboneOptions,
+				992: tabtwoOptions,
+				1200: desktopOptions
+			};
+			owlOptions['responsive'] = owlResponsiveOptions;
+
+			// By default, the carousel is assumed to be active.
+			var disabledState = false;
+
+			// Check the value of 'disabledFrom' against the current viewport dimensions to decide if the carousel should be disabled or not.
+			if (disableFrom == 'mobtwo' && $('body').width() >= 550) {disabledState = true;}
+				else if (disableFrom == 'tabone' && $('body').width() >= 768) {disabledState = true;}
+				else if (disableFrom == 'tabtwo' && $('body').width() >= 992) {disabledState = true;}
+				else if (disableFrom == 'desktop' && $('body').width() >= 1200) {disabledState = true;}
+
+			// If the carousel is not disabled, then pass over the plugin options and initialize the slider.
+			if (disabledState == false) {
+				var owlActive = owl.owlCarousel(owlOptions);
+			} else {
+				owl.addClass('off');
+			}
+
+			$(window).on('resize', function() {
+				// On resize, update the disabledFrom value. Same conditions as before.
+				if (disableFrom == 'mobtwo' && $('body').width() >= 550) { disabledState = true;}
+					else if (disableFrom == 'tabone' && $('body').width() >= 768) { disabledState = true;}
+					else if (disableFrom == 'tabtwo' && $('body').width() >= 992) {disabledState = true;}
+					else if (disableFrom == 'desktop' && $('body').width() >= 1200) {disabledState = true;} 
+				else {disabledState = false;}
+
+				// If the carousel should be disabled. Destroy it and remove unnecessary html.
+				if (disabledState == false) {
+					if ( $(element).hasClass('off') ) {
+						var owlActive = owl.owlCarousel(owlOptions);
+						owl.removeClass('off');
+					}
+				} else {
+					owl.addClass('off').trigger('destroy.owl.carousel');
+					owl.find('.owl-stage-outer').children(':eq(0)').unwrap();
+				}
+
+			});
+
+		});
+
+	};
+
+}(jQuery));

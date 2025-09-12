@@ -1,0 +1,13 @@
+<!-- This is a placeholder SVG for appliance images -->
+<svg width="600" height="400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400">
+  <rect width="600" height="400" fill="#f8f9fa"/>
+  <rect x="150" y="50" width="300" height="200" fill="#e9ecef" rx="12" stroke="#dee2e6" stroke-width="2"/>
+  <rect x="170" y="70" width="40" height="25" fill="#6c757d" rx="4"/>
+  <rect x="220" y="70" width="40" height="25" fill="#6c757d" rx="4"/>
+  <rect x="270" y="70" width="40" height="25" fill="#6c757d" rx="4"/>
+  <rect x="320" y="70" width="40" height="25" fill="#6c757d" rx="4"/>
+  <circle cx="400" cy="150" r="30" fill="#dee2e6" stroke="#6c757d" stroke-width="3"/>
+  <circle cx="400" cy="150" r="15" fill="#6c757d"/>
+  <rect x="170" y="120" width="180" height="100" fill="#fff" stroke="#dee2e6" stroke-width="1" rx="4"/>
+  <text x="300" y="320" text-anchor="middle" fill="#6c757d" font-family="Arial, sans-serif" font-size="16">Appliance Placeholder</text>
+</svg>

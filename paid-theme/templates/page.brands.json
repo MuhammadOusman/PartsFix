@@ -1,0 +1,19 @@
+{
+  "sections": {
+    "brand_index_main": {
+      "type": "brand-index",
+      "settings": {
+        "heading": "Shop by Brand",
+        "show_heading": true,
+        "enable_search": true,
+        "search_placeholder": "Filter brands...",
+        "columns": 4,
+        "hide_empty": true,
+        "empty_text": "No brands for this letter."
+      }
+    }
+  },
+  "order": [
+    "brand_index_main"
+  ]
+}

@@ -1,0 +1,6 @@
+{%- comment -%} eSpares styled empty state {%- endcomment -%}
+<div class="collection-empty">
+  <h2>{{ heading | default: 'Nothing found yet' }}</h2>
+  <p>{{ message | default: 'Refine filters or search again. We stock over a million genuine and compatible parts.' }}</p>
+  <a href="{{ routes.root_url }}" class="btn btn--primary">Return Home</a>
+</div>

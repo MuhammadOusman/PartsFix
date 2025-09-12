@@ -1,0 +1,271 @@
+/* Override scaffold for eSpares style alignment
+   Keep custom changes isolated here for maintainability. */
+
+/* 1. Typography Tweaks */
+body { letter-spacing: 0.15px; }
+
+/* 2. Header Adjustments */
+.header-main-bar {
+  background-color: #000;
+  color: #fff;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.header__grid {
+  grid-template-columns: 250px 1fr auto;
+  gap: 1.5rem;
+}
+
+.logo__link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #fff !important;
+  text-decoration: none !important;
+}
+
+.logo__tagline {
+  font-size: 0.8rem;
+  color: #fff;
+  line-height: 1.2;
+  max-width: 100px;
+}
+
+.header__search {
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.predictive-search__form {
+  border: 2px solid #fff;
+  border-radius: 0;
+}
+
+.predictive-search__input {
+  background-color: #fff !important;
+  color: #000 !important;
+  border: none;
+  height: 48px;
+}
+.predictive-search__input::placeholder {
+  color: #666 !important;
+}
+
+.predictive-search__button {
+  background-color: #ffd700 !important;
+  color: #000 !important;
+  border-radius: 0;
+  width: 120px;
+  font-weight: bold;
+}
+.predictive-search__button .icon-search {
+  display: none;
+}
+.predictive-search__button-label {
+  display: block !important;
+}
+
+.header__icons {
+  gap: 1.5rem;
+}
+
+.header__icon--with-text {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #fff !important;
+  text-decoration: none !important;
+}
+
+.header__icon--with-text .icon {
+  width: 28px;
+  height: 28px;
+}
+
+.header__icon-text {
+  font-size: 0.9rem;
+}
+
+.header__cart-count {
+  background-color: #ffd700 !important;
+  color: #000 !important;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  top: -8px;
+  right: -12px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.header-nav-bar {
+  background-color: #fff;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.main-nav__item--primary {
+  padding: 1rem 1.25rem;
+  text-transform: none;
+  font-size: 1rem;
+  color: #000;
+}
+.main-nav__item--primary:hover {
+  background-color: #f0f0f0;
+}
+
+.header-info-bar {
+  background-color: #f8f8f8;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.info-bar-item__icon .icon {
+  color: #555;
+}
+
+.header-promo-bar {
+  background-color: #ffd700;
+  color: #000;
+}
+
+/* 3. Utility classes */
+.u-muted { opacity: .72; }
+.u-tight { margin-top: .25rem !important; margin-bottom: .25rem !important; }
+.u-visually-hidden { position:absolute; left:-10000px; top:auto; width:1px; height:1px; overflow:hidden; }
+
+/* 4. Brand Index hooks */
+.brand-index-section { --brand-cols:4; }
+
+/* 5. eSpares Global Theming Additions */
+:root {
+  --es-yellow: #ffd700;
+  --es-yellow-alt: #ffeb3b;
+  --es-dark: #111111;
+  --es-accent: #ff6b35;
+  --es-link: #0066c2;
+  --es-link-hover: #004f94;
+  --es-border: #e2e2e2;
+}
+
+/* Base page adjustments */
+body {
+  background-color: #ffffff;
+  color: #222;
+  font-family: 'Lato', Arial, sans-serif;
+}
+
+a { color: var(--es-link); }
+a:hover, a:focus { color: var(--es-link-hover); }
+
+/* Buttons */
+.btn--primary {
+  background: var(--es-yellow) !important;
+  color: #000 !important;
+  border: 2px solid var(--es-yellow) !important;
+  border-radius: 0 !important;
+  font-weight: 700;
+  letter-spacing: .25px;
+}
+.btn--primary:hover, .btn--primary:focus { background:#e6c200 !important; border-color:#e6c200 !important; }
+
+.btn--secondary {
+  background:#fff !important;
+  color:#000 !important;
+  border:2px solid #000 !important;
+  border-radius:0 !important;
+  font-weight:600;
+}
+.btn--secondary:hover { background:#000 !important; color:#fff !important; }
+
+/* Product card styling */
+.card--product { border:1px solid var(--es-border); box-shadow:none; transition:box-shadow .18s ease, transform .18s ease; }
+.card--product:hover { box-shadow:0 4px 14px rgba(0,0,0,.12); transform:translateY(-2px); }
+.card--product .card__media { background:#fff; }
+.card--product .card__title { font-size:14px; line-height:1.25; }
+.card--product .card__title a { color:#111; text-decoration:none; }
+.card--product .card__title a:hover { color:var(--es-link); }
+.card--product .card__vendor { font-size:11px; text-transform:uppercase; letter-spacing:.5px; color:#555; }
+
+/* Price styling */
+.card--product .price, .price { font-weight:700; color:#111; font-size:15px; }
+.price--top, .price--bottom { display:block; }
+.price .price__sale { color:var(--es-accent); }
+.price .price__compare { color:#666; font-weight:400; text-decoration:line-through; margin-left:4px; font-size:12px; }
+
+/* Labels */
+.product-label__inner { border-radius:0 !important; font-weight:600; font-size:11px; letter-spacing:.5px; }
+.product-label--sale { background:var(--es-accent) !important; }
+.product-label--new { background:#222 !important; color:#fff !important; }
+
+/* Quick add alignment */
+.card__quick-add { margin-top:8px; }
+
+/* Collection grid spacing */
+.grid { --grid-gutter: 20px; }
+
+/* Header refinements (ensure cohesion if native header shown) */
+.header-nav-bar, .espares-navigation { font-family:'Lato', Arial, sans-serif; }
+.main-nav__item--primary { font-weight:600; }
+
+/* Forms */
+input[type='search'], input[type='text'], select { border-radius:0 !important; }
+
+/* Badges / counts */
+.header__cart-count { box-shadow:0 0 0 2px #000; }
+
+/* Accessibility focus */
+*:focus-visible { outline:2px solid var(--es-accent); outline-offset:2px; }
+
+/* Mock product cards unify */
+.mock-card__price { color:#111; }
+.mock-card__compare { color:#777; }
+.mock-card__btn { background:#eee; }
+.mock-card__btn:hover { background:#ddd; }
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .card--product { padding:4px; }
+  .card--product .card__title { font-size:13px; }
+  .card--product .price { font-size:14px; }
+}
+
+/* Hide other header variants when eSpares header section present */
+.section-header:has(.espares-header) .header:not(.espares-header),
+.section-header:has(.espares-header) .header-clean,
+.section-header:has(.espares-header) .header-new { display:none !important; }
+
+/* Top bar + promo alignment if native bars still render */
+.announce-bar, .promo-strip, .header-info-bar { font-family:'Lato',Arial,sans-serif; }
+
+/* Collection / Filters */
+.main-products-grid__filters { background:#f7f7f7; border:1px solid #e1e1e1; padding:18px 16px; border-radius:4px; font-family:'Lato',Arial,sans-serif; }
+.facet-filters h3, .facet-filters legend { font-size:14px; font-weight:700; letter-spacing:.4px; text-transform:uppercase; margin-bottom:8px; }
+.facet-filters details { border-bottom:1px solid #e3e3e3; padding:8px 0; }
+.facet-filters details[open] { background:#fff; }
+.facet-filters summary { cursor:pointer; font-size:13px; font-weight:600; }
+.facet-filters input[type='checkbox'] { accent-color:#ff6b35; }
+.facet-filters .filter-group-display__list { max-height:220px; overflow:auto; scrollbar-width:thin; }
+.facet-filters .filter-group-display__list::-webkit-scrollbar { width:8px; }
+.facet-filters .filter-group-display__list::-webkit-scrollbar-thumb { background:#ccc; border-radius:4px; }
+.products-toolbar { border:0; margin-bottom:14px; background:#fff; padding:10px 14px; box-shadow:0 1px 3px rgba(0,0,0,.06); }
+.products-toolbar select { border:1px solid #ccc; border-radius:0; }
+.main-products-grid__results .grid { --grid-gutter:22px; }
+.pagination { font-family:'Lato',Arial,sans-serif; }
+.pagination .page a, .pagination .page span { border:1px solid #ddd; padding:6px 10px; margin:0 3px; font-size:13px; }
+.pagination .page.current span { background:#ffd700; border-color:#ffd700; color:#000; font-weight:700; }
+
+/* Empty states */
+.collection-empty, .search-empty { padding:60px 20px; text-align:center; font-family:'Lato',Arial,sans-serif; }
+.collection-empty h2, .search-empty h2 { font-size:28px; margin:0 0 16px; font-weight:800; }
+.collection-empty p, .search-empty p { font-size:15px; color:#555; max-width:560px; margin:0 auto 20px; }
+.collection-empty a.btn, .search-empty a.btn { margin-top:10px; }
+
+/* Forms unified */
+form .input, form input[type='email'], form input[type='text'], form input[type='search'] { border:1px solid #ccc; border-radius:0; font-family:'Lato',Arial,sans-serif; }
+form .input:focus, form input[type='email']:focus, form input[type='text']:focus, form input[type='search']:focus { outline:2px solid #ff6b35; outline-offset:2px; }
+
+/* Promo / info bars mobile spacing */
+@media (max-width:740px){
+  .espares-top-bar { font-size:11px !important; padding:4px 0 !important; }
+  .espares-yellow-banner { font-size:12px !important; padding:10px 0 !important; }
+}

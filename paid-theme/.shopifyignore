@@ -1,0 +1,4 @@
+# Exclude deprecated backup templates from upload
+templates/product.original-backup.txt
+/templates/product.original-backup.txt
+**/product.original-backup.txt

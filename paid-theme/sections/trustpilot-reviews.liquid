@@ -1,0 +1,384 @@
+<style>
+/* Enhanced Trustpilot Section with eSpares styling */
+.home-trustpilot-wrapper {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  padding: 80px 0;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+.home-trustpilot-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="white" opacity="0.05"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>') repeat;
+  pointer-events: none;
+}
+
+.home-trustpilot {
+  position: relative;
+  z-index: 1;
+}
+
+.home-trustpilot .quote {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+  margin-bottom: 50px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 40px;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.home-trustpilot .quote-image {
+  flex-shrink: 0;
+  position: relative;
+}
+
+.home-trustpilot .quote-image::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  background: linear-gradient(45deg, #ff6b35, #ff8c42);
+  border-radius: 50%;
+  z-index: -1;
+}
+
+.home-trustpilot .quote-image img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid white;
+  position: relative;
+  z-index: 1;
+}
+
+.home-trustpilot .quote-text {
+  flex: 1;
+}
+
+.home-trustpilot .quote-text-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+
+.home-trustpilot .quote-text-title .line-1 {
+  display: block;
+  color: #ff6b35;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.home-trustpilot .quote-text-title .line-2 {
+  display: block;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.home-trustpilot .quote-text-content {
+  font-size: 1.2rem;
+  line-height: 1.7;
+  margin-bottom: 15px;
+  font-style: italic;
+  opacity: 0.95;
+  position: relative;
+  padding-left: 30px;
+}
+
+.home-trustpilot .quote-text-content::before {
+  content: '"';
+  position: absolute;
+  left: 0;
+  top: -10px;
+  font-size: 3rem;
+  color: #ff6b35;
+  opacity: 0.7;
+}
+
+.home-trustpilot .quote-text-author {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #ff6b35;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.home-trustpilot .trustpilot-with-quote {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 30px;
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.trustpilot-widget {
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  transition: transform 0.3s ease;
+}
+
+.trustpilot-widget:hover {
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .home-trustpilot-wrapper {
+    padding: 60px 0;
+  }
+
+  .home-trustpilot .quote {
+    flex-direction: column;
+    text-align: center;
+    gap: 30px;
+    padding: 30px 20px;
+  }
+
+  .home-trustpilot .quote-text-title {
+    font-size: 2rem;
+  }
+
+  .home-trustpilot .quote-text-content {
+    font-size: 1.1rem;
+    padding-left: 20px;
+  }
+
+  .home-trustpilot .quote-image img {
+    width: 80px;
+    height: 80px;
+  }
+
+  .home-trustpilot .trustpilot-with-quote {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-trustpilot .quote {
+    padding: 25px 15px;
+  }
+  
+  .home-trustpilot .quote-text-title {
+    font-size: 1.7rem;
+  }
+  
+  .home-trustpilot .quote-text-content {
+    font-size: 1rem;
+    padding-left: 15px;
+  }
+}
+</style>
+
+<div class="home-trustpilot-wrapper" id="trustpilot-band">
+  <div class="container">
+    <div class="row">
+      <div class="home-trustpilot">
+        <div class="quote">
+          {%- if section.settings.quote_image != blank -%}
+            <div class="quote-image">
+              <img loading="lazy" src="{{ section.settings.quote_image | image_url: width: 160, height: 160, crop: 'center' }}" alt="Trustpilot" width="160" height="160" />
+            </div>
+          {%- endif -%}
+          <div class="quote-text">
+            <h2 class="quote-text-title">
+              <span class="line-1">{{ section.settings.quote_line_1 }}</span>
+              <span class="line-2">{{ section.settings.quote_line_2 }}</span>
+            </h2>
+            <p class="quote-text-content">"{{ section.settings.quote_content }}"</p>
+            <p class="quote-text-author">{{ section.settings.quote_author }}</p>
+          </div>
+        </div>
+
+        <div class="trustpilot-with-quote">
+          <div class="trustpilot-widget"
+               data-locale="{{ section.settings.trustpilot_locale }}"
+               data-template-id="{{ section.settings.trustpilot_template_id }}"
+               data-businessunit-id="{{ section.settings.trustpilot_business_id }}"
+               data-style-height="{{ section.settings.widget_height }}px"
+               data-style-width="{{ section.settings.widget_width }}%"
+               data-theme="{{ section.settings.widget_theme }}"
+               data-stars="{{ section.settings.star_rating }}"
+               data-review-languages="{{ section.settings.review_languages }}">
+            <a href="{{ section.settings.trustpilot_link | default: 'https://www.trustpilot.com/review/www.espares.co.uk' }}" target="_blank" rel="noopener">{{ section.settings.link_text }}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Lazy load Trustpilot script once section in view (mirrors original conditional load)
+document.addEventListener('DOMContentLoaded', function(){
+  const tp = document.querySelector('#trustpilot-band .trustpilot-widget');
+  if(!tp) return;
+  function inject(){
+    if(document.getElementById('tp-widget-script')) return;
+    const s=document.createElement('script');
+    s.id='tp-widget-script';
+    s.src='https://widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js';
+    s.defer=true; s.async=true; document.body.appendChild(s);
+  }
+  function attempt(){
+    const consent=localStorage.getItem('cc-consent');
+    if(consent==='accept') observerLoad();
+    else document.addEventListener('cc:accepted', observerLoad, { once:true });
+  }
+  function observerLoad(){
+    if('IntersectionObserver' in window){
+      const io=new IntersectionObserver(es=>{ if(es.some(e=>e.isIntersecting)){ inject(); io.disconnect(); } });
+      io.observe(tp);
+    } else { inject(); }
+  }
+  attempt();
+});
+</script>
+
+{% schema %}
+{
+  "name": "Trustpilot Reviews",
+  "tag": "section",
+  "class": "trustpilot-reviews-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "quote_image",
+      "label": "Quote Image",
+      "info": "Upload a profile image for the quote"
+    },
+    {
+      "type": "text",
+      "id": "quote_line_1",
+      "label": "Quote Title Line 1",
+      "default": "Think Fix First"
+    },
+    {
+      "type": "text",
+      "id": "quote_line_2",
+      "label": "Quote Title Line 2",
+      "default": "think eSpares"
+    },
+    {
+      "type": "textarea",
+      "id": "quote_content",
+      "label": "Quote Content",
+  "default": "Many people are surprised to learn that repairs are actually quite easy, requiring only a little knowledge about the appliance and of course a little patience!"
+    },
+    {
+      "type": "text",
+      "id": "quote_author",
+      "label": "Quote Author",
+      "default": "Matt Betteridge, eSpares eXpert"
+    },
+    {
+      "type": "text",
+      "id": "trustpilot_locale",
+      "label": "Trustpilot Locale",
+      "default": "en-GB"
+    },
+    {
+      "type": "text",
+      "id": "trustpilot_template_id",
+      "label": "Trustpilot Template ID",
+      "default": "53aa8912dec7e10d38f59f36"
+    },
+    {
+      "type": "text",
+      "id": "trustpilot_business_id",
+      "label": "Trustpilot Business Unit ID",
+      "default": "4834c3790000640005028b5d"
+    },
+    {
+      "type": "range",
+      "id": "widget_height",
+      "label": "Widget Height (px)",
+      "min": 200,
+      "max": 500,
+      "step": 10,
+      "default": 290
+    },
+    {
+      "type": "range",
+      "id": "widget_width",
+      "label": "Widget Width (%)",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "default": 100
+    },
+    {
+      "type": "select",
+      "id": "widget_theme",
+      "label": "Widget Theme",
+      "options": [
+        {
+          "value": "light",
+          "label": "Light"
+        },
+        {
+          "value": "dark",
+          "label": "Dark"
+        }
+      ],
+      "default": "dark"
+    },
+    {
+      "type": "text",
+      "id": "star_rating",
+      "label": "Minimum Star Rating",
+      "default": "4,5"
+    },
+    {
+      "type": "text",
+      "id": "review_languages",
+      "label": "Review Languages",
+      "default": "en"
+    },
+    {
+      "type": "url",
+      "id": "trustpilot_link",
+      "label": "Trustpilot Profile Link"
+    },
+    {
+      "type": "text",
+      "id": "link_text",
+      "label": "Link Text",
+      "default": "Trustpilot"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Trustpilot Reviews",
+      "settings": {
+        "quote_line_1": "Think Fix First",
+        "quote_line_2": "think eSpares",
+  "quote_content": "Many people are surprised to learn that repairs are actually quite easy, requiring only a little knowledge about the appliance and of course a little patience!",
+        "quote_author": "Matt Betteridge, eSpares eXpert",
+        "trustpilot_locale": "en-GB",
+        "trustpilot_template_id": "53aa8912dec7e10d38f59f36",
+        "trustpilot_business_id": "4834c3790000640005028b5d",
+        "widget_height": 290,
+        "widget_width": 100,
+        "widget_theme": "dark",
+        "star_rating": "4,5",
+        "review_languages": "en",
+        "trustpilot_link": "https://www.trustpilot.com/review/www.espares.co.uk",
+        "link_text": "Trustpilot"
+      }
+    }
+  ]
+}
+{% endschema %}

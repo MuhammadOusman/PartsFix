@@ -1,0 +1,65 @@
+$(document).ready(function(){
+	// AdviceListDocuments
+	$(document).on('click', '.br-advicelistdocuments .links-show-more', function(e) {
+		if (!$(this).prev('.links-more-results').is(':animated')) {
+			const textVariable = $(this).data('toggle-text');     
+			$(this).toggleClass('active');     
+			$(this).data('toggle-text', $(this).text()).text(textVariable);
+			$(this).prev('.links-more-results').slideToggle();
+		}
+		e.preventDefault();
+	});
+
+	// AdviceSearchResults
+	$('.br-advicesearch input[name="searchTerms"]').each(function(i, el) {
+		const previousSearch = decodeURIComponent(new URLSearchParams(window.location.search).get('searchTerms')?.replace(/\+/g, ' ') || '');
+		if(previousSearch) {
+			$(el).val(previousSearch);
+		}
+	});
+
+	$(document).on('click', '.br-advicesearchresults .pagination a', function(e) {
+		e.preventDefault();
+
+		const url = $(this).attr('href');
+		const componentID = $(this).closest('[data-br-component-id]').attr('data-br-component-id');
+
+		$(this).closest('.pagination').addClass('loading');
+
+		if(url && componentID) {
+			fetch(url, {
+				method: 'GET',
+				credentials: 'include'
+			})
+				.then(response => {
+				if (!response.ok) {
+					throw new Error('Network response was not ok');
+				}
+				return response.text();
+			})
+			.then(data => {
+				const parser = new DOMParser();
+				const doc = parser.parseFromString(data, 'text/html');
+
+				const snippetElement = doc.querySelector(`[data-br-component-id="${componentID}"]`);
+				
+				if(snippetElement) {
+					const snippetHTML = snippetElement.innerHTML;
+					const snippetTarget = document.querySelector(`[data-br-component-id="${componentID}"]`);
+
+					snippetTarget.style.display = 'none';
+					requestAnimationFrame(() => {
+						snippetTarget.innerHTML = snippetHTML;
+						snippetTarget.style.display = 'block';
+					});
+				}
+
+				$('.br-advicesearchresults .pagination').removeClass('loading');
+			})
+			.catch(error => {
+				$('.br-advicesearchresults .pagination').removeClass('loading');
+				console.error('Fetch error:', error);
+			});
+		};
+	});
+});

@@ -1,0 +1,293 @@
+{%- assign categories = section.settings.categories | split: '|' -%}
+
+<style>
+.espares-categories-section {
+  padding: 60px 0;
+  background: white;
+}
+
+.espares-categories-section .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.espares-categories-section h2 {
+  text-align: center;
+  margin-bottom: 50px;
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 25px;
+  justify-items: center;
+}
+
+.category-item {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+  width: 100%;
+  max-width: 200px;
+  position: relative;
+}
+
+.category-item:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.category-item a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.category-image {
+  position: relative;
+  overflow: hidden;
+  height: 140px;
+  background: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.category-image img {
+  width: 80%;
+  height: 80%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.category-item:hover .category-image img {
+  transform: scale(1.05);
+}
+
+.category-content {
+  padding: 15px;
+  text-align: center;
+}
+
+.category-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.category-description {
+  font-size: 0.8rem;
+  color: #666;
+  line-height: 1.4;
+}
+
+@media (max-width: 768px) {
+  .categories-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  
+  .category-item {
+    max-width: none;
+  }
+  
+  .category-image {
+    height: 120px;
+  }
+  
+  .category-content {
+    padding: 12px;
+  }
+  
+  .espares-categories-section h2 {
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .categories-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+  
+  .category-image {
+    height: 100px;
+  }
+  
+  .category-name {
+    font-size: 0.9rem;
+  }
+  
+  .category-description {
+    font-size: 0.75rem;
+  }
+}
+</style>
+
+<div class="espares-categories-section">
+  <div class="container">
+    <h2>{{ section.settings.title | default: "Spare Parts By Category" }}</h2>
+    <div class="categories-grid">
+      <!-- Default categories matching eSpares layout -->
+      <div class="category-item">
+        <a href="/collections/cooker-parts" title="Cooker">
+          <div class="category-image">
+            <img loading="lazy" src="https://via.placeholder.com/160x120/f8f9fa/666?text=Cooker" alt="Cooker" width="160" height="120"/>
+          </div>
+          <div class="category-content">
+            <div class="category-name">Cooker</div>
+            <div class="category-description">Parts & accessories</div>
+          </div>
+        </a>
+      </div>
+      <div class="category-item">
+        <a href="/collections/cooker-hood-parts" title="Cooker Hood">
+          <div class="category-image">
+            <img loading="lazy" src="https://via.placeholder.com/160x120/f8f9fa/666?text=Hood" alt="Cooker Hood" width="160" height="120"/>
+          </div>
+          <div class="category-content">
+            <div class="category-name">Cooker Hood</div>
+            <div class="category-description">Parts & accessories</div>
+          </div>
+        </a>
+      </div>
+      <div class="category-item">
+        <a href="/collections/dishwasher-parts" title="Dishwasher">
+          <div class="category-image">
+            <img loading="lazy" src="https://via.placeholder.com/160x120/f8f9fa/666?text=Dishwasher" alt="Dishwasher" width="160" height="120"/>
+          </div>
+          <div class="category-content">
+            <div class="category-name">Dishwasher</div>
+            <div class="category-description">Parts & accessories</div>
+          </div>
+        </a>
+      </div>
+      <div class="category-item">
+        <a href="/collections/fridge-parts" title="Fridge">
+          <div class="category-image">
+            <img loading="lazy" src="https://via.placeholder.com/160x120/f8f9fa/666?text=Fridge" alt="Fridge" width="160" height="120"/>
+          </div>
+          <div class="category-content">
+            <div class="category-name">Fridge</div>
+            <div class="category-description">Parts & accessories</div>
+          </div>
+        </a>
+      </div>
+      <div class="category-item">
+        <a href="/collections/microwave-parts" title="Microwave">
+          <div class="category-image">
+            <img loading="lazy" src="https://via.placeholder.com/160x120/f8f9fa/666?text=Microwave" alt="Microwave" width="160" height="120"/>
+          </div>
+          <div class="category-content">
+            <div class="category-name">Microwave</div>
+            <div class="category-description">Parts & accessories</div>
+          </div>
+        </a>
+      </div>
+      <div class="category-item">
+        <a href="/collections/tumble-dryer-parts" title="Tumble Dryer">
+          <div class="category-image">
+            <img loading="lazy" src="https://via.placeholder.com/160x120/f8f9fa/666?text=Dryer" alt="Tumble Dryer" width="160" height="120"/>
+          </div>
+          <div class="category-content">
+            <div class="category-name">Tumble Dryer</div>
+            <div class="category-description">Parts & accessories</div>
+          </div>
+        </a>
+      </div>
+      <div class="category-item">
+        <a href="/collections/vacuum-parts" title="Vacuum Cleaner">
+          <div class="category-image">
+            <img loading="lazy" src="https://via.placeholder.com/160x120/f8f9fa/666?text=Vacuum" alt="Vacuum Cleaner" width="160" height="120"/>
+          </div>
+          <div class="category-content">
+            <div class="category-name">Vacuum Cleaner</div>
+            <div class="category-description">Parts & accessories</div>
+          </div>
+        </a>
+      </div>
+      <div class="category-item">
+        <a href="/collections/washing-machine-parts" title="Washing Machine">
+          <div class="category-image">
+            <img loading="lazy" src="https://via.placeholder.com/160x120/f8f9fa/666?text=Washer" alt="Washing Machine" width="160" height="120"/>
+          </div>
+          <div class="category-content">
+            <div class="category-name">Washing Machine</div>
+            <div class="category-description">Parts & accessories</div>
+          </div>
+        </a>
+      </div>
+      <div class="category-item">
+        <a href="/collections/blender-parts" title="Blender & Mixer">
+          <div class="category-image">
+            <img loading="lazy" src="https://via.placeholder.com/160x120/f8f9fa/666?text=Blender" alt="Blender & Mixer" width="160" height="120"/>
+          </div>
+          <div class="category-content">
+            <div class="category-name">Blender & Mixer</div>
+            <div class="category-description">Parts & accessories</div>
+          </div>
+        </a>
+      </div>
+      <div class="category-item">
+        <a href="/collections/coffee-machine-parts" title="Coffee Machine">
+          <div class="category-image">
+            <img loading="lazy" src="https://via.placeholder.com/160x120/f8f9fa/666?text=Coffee" alt="Coffee Machine" width="160" height="120"/>
+          </div>
+          <div class="category-content">
+            <div class="category-name">Coffee Machine</div>
+            <div class="category-description">Parts & accessories</div>
+          </div>
+        </a>
+      </div>
+      <div class="category-item">
+        <a href="/collections/lawnmower-parts" title="Lawnmower">
+          <div class="category-image">
+            <img loading="lazy" src="https://via.placeholder.com/160x120/f8f9fa/666?text=Mower" alt="Lawnmower" width="160" height="120"/>
+          </div>
+          <div class="category-content">
+            <div class="category-name">Lawnmower</div>
+            <div class="category-description">Parts & accessories</div>
+          </div>
+        </a>
+      </div>
+      <div class="category-item">
+        <a href="/collections/pressure-washer-parts" title="Pressure Washer">
+          <div class="category-image">
+            <img loading="lazy" src="https://via.placeholder.com/160x120/f8f9fa/666?text=Pressure" alt="Pressure Washer" width="160" height="120"/>
+          </div>
+          <div class="category-content">
+            <div class="category-name">Pressure Washer</div>
+            <div class="category-description">Parts & accessories</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Spare Parts Categories",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Spare Parts By Category"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Spare Parts Categories"
+    }
+  ]
+}
+{% endschema %}

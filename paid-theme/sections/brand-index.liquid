@@ -1,0 +1,150 @@
+{% comment %}
+  Brand Index Section
+  Lists all vendors (shop.vendors) grouped alphabetically with optional search filter.
+  Settings allow: show search, hide empty letters, limit columns.
+{% endcomment %}
+{% liquid
+  assign vendors = shop.vendors | sort
+  assign letters = '0-9,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z' | split: ','
+%}
+
+<div class="brand-index" data-section-id="{{ section.id }}">
+  {% if section.settings.show_heading %}
+    <h1 class="brand-index__title">{{ section.settings.heading | escape }}</h1>
+  {% endif %}
+
+  {% if section.settings.enable_search %}
+    <div class="brand-index__filter">
+      <label for="brand-filter-{{ section.id }}" class="visually-hidden">{{ 'general.search.input_label' | t }}</label>
+      <input id="brand-filter-{{ section.id }}" type="search" placeholder="{{ section.settings.search_placeholder | escape }}" class="brand-index__search-input" autocomplete="off">
+    </div>
+  {% endif %}
+
+  <nav class="brand-index__letters" aria-label="Brand alphabet navigation">
+    <ul>
+      {% for l in letters %}
+        {% assign has_items = false %}
+        {% for v in vendors %}
+          {% assign first_char = v | slice: 0 | upcase %}
+          {% unless first_char >= 'A' and first_char <= 'Z' %}
+            {% assign first_char = '0-9' %}
+          {% endunless %}
+          {% if first_char == l %}
+            {% assign has_items = true %}
+            {% break %}
+          {% endif %}
+        {% endfor %}
+        {% if section.settings.hide_empty and has_items == false %}
+          {% continue %}
+        {% endif %}
+        <li>
+          {% if has_items %}
+            <a href="#brand-group-{{ l | replace: '0-9','digits' }}">{{ l }}</a>
+          {% else %}
+            <span class="brand-index__letter--empty">{{ l }}</span>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  </nav>
+
+  <div class="brand-index__groups">
+    {% for l in letters %}
+      {% assign has_items = false %}
+      {% unless section.settings.hide_empty == false %}
+        {% for v in vendors %}
+          {% assign first_char = v | slice: 0 | upcase %}
+          {% unless first_char >= 'A' and first_char <= 'Z' %}
+            {% assign first_char = '0-9' %}
+          {% endunless %}
+          {% if first_char == l %}
+            {% assign has_items = true %}
+            {% break %}
+          {% endif %}
+        {% endfor %}
+        {% if section.settings.hide_empty and has_items == false %}
+          {% continue %}
+        {% endif %}
+      {% endunless %}
+      <div id="brand-group-{{ l | replace: '0-9','digits' }}" class="brand-index__group" data-letter="{{ l }}">
+        <h2 class="brand-index__group-title">{{ l }}</h2>
+        <ul class="brand-index__list columns-{{ section.settings.columns }}">
+          {% assign empty_letter = true %}
+          {% for v in vendors %}
+            {% assign first_char = v | slice: 0 | upcase %}
+            {% unless first_char >= 'A' and first_char <= 'Z' %}
+              {% assign first_char = '0-9' %}
+            {% endunless %}
+            {% if first_char == l %}
+              {% assign empty_letter = false %}
+              <li class="brand-index__item" data-brand="{{ v | escape }}"><a href="{{ routes.collections_url }}/vendors?q={{ v | url_encode }}">{{ v }}</a></li>
+            {% endif %}
+          {% endfor %}
+          {% if empty_letter %}
+            <li class="brand-index__empty">{{ section.settings.empty_text }}</li>
+          {% endif %}
+        </ul>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% if section.settings.enable_search %}
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var input = document.getElementById('brand-filter-{{ section.id }}');
+      if(!input) return;
+      input.addEventListener('input', function() {
+        var q = this.value.toLowerCase();
+        document.querySelectorAll('#shopify-section-{{ section.id }} .brand-index__item').forEach(function(li){
+          var name = li.dataset.brand.toLowerCase();
+          li.style.display = name.indexOf(q) > -1 ? '' : 'none';
+        });
+      });
+    });
+  </script>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Brand index",
+  "tag": "section",
+  "class": "section brand-index-section",
+  "settings": [
+    {"type":"text","id":"heading","label":"Heading","default":"Shop by Brand"},
+    {"type":"checkbox","id":"show_heading","label":"Show heading","default":true},
+    {"type":"checkbox","id":"enable_search","label":"Enable filter search","default":true},
+    {"type":"text","id":"search_placeholder","label":"Search placeholder","default":"Filter brands..."},
+    {"type":"range","id":"columns","label":"Columns","min":2,"max":6,"step":1,"default":4},
+    {"type":"checkbox","id":"hide_empty","label":"Hide empty letters","default":true},
+    {"type":"text","id":"empty_text","label":"Empty letter text","default":"No brands for this letter."}
+  ],
+  "presets": [
+    {"name":"Brand index"}
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+.brand-index__letters ul {display:flex;flex-wrap:wrap;gap:.5rem;list-style:none;padding:0;margin:1rem 0;}
+.brand-index__letters a, .brand-index__letters span {display:inline-block;padding:.35rem .55rem;border:1px solid var(--input-bg-color-diff-6);border-radius:4px;font-size:.85rem;text-decoration:none;line-height:1;color:var(--text-color);}
+.brand-index__letters span.brand-index__letter--empty {opacity:.3;border-style:dashed;}
+.brand-index__letters a:hover {background:var(--btn-bg-color);color:var(--btn-text-color);}
+.brand-index__group {margin-bottom:2.5rem;}
+.brand-index__group-title {margin:0 0 .75rem;font-size:1.25rem;}
+.brand-index__list {columns: var(--brand-cols); -webkit-columns: var(--brand-cols); -moz-columns: var(--brand-cols); list-style:none; padding:0; margin:0;}
+.brand-index__item {break-inside:avoid; page-break-inside:avoid; -webkit-column-break-inside:avoid; margin:0 0 .35rem;}
+.brand-index__item a {text-decoration:none;color:var(--link-color);}
+.brand-index__item a:hover {text-decoration:underline;}
+.brand-index__search-input {width:100%;max-width:420px;padding:.65rem .75rem;border:1px solid var(--input-bg-color-diff-6);border-radius:6px;}
+@media (min-width: 600px){
+  .brand-index__list.columns-2 {--brand-cols:2;}
+  .brand-index__list.columns-3 {--brand-cols:3;}
+  .brand-index__list.columns-4 {--brand-cols:4;}
+  .brand-index__list.columns-5 {--brand-cols:5;}
+  .brand-index__list.columns-6 {--brand-cols:6;}
+}
+@media (max-width: 599px){
+  .brand-index__list {--brand-cols:2;}
+}
+{% endstylesheet %}

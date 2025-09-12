@@ -1,0 +1,28 @@
+{%- comment -%}
+  Iterates mock products (max: limit) and renders mock-product-card.
+  Accepts 'limit' (default 8) and optional 'offset'.
+{%- endcomment -%}
+{%- assign limit = limit | default: 8 -%}
+{%- assign offset = offset | default: 0 -%}
+{%- capture raw -%}{%- render 'mock-data-json' -%}{%- endcapture -%}
+<div class="mock-products-loop" data-mock-json='{{ raw | escape }}' data-limit="{{ limit }}" data-offset="{{ offset }}">
+  Loading mock products…
+</div>
+<script>
+  (function(){
+    var c=document.currentScript.previousElementSibling; if(!c || !c.classList.contains('mock-products-loop')) return;
+    try{ var data=JSON.parse(c.getAttribute('data-mock-json')); if(data && data.products){
+      var limit=parseInt(c.getAttribute('data-limit'),10)||8; var offset=parseInt(c.getAttribute('data-offset'),10)||0;
+      var slice=data.products.slice(offset, offset+limit); var html='';
+      var base='{{ "" | asset_url | split: "?" | first | replace: "\\/assets\\/", "/assets/" }}';
+      if(base.indexOf('/assets/')>-1){ base=base.split('/assets/')[0]+'/assets/'; }
+      slice.forEach(function(p){
+        var price=(p.price/100).toFixed(2).replace(/\.00$/,'');
+        var compare=(p.compare_at && p.compare_at>p.price)?'<span class="mock-card__compare">£'+(p.compare_at/100).toFixed(2).replace(/\.00$/,'')+'</span>':'';
+        html+=`<div class="mock-card" data-mock-product><div class="mock-card__media"><img src="${base}${p.image}" alt="${p.title}" loading="lazy" width="300" height="300"></div><div class="mock-card__body"><h3 class="mock-card__title">${p.title}</h3><div class="mock-card__vendor">${p.vendor||''}</div><div class="mock-card__price">£${price}${compare}</div><button class="mock-card__btn" type="button" disabled>Add to cart</button></div></div>`;
+      });
+      c.innerHTML=html;
+    } else { c.textContent='No mock data'; }
+    }catch(e){ c.textContent='Mock load error'; }
+  })();
+</script>
