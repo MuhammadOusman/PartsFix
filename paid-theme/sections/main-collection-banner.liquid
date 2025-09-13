@@ -38,6 +38,29 @@
   assign color_scheme = section.settings.color_scheme
 -%}
 
+{%- comment -%} eSpares Breadcrumbs {%- endcomment -%}
+{%- if section.settings.show_breadcrumbs -%}
+<div style="background: #f8f9fa; border-bottom: 1px solid #e9ecef; padding: 12px 0;">
+  <div class="container">
+    <ul style="list-style: none; margin: 0; padding: 0; display: flex; align-items: center; flex-wrap: wrap; font-size: 14px;">
+      <li style="display: flex; align-items: center;">
+        <a href="{{ routes.root_url }}" style="color: #007bff; text-decoration: none;">Home</a>
+      </li>
+      <li style="display: flex; align-items: center;">
+        <span style="margin: 0 8px; color: #6c757d; font-weight: bold;">></span>
+        {%- if collection.handle == 'all' -%}
+          <span style="color: #495057; font-weight: 500;">All Products</span>
+        {%- elsif collection -%}
+          <span style="color: #495057; font-weight: 500;">{{ collection.title }}</span>
+        {%- else -%}
+          <span style="color: #495057; font-weight: 500;">Collections</span>
+        {%- endif -%}
+      </li>
+    </ul>
+  </div>
+</div>
+{%- endif -%}
+
 <div class="container">
   <div class="collection-banner flex flex-col md:flex-row{% if collection_image and collection_image_size != "fill" %} collection-banner--natural{% endif %}{% unless collection_image %} {{ section.settings.text_align }}{% endunless %}{% if section.settings.color_scheme == "default" %} gap-y-6{% endif %}">
     {% if collection_image %}
@@ -183,6 +206,12 @@
       "id": "use_product_image",
       "label": "Use the first product image as the collection image",
       "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_breadcrumbs",
+      "label": "Show breadcrumbs",
+      "default": true
     },
     {
       "type": "select",

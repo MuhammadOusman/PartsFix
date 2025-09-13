@@ -1,0 +1,60 @@
+{%- comment -%}
+  Mock Data Generator for eSpares Dynamic Search
+  Generates realistic categories, brands, and products for testing
+{%- endcomment -%}
+
+{%- comment -%} CATEGORIES MOCK DATA {%- endcomment -%}
+{%- assign mock_categories = "Washing Machines|Dishwashers|Ovens & Cookers|Fridges & Freezers|Vacuum Cleaners|Tumble Dryers|Microwaves|Coffee Machines|Blenders & Mixers|Irons & Steamers|Air Conditioners|Dehumidifiers|Cooker Hoods|Hobs & Cooktops|Built-in Appliances|Small Kitchen Appliances|Lawnmowers|Pressure Washers|Garden Tools|Hedge Trimmers|Leaf Blowers|Chain Saws|Water Pumps|Generators|Air Compressors|Power Tools|Hand Tools|Tool Storage|Workshop Equipment|Safety Equipment" | split: "|" -%}
+
+{%- assign mock_category_counts = "247|189|334|256|178|134|98|67|45|89|23|34|156|203|167|234|145|89|67|45|34|56|78|23|45|123|89|67|34|56" | split: "|" -%}
+
+{%- comment -%} BRANDS MOCK DATA {%- endcomment -%}
+{%- assign mock_brands = "Bosch|Samsung|Whirlpool|LG|Hotpoint|Beko|Siemens|Miele|AEG|Electrolux|Indesit|Zanussi|Candy|Hoover|Dyson|Shark|Vax|Bissell|Karcher|Black & Decker|Makita|DeWalt|Ryobi|Worx|Flymo|Husqvarna|McCulloch|Honda|Briggs & Stratton|Stihl|Echo|Mitox|Greenworks|Einhell|Wickes|Screwfix|Toolstation|B&Q|Homebase|Argos|Currys|John Lewis|Very|Amazon Basics|Tower|Russell Hobbs|Morphy Richards|Tefal|Kenwood|KitchenAid|Sage|Ninja|Instant Pot|Philips|Braun|Panasonic|Sharp|Toshiba|Grundig|Liebherr|Smeg|Rangemaster|Stoves|Falcon|Leisure|New World|Flavel|Creda|Tricity Bendix|Proline|Logik|Bush|Alba|Matsui|Goodmans|JVC|Sony|Pioneer|Technics|Yamaha|Onkyo|Denon|Marantz|Cambridge Audio|Monitor Audio|KEF|B&W|Mission|Wharfedale|Q Acoustics" | split: "|" -%}
+
+{%- assign mock_brand_counts = "145|238|152|129|234|189|167|89|134|156|178|145|123|167|234|189|134|98|178|145|123|98|87|76|65|134|123|98|87|76|65|54|43|32|234|189|167|145|134|123|98|87|76|65|54|43|89|78|67|56|45|34|123|98|87|76|65|54|43|32|21|19|45|34|23|12|21|19|17|15|13|11|9|8|7|6|5|4|3|2|1|12|11|10|9|8|7|6|5|4|3|2|1" | split: "|" -%}
+
+{%- comment -%} PRODUCT TYPES {%- endcomment -%}
+{%- assign mock_product_types = "Door Seal|Heating Element|Water Filter|Spray Arm|Vacuum Belt|Turntable|Lint Filter|Grease Filter|Thermostat|Pump|Motor|Hose|Gasket|Handle|Knob|Switch|Sensor|Control Board|Display Panel|Glass Shelf|Wire Rack|Drip Tray|Water Tank|Dust Bag|HEPA Filter|Brush Roll|Extension Wand|Crevice Tool|Upholstery Tool|Pet Hair Tool|Floor Nozzle|Wall Mount|Remote Control|Power Cord|Adapter|Charger|Battery Pack|Fuse|Circuit Breaker|Safety Valve|Pressure Relief|Temperature Probe|Timer|Clock|Bulb|LED Strip|Fan Blade|Air Filter|Carbon Filter|Membrane|O-Ring|Spring|Screw Set|Bracket|Clamp|Tube|Pipe|Connector|Joint|Elbow|Reducer|Cap|Plug|Valve|Tap|Outlet|Inlet|Manifold|Chamber|Housing|Cover|Panel|Door|Drawer|Basket|Tray|Grid|Mesh|Screen|Pad|Mat|Cushion|Seal Ring|Bearing|Gear|Belt|Chain|Sprocket|Pulley|Wheel|Roller|Axle|Shaft|Pin|Clip|Lock|Latch|Catch|Hook|Loop|Strap|Cord|Wire|Cable|Lead|Plug|Socket|Terminal|Connector Block" | split: "|" -%}
+
+{%- comment -%} PRICE RANGES {%- endcomment -%}
+{%- assign mock_prices = "£4.99|£7.99|£12.99|£15.99|£18.99|£24.99|£28.99|£32.99|£38.99|£45.99|£52.99|£58.99|£65.99|£72.99|£78.99|£85.99|£92.99|£98.99|£105.99|£115.99|£125.99|£135.99|£145.99|£155.99|£165.99|£175.99|£185.99|£195.99|£225.99|£255.99|£285.99|£315.99|£345.99|£375.99|£425.99|£475.99|£525.99|£575.99|£625.99|£675.99" | split: "|" -%}
+
+{%- comment -%} SKU PREFIXES BY CATEGORY {%- endcomment -%}
+{%- assign mock_sku_prefixes = "WM|DW|OC|FF|VC|TD|MW|CM|BM|IS|AC|DH|CH|HC|BA|SK|LM|PW|GT|HT|LB|CS|WP|GN|AR|PT|HT|TS|WE|SE" | split: "|" -%}
+
+{%- comment -%} GENERATE PRODUCT DESCRIPTIONS {%- endcomment -%}
+{%- assign mock_descriptions = "High-quality genuine replacement part designed for optimal performance and durability|Premium spare part manufactured to exact OEM specifications for reliable operation|Essential replacement component ensuring your appliance continues to work efficiently|Professional-grade spare part backed by comprehensive warranty coverage|Authentic replacement part designed to restore your appliance to full working condition|Quality assured spare part tested for compatibility and long-lasting performance|Genuine replacement component manufactured using premium materials and strict quality controls|Reliable spare part engineered to meet or exceed original equipment standards|Durable replacement part designed to provide years of trouble-free operation|Precision-manufactured spare part ensuring perfect fit and optimal functionality" | split: "|" -%}
+
+{%- comment -%} COMPATIBILITY KEYWORDS {%- endcomment -%}
+{%- assign mock_compatibility = "Compatible with most models|Universal fit|Specific model compatibility|Check model number|Professional installation recommended|Easy DIY replacement|Tool-free installation|Quick-fit design|Plug and play|Direct replacement|OEM equivalent|Energy efficient|Eco-friendly|Dishwasher safe|Heat resistant|Corrosion resistant|UV resistant|Non-toxic materials|Food grade|BPA free" | split: "|" -%}
+
+{%- comment -%} AVAILABILITY STATUS {%- endcomment -%}
+{%- assign mock_availability = "In Stock|In Stock|In Stock|In Stock|In Stock|Low Stock|Low Stock|Pre-order|Out of Stock" | split: "|" -%}
+
+{%- comment -%} DELIVERY OPTIONS {%- endcomment -%}
+{%- assign mock_delivery = "Next Day Delivery|2-3 Working Days|3-5 Working Days|5-7 Working Days|Express Delivery|Standard Delivery|Free Delivery|Click & Collect" | split: "|" -%}
+
+{%- comment -%} RATINGS {%- endcomment -%}
+{%- assign mock_ratings = "4.8|4.7|4.9|4.6|4.8|4.5|4.7|4.9|4.6|4.8|4.4|4.7|4.8|4.5|4.9|4.6|4.7|4.3|4.8|4.9" | split: "|" -%}
+
+{%- comment -%} REVIEW COUNTS {%- endcomment -%}
+{%- assign mock_review_counts = "234|189|156|312|278|145|167|198|223|189|134|256|289|167|198|234|156|123|189|245" | split: "|" -%}
+
+{%- comment -%} EXPORT ALL DATA AS GLOBAL ASSIGNS {%- endcomment -%}
+{%- assign global_mock_categories = mock_categories -%}
+{%- assign global_mock_category_counts = mock_category_counts -%}
+{%- assign global_mock_brands = mock_brands -%}
+{%- assign global_mock_brand_counts = mock_brand_counts -%}
+{%- assign global_mock_product_types = mock_product_types -%}
+{%- assign global_mock_prices = mock_prices -%}
+{%- assign global_mock_sku_prefixes = mock_sku_prefixes -%}
+{%- assign global_mock_descriptions = mock_descriptions -%}
+{%- assign global_mock_compatibility = mock_compatibility -%}
+{%- assign global_mock_availability = mock_availability -%}
+{%- assign global_mock_delivery = mock_delivery -%}
+{%- assign global_mock_ratings = mock_ratings -%}
+{%- assign global_mock_review_counts = mock_review_counts -%}
+
+{%- comment -%} PRICE RANGE COUNTS {%- endcomment -%}
+{%- assign mock_price_range_counts = "167|324|289|145|123" | split: "|" -%}
+{%- assign global_mock_price_range_counts = mock_price_range_counts -%}

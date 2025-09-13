@@ -1,0 +1,351 @@
+{%- comment -%}
+  Search Suggestions Section - eSpares Style
+  Popular searches, categories, and helpful links with manual mock data
+{%- endcomment -%}
+
+{%- comment -%} MANUAL MOCK DATA {%- endcomment -%}
+{%- assign mock_categories = "Washing Machines|Dishwashers|Ovens & Cookers|Fridges & Freezers|Vacuum Cleaners" | split: "|" -%}
+{%- assign mock_brands = "Bosch|Samsung|Whirlpool|LG|Hotpoint" | split: "|" -%}
+{%- assign mock_product_types = "Door Seal|Heating Element|Water Filter|Spray Arm|Vacuum Belt|Turntable|Lint Filter|Grease Filter|Thermostat|Pump|Motor|Hose|Gasket|Handle|Knob|Switch" | split: "|" -%}
+
+<style>
+.espares-search-suggestions {
+  background: white;
+  padding: 50px 0;
+}
+
+.espares-suggestions-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.espares-suggestions-title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #212529;
+  margin-bottom: 40px;
+}
+
+.espares-suggestions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+.espares-suggestion-card {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 25px;
+  text-align: center;
+}
+
+.espares-suggestion-icon {
+  font-size: 3rem;
+  margin-bottom: 15px;
+  display: block;
+}
+
+.espares-suggestion-heading {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #212529;
+  margin-bottom: 15px;
+}
+
+.espares-suggestion-description {
+  color: #6c757d;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.espares-suggestion-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.espares-suggestion-links li {
+  margin-bottom: 8px;
+}
+
+.espares-suggestion-links a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.espares-suggestion-links a:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+.espares-popular-searches {
+  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+  border-radius: 12px;
+  padding: 30px;
+  text-align: center;
+  color: white;
+}
+
+.espares-popular-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.espares-popular-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.espares-popular-tag {
+  background: rgba(255,255,255,0.2);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.espares-popular-tag:hover {
+  background: rgba(255,255,255,0.3);
+  transform: translateY(-2px);
+}
+
+.espares-help-section {
+  margin-top: 40px;
+  text-align: center;
+  padding: 30px;
+  background: #f8f9fa;
+  border-radius: 12px;
+}
+
+.espares-help-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #212529;
+  margin-bottom: 15px;
+}
+
+.espares-help-description {
+  color: #6c757d;
+  margin-bottom: 20px;
+}
+
+.espares-help-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.espares-help-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: background 0.2s ease;
+}
+
+.espares-help-button:hover {
+  background: #0056b3;
+  color: white;
+}
+
+.espares-help-button.secondary {
+  background: #6c757d;
+}
+
+.espares-help-button.secondary:hover {
+  background: #5a6268;
+}
+
+@media (max-width: 768px) {
+  .espares-suggestions-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .espares-popular-tags {
+    justify-content: flex-start;
+  }
+  
+  .espares-help-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+</style>
+
+{%- if section.settings.show_search_suggestions -%}
+<div class="espares-search-suggestions">
+  <div class="espares-suggestions-container">
+    <h2 class="espares-suggestions-title">Can't find what you're looking for?</h2>
+    
+    <div class="espares-suggestions-grid">
+      <!-- Browse by Appliance -->
+      <div class="espares-suggestion-card">
+        <span class="espares-suggestion-icon">🏠</span>
+        <h3 class="espares-suggestion-heading">Browse by Appliance</h3>
+        <p class="espares-suggestion-description">
+          Find parts by browsing your specific appliance type
+        </p>
+        <ul class="espares-suggestion-links">
+          {%- for i in (0..4) -%}
+            {%- assign category = mock_categories[i] -%}
+            {%- if category -%}
+              <li><a href="/search?q={{ category | handleize }}">{{ category }}</a></li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      </div>
+      
+      <!-- Browse by Brand -->
+      <div class="espares-suggestion-card">
+        <span class="espares-suggestion-icon">🏷️</span>
+        <h3 class="espares-suggestion-heading">Browse by Brand</h3>
+        <p class="espares-suggestion-description">
+          Search for parts from your appliance manufacturer
+        </p>
+        <ul class="espares-suggestion-links">
+          {%- for i in (0..4) -%}
+            {%- assign brand = mock_brands[i] -%}
+            {%- if brand -%}
+              <li><a href="/search?q={{ brand | handleize }}">{{ brand }}</a></li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      </div>
+      
+      <!-- Search Tips -->
+      <div class="espares-suggestion-card">
+        <span class="espares-suggestion-icon">💡</span>
+        <h3 class="espares-suggestion-heading">Search Tips</h3>
+        <p class="espares-suggestion-description">
+          Get better results with these search techniques
+        </p>
+        <ul class="espares-suggestion-links">
+          <li><a href="/pages/how-to-find-model-number">Find Your Model Number</a></li>
+          <li><a href="/pages/part-identification">Part Identification Guide</a></li>
+          <li><a href="/pages/compatibility-checker">Compatibility Checker</a></li>
+          <li><a href="/pages/installation-guides">Installation Guides</a></li>
+          <li><a href="/pages/troubleshooting">Troubleshooting Help</a></li>
+        </ul>
+      </div>
+    </div>
+    
+    <!-- Popular Searches -->
+    <div class="espares-popular-searches">
+      <h3 class="espares-popular-title">Popular Searches</h3>
+      <div class="espares-popular-tags">
+        {%- for i in (0..15) -%}
+          {%- assign product_type = mock_product_types[i] -%}
+          {%- if product_type -%}
+            <a href="/search?q={{ product_type | handleize }}" class="espares-popular-tag">{{ product_type }}</a>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+    
+    <!-- Help Section -->
+    <div class="espares-help-section">
+      <h3 class="espares-help-title">Still need help finding the right part?</h3>
+      <p class="espares-help-description">
+        Our experts are here to help you find exactly what you need for your appliance repair.
+      </p>
+      <div class="espares-help-buttons">
+        <a href="/pages/contact" class="espares-help-button">
+          <span>💬</span>
+          <span>Live Chat</span>
+        </a>
+        <a href="tel:+441234567890" class="espares-help-button secondary">
+          <span>📞</span>
+          <span>Call Us</span>
+        </a>
+        <a href="/pages/part-finder" class="espares-help-button">
+          <span>🔍</span>
+          <span>Part Finder Tool</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{%- endif -%}
+
+<script>
+// Track popular search clicks
+document.addEventListener('DOMContentLoaded', function() {
+  const popularTags = document.querySelectorAll('.espares-popular-tag');
+  
+  popularTags.forEach(tag => {
+    tag.addEventListener('click', function(e) {
+      const searchTerm = this.textContent.trim();
+      console.log('Popular search clicked:', searchTerm);
+      
+      // Optional: Track analytics
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'search', {
+          'search_term': searchTerm,
+          'source': 'popular_suggestions'
+        });
+      }
+    });
+  });
+  
+  // Track help button clicks
+  const helpButtons = document.querySelectorAll('.espares-help-button');
+  
+  helpButtons.forEach(button => {
+    button.addEventListener('click', function(e) {
+      const buttonType = this.querySelector('span:last-child').textContent.trim();
+      console.log('Help button clicked:', buttonType);
+      
+      // Optional: Track analytics
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'click', {
+          'button_type': buttonType,
+          'section': 'search_help'
+        });
+      }
+    });
+  });
+});
+</script>
+
+{% schema %}
+{
+  "name": "Search Suggestions",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_search_suggestions",
+      "label": "Show search suggestions",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "suggestions_title",
+      "label": "Suggestions title",
+      "default": "Can't find what you're looking for?"
+    },
+    {
+      "type": "text",
+      "id": "help_phone",
+      "label": "Help phone number",
+      "default": "+441234567890"
+    }
+  ]
+}
+{% endschema %}

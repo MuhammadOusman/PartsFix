@@ -1,0 +1,282 @@
+{%- comment -%}
+  Search Banner Section - eSpares Style
+  Search form and helpful tips with manual mock data
+{%- endcomment -%}
+
+{%- comment -%} MANUAL MOCK DATA {%- endcomment -%}
+{%- assign mock_product_types = "Door Seal|Heating Element|Water Filter|Spray Arm|Vacuum Belt|Turntable|Lint Filter|Grease Filter|Thermostat|Pump|Motor|Hose|Gasket|Handle|Knob|Switch|Sensor|Control Board|Display Panel|Glass Shelf" | split: "|" -%}
+{%- assign mock_categories = "Washing Machines|Dishwashers|Ovens & Cookers|Fridges & Freezers|Vacuum Cleaners|Tumble Dryers|Microwaves|Coffee Machines|Blenders & Mixers|Irons & Steamers" | split: "|" -%}
+{%- assign mock_brands = "Bosch|Samsung|Whirlpool|LG|Hotpoint|Beko|Siemens|Miele|AEG|Electrolux|Indesit|Zanussi|Candy|Hoover|Dyson" | split: "|" -%}
+
+<style>
+.espares-search-banner {
+  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+  color: white;
+  padding: 40px 0;
+}
+
+.espares-search-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  text-align: center;
+}
+
+.espares-search-title {
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.espares-search-subtitle {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  margin-bottom: 30px;
+}
+
+.espares-search-form {
+  max-width: 600px;
+  margin: 0 auto 30px;
+  position: relative;
+}
+
+.espares-search-input {
+  width: 100%;
+  padding: 15px 60px 15px 20px;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 8px;
+  outline: none;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.espares-search-button {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  bottom: 5px;
+  background: #ffc107;
+  color: #212529;
+  border: none;
+  padding: 0 20px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.espares-search-button:hover {
+  background: #e0a800;
+}
+
+.espares-search-tips {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.espares-search-tip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.espares-search-autocomplete {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  margin-top: 5px;
+  z-index: 1000;
+  display: none;
+}
+
+.espares-autocomplete-item {
+  padding: 12px 20px;
+  color: #212529;
+  border-bottom: 1px solid #f1f1f1;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.espares-autocomplete-item:hover {
+  background: #f8f9fa;
+}
+
+.espares-autocomplete-item:last-child {
+  border-bottom: none;
+}
+
+@media (max-width: 768px) {
+  .espares-search-banner {
+    padding: 30px 0;
+  }
+  
+  .espares-search-title {
+    font-size: 2rem;
+  }
+  
+  .espares-search-tips {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .espares-search-input {
+    padding: 12px 50px 12px 15px;
+    font-size: 1rem;
+  }
+}
+</style>
+
+{%- if section.settings.show_search_banner -%}
+<div class="espares-search-banner">
+  <div class="espares-search-container">
+    <h1 class="espares-search-title">
+      {%- if search.performed -%}
+        {%- if search.results_count > 0 -%}
+          {{ search.results_count }} results for "{{ search.terms }}"
+        {%- else -%}
+          No results for "{{ search.terms }}"
+        {%- endif -%}
+      {%- else -%}
+        Find the right part for your appliance
+      {%- endif -%}
+    </h1>
+    
+    {%- unless search.performed -%}
+      <p class="espares-search-subtitle">
+        Search from over 1 million genuine spare parts and accessories
+      </p>
+    {%- endunless -%}
+    
+    <form class="espares-search-form" action="{{ routes.search_url }}" method="get" role="search">
+      <input type="search" 
+             name="q" 
+             class="espares-search-input"
+             placeholder="Search by model number, part name, or appliance type..."
+             value="{{ search.terms | escape }}"
+             autocomplete="off"
+             id="searchInput">
+      
+      <button type="submit" class="espares-search-button">
+        🔍 Search
+      </button>
+      
+      <div class="espares-search-autocomplete" id="autocompleteResults"></div>
+    </form>
+    
+    {%- if section.settings.show_search_tips -%}
+      <div class="espares-search-tips">
+        <div class="espares-search-tip">
+          <span>💡</span>
+          <span>Try model numbers like "WMF145"</span>
+        </div>
+        <div class="espares-search-tip">
+          <span>🔧</span>
+          <span>Search by part type like "door seal"</span>
+        </div>
+        <div class="espares-search-tip">
+          <span>🏠</span>
+          <span>Browse by appliance category</span>
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+{%- endif -%}
+
+<script>
+// Dynamic autocomplete suggestions based on mock data
+const mockSuggestions = [
+  {%- for product_type in mock_product_types limit: 20 -%}
+    '{{ product_type | downcase }}'
+    {%- unless forloop.last -%},{%- endunless -%}
+  {%- endfor -%}
+];
+
+// Add some category suggestions
+const categorySuggestions = [
+  {%- for category in mock_categories limit: 10 -%}
+    '{{ category | downcase }} parts'
+    {%- unless forloop.last -%},{%- endunless -%}
+  {%- endfor -%}
+];
+
+// Add some brand suggestions  
+const brandSuggestions = [
+  {%- for brand in mock_brands limit: 15 -%}
+    '{{ brand | downcase }} parts'
+    {%- unless forloop.last -%},{%- endunless -%}
+  {%- endfor -%}
+];
+
+// Combine all suggestions
+const allSuggestions = [...mockSuggestions, ...categorySuggestions, ...brandSuggestions];
+
+document.addEventListener('DOMContentLoaded', function() {
+  const searchInput = document.getElementById('searchInput');
+  const autocompleteResults = document.getElementById('autocompleteResults');
+  
+  if (!searchInput || !autocompleteResults) return;
+  
+  searchInput.addEventListener('input', function() {
+    const query = this.value.toLowerCase().trim();
+    
+    if (query.length < 2) {
+      autocompleteResults.style.display = 'none';
+      return;
+    }
+    
+    const matches = allSuggestions.filter(suggestion => 
+      suggestion.toLowerCase().includes(query)
+    ).slice(0, 8);
+    
+    if (matches.length > 0) {
+      autocompleteResults.innerHTML = matches.map(match => 
+        `<div class="espares-autocomplete-item" onclick="selectSuggestion('${match}')">${match}</div>`
+      ).join('');
+      autocompleteResults.style.display = 'block';
+    } else {
+      autocompleteResults.style.display = 'none';
+    }
+  });
+  
+  // Hide autocomplete when clicking outside
+  document.addEventListener('click', function(e) {
+    if (!searchInput.contains(e.target) && !autocompleteResults.contains(e.target)) {
+      autocompleteResults.style.display = 'none';
+    }
+  });
+});
+
+function selectSuggestion(suggestion) {
+  document.getElementById('searchInput').value = suggestion;
+  document.getElementById('autocompleteResults').style.display = 'none';
+  document.querySelector('.espares-search-form').submit();
+}
+</script>
+
+{% schema %}
+{
+  "name": "Search Banner",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_search_banner",
+      "label": "Show search banner",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_search_tips",
+      "label": "Show search tips",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

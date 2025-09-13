@@ -1,0 +1,279 @@
+{%- comment -%}
+  Brand Alphabet Filter Section
+  A-Z brand navigation like eSpares shop.pl?letter=A
+{%- endcomment -%}
+
+<style>
+  .espares-brand-alphabet {
+    background: #ffffff;
+    padding: 30px 0;
+    border-bottom: 1px solid #e9ecef;
+  }
+  
+  .espares-brand-alphabet h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #212529;
+    margin-bottom: 20px;
+  }
+  
+  .espares-alphabet-filter-label {
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #495057;
+  }
+  
+  .espares-alphabet-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 30px;
+  }
+  
+  .espares-alphabet-list-item {
+    display: inline-block;
+    min-width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    color: #495057;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+  
+  .espares-alphabet-list-item:hover {
+    background: #e9ecef;
+    color: #212529;
+    text-decoration: none;
+  }
+  
+  .espares-alphabet-list-item.selected {
+    background: #007bff;
+    color: #ffffff;
+    border-color: #007bff;
+  }
+  
+  .espares-brand-results {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 15px;
+  }
+  
+  .espares-brand-item {
+    background: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    padding: 20px;
+    transition: all 0.2s ease;
+    text-align: center;
+  }
+  
+  .espares-brand-item:hover {
+    border-color: #007bff;
+    box-shadow: 0 2px 8px rgba(0, 123, 255, 0.1);
+    transform: translateY(-2px);
+  }
+  
+  .espares-brand-item a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1.1rem;
+  }
+  
+  .espares-brand-item a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+  }
+  
+  .espares-pagination {
+    margin-top: 40px;
+    text-align: center;
+  }
+  
+  .espares-pagination ul {
+    display: inline-flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 8px;
+  }
+  
+  .espares-pagination li {
+    display: inline-block;
+  }
+  
+  .espares-pagination a,
+  .espares-pagination span {
+    display: block;
+    padding: 10px 15px;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    color: #007bff;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+  
+  .espares-pagination a:hover {
+    background: #e9ecef;
+    border-color: #adb5bd;
+  }
+  
+  .espares-pagination .pagination-active span {
+    background: #007bff;
+    color: #ffffff;
+    border-color: #007bff;
+  }
+  
+  @media (max-width: 768px) {
+    .espares-brand-alphabet {
+      padding: 20px 0;
+    }
+    
+    .espares-alphabet-list {
+      gap: 4px;
+    }
+    
+    .espares-alphabet-list-item {
+      min-width: 35px;
+      height: 35px;
+      line-height: 35px;
+      font-size: 14px;
+    }
+    
+    .espares-brand-results {
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    
+    .espares-brand-item {
+      padding: 15px;
+    }
+  }
+</style>
+
+<div class="espares-brand-alphabet">
+  <div class="container">
+    <h1>{{ section.settings.heading | default: "Select your brand" }}</h1>
+    
+    <div class="espares-alphabet-filter-label">
+      <strong>Filter:</strong>
+    </div>
+    
+    <div class="espares-alphabet-list">
+      {%- assign alphabet = "2,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z" | split: "," -%}
+      {%- assign current_letter = request.path | split: "=" | last | upcase -%}
+      
+      {%- for letter in alphabet -%}
+        <a class="espares-alphabet-list-item {% if current_letter == letter %}selected{% endif %}" 
+           href="{{ routes.collections_url }}/brands?letter={{ letter }}">
+          {{ letter }}
+        </a>
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.show_brand_grid -%}
+      <div class="espares-brand-results">
+        {%- comment -%} Sample brand data - in real implementation, this would be dynamic {%- endcomment -%}
+        {%- assign sample_brands = "Bosch,Samsung,Hotpoint,Indesit,Beko,Whirlpool,Electrolux,Zanussi,AEG,Neff,Siemens,LG,Candy,Hoover,Dyson,Karcher,Flymo,Rangemaster" | split: "," -%}
+        
+        {%- for brand in sample_brands limit: section.settings.brands_per_page -%}
+          <div class="espares-brand-item">
+            <a href="{{ routes.collections_url }}/{{ brand | downcase | replace: ' ', '-' }}-spares" 
+               title="View {{ brand }} range">
+              {{ brand }}
+            </a>
+          </div>
+        {%- endfor -%}
+      </div>
+      
+      {%- if section.settings.show_pagination -%}
+        <div class="espares-pagination">
+          <ul>
+            <li class="pagination-active">
+              <span>1</span>
+            </li>
+            <li>
+              <a href="#" onclick="return false;">2</a>
+            </li>
+            <li>
+              <a href="#" onclick="return false;">3</a>
+            </li>
+            <li class="pagination-next">
+              <a href="#" onclick="return false;">
+                <span>next</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Brand Alphabet Filter",
+  "tag": "section",
+  "class": "section-brand-alphabet",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Brand Filter Settings"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section heading",
+      "default": "Select your brand"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_brand_grid",
+      "label": "Show brand grid",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "brands_per_page",
+      "min": 12,
+      "max": 60,
+      "step": 6,
+      "label": "Brands per page",
+      "default": 24
+    },
+    {
+      "type": "checkbox",
+      "id": "show_pagination",
+      "label": "Show pagination",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Style Settings"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#212529"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent color",
+      "default": "#007bff"
+    }
+  ]
+}
+{% endschema %}

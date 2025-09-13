@@ -1,1 +1,34 @@
-{"sections":{"main":{"type":"main-search","settings":{}}},"order":["main"]}
+{
+  "sections": {
+    "search-banner": {
+      "type": "search_banner_espares",
+      "settings": {
+        "show_search_banner": true,
+        "show_search_tips": true
+      }
+    },
+    "main": {
+      "type": "main_search_espares",
+      "settings": {
+        "show_filters": true,
+        "show_sort_options": true,
+        "show_result_count": true,
+        "products_per_page": 24,
+        "enable_infinite_scroll": false
+      }
+    },
+    "search-suggestions": {
+      "type": "search_suggestions_espares",
+      "settings": {
+        "show_popular_searches": true,
+        "show_categories": true,
+        "show_brands": true
+      }
+    }
+  },
+  "order": [
+    "search-banner",
+    "main", 
+    "search-suggestions"
+  ]
+}

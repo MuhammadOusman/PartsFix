@@ -1,0 +1,1350 @@
+{%- comment -%}
+  Main Search Results Section - eSpares Style
+  Search filters, sorting, and product results with dynamic mock data
+{%- endcomment -%}
+
+{%- comment -%} MANUAL MOCK DATA {%- endcomment -%}
+{%- assign mock_categories = "Washing Machines|Dishwashers|Ovens & Cookers|Fridges & Freezers|Vacuum Cleaners|Tumble Dryers|Microwaves|Coffee Machines|Blenders & Mixers|Irons & Steamers|Air Conditioners|Dehumidifiers|Cooker Hoods|Hobs & Cooktops|Built-in Appliances" | split: "|" -%}
+{%- assign mock_category_counts = "247|189|334|256|178|134|98|67|45|89|23|34|156|203|167" | split: "|" -%}
+
+{%- assign mock_brands = "Bosch|Samsung|Whirlpool|LG|Hotpoint|Beko|Siemens|Miele|AEG|Electrolux|Indesit|Zanussi|Candy|Hoover|Dyson|Shark|Vax|Bissell|Karcher|Black & Decker" | split: "|" -%}
+{%- assign mock_brand_counts = "145|238|152|129|234|189|167|89|134|156|178|145|123|167|234|189|134|98|178|145" | split: "|" -%}
+
+{%- assign mock_product_types = "Door Seal|Heating Element|Water Filter|Spray Arm|Vacuum Belt|Turntable|Lint Filter|Grease Filter|Thermostat|Pump|Motor|Hose|Gasket|Handle|Knob|Switch|Sensor|Control Board|Display Panel|Glass Shelf|Wire Rack|Drip Tray|Water Tank|Dust Bag|HEPA Filter|Brush Roll|Extension Wand|Crevice Tool|Upholstery Tool|Pet Hair Tool" | split: "|" -%}
+
+{%- assign mock_prices = "£4.99|£7.99|£12.99|£15.99|£18.99|£24.99|£28.99|£32.99|£38.99|£45.99|£52.99|£58.99|£65.99|£72.99|£78.99|£85.99|£92.99|£98.99|£105.99|£115.99" | split: "|" -%}
+
+{%- assign mock_ratings = "4.8|4.7|4.9|4.6|4.8|4.5|4.7|4.9|4.6|4.8|4.4|4.7|4.8|4.5|4.9|4.6|4.7|4.3|4.8|4.9" | split: "|" -%}
+{%- assign mock_review_counts = "234|189|156|312|278|145|167|198|223|189|134|256|289|167|198|234|156|123|189|245" | split: "|" -%}
+
+{%- assign mock_price_range_counts = "167|324|289|145|123" | split: "|" -%}
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+.espares-search-main {
+  padding: 40px 0;
+  background: #f8f9fa;
+  width: 100%;
+  overflow: hidden;
+}
+
+.espares-search-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+}
+
+.espares-search-sidebar {
+  background: white;
+  border-radius: 12px;
+  padding: 25px;
+  width: 280px;
+  flex-shrink: 0;
+  height: fit-content;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.espares-search-results {
+  flex: 1;
+  min-width: 0;
+}
+
+.espares-filter-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #212529;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #007bff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.espares-filter-group {
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.espares-filter-group:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.espares-filter-label {
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 15px;
+  display: block;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.espares-filter-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.espares-filter-item {
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+.espares-filter-item:hover {
+  background: #f8f9fa;
+  padding-left: 8px;
+}
+
+.espares-filter-checkbox {
+  margin-right: 12px;
+  transform: scale(1.1);
+  accent-color: #007bff;
+}
+
+.espares-filter-item label {
+  cursor: pointer;
+  flex: 1;
+  color: #495057;
+  font-size: 0.9rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: color 0.2s ease;
+}
+
+.espares-search-content {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  border: 1px solid #e9ecef;
+}
+
+.espares-search-header {
+  padding: 20px 25px;
+  border-bottom: 1px solid #e9ecef;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  background: #f8f9fa;
+}
+
+.espares-results-info {
+  font-size: 1.1rem;
+  color: #495057;
+  font-weight: 600;
+}
+
+.espares-sort-controls {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.espares-view-toggle {
+  display: flex;
+  background: white;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.espares-view-btn {
+  padding: 8px 12px;
+  border: none;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #495057;
+}
+
+.espares-view-btn.active {
+  background: #007bff;
+  color: white;
+}
+
+.espares-sort-select {
+  padding: 8px 12px;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  background: white;
+  color: #495057;
+  font-size: 0.9rem;
+  min-width: 150px;
+}
+
+.espares-sort-controls {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.espares-sort-select {
+  padding: 8px 12px;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  background: white;
+  font-size: 0.9rem;
+}
+
+.espares-view-toggle {
+  display: flex;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.espares-view-btn {
+  padding: 8px 12px;
+  background: white;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.espares-view-btn.active {
+  background: #007bff;
+  color: white;
+}
+
+.espares-products-grid {
+  padding: 25px !important;
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 20px !important;
+  align-items: stretch !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.espares-products-list {
+  padding: 25px;
+  display: none;
+}
+
+.espares-products-list.active {
+  display: block;
+}
+
+.espares-products-grid.list-view {
+  display: none;
+}
+
+.espares-product-card {
+  background: white !important;
+  border: 1px solid #e9ecef !important;
+  border-radius: 12px !important;
+  padding: 20px !important;
+  text-align: center !important;
+  transition: all 0.3s ease !important;
+  cursor: pointer !important;
+  height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  min-width: 220px !important;
+  word-wrap: break-word !important;
+  box-sizing: border-box !important;
+}
+
+.espares-product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  border-color: #007bff;
+}
+
+.espares-product-image {
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+  margin-bottom: 15px;
+  border-radius: 8px;
+}
+
+/* FORCE HORIZONTAL TEXT - OVERRIDE ALL STYLES */
+h4.espares-product-title,
+.espares-product-title,
+h4 {
+  writing-mode: horizontal-tb !important;
+  text-orientation: mixed !important;
+  direction: ltr !important;
+  unicode-bidi: normal !important;
+  white-space: normal !important;
+  word-break: break-word !important;
+  overflow-wrap: break-word !important;
+  display: block !important;
+  width: auto !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  font-size: 1rem !important;
+  line-height: 1.4 !important;
+  text-align: center !important;
+  margin: 8px 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  color: #212529 !important;
+  font-weight: 600 !important;
+}
+
+/* Ensure the container doesn't cause issues */
+.espares-product-card h4,
+.espares-product-card .espares-product-title {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+h4.espares-product-title {
+  font-size: 1.1rem !important;
+  font-weight: 600 !important;
+  color: #212529 !important;
+  margin-bottom: 8px !important;
+  line-height: 1.3 !important;
+  word-break: break-word !important;
+  white-space: normal !important;
+  text-align: center !important;
+  display: block !important;
+}
+
+.espares-product-title {
+  font-size: 1.1rem !important;
+  font-weight: 600 !important;
+  color: #212529 !important;
+  margin-bottom: 8px !important;
+  line-height: 1.3 !important;
+  word-break: break-word !important;
+  white-space: normal !important;
+  text-align: center !important;
+  display: block !important;
+}
+
+.espares-product-sku {
+  font-size: 0.85rem;
+  color: #6c757d;
+  margin-bottom: 10px;
+}
+
+.espares-product-price {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #28a745;
+  margin-bottom: 15px;
+  margin-top: auto;
+}
+
+.espares-product-features {
+  list-style: none;
+  padding: 0;
+  margin: 15px 0;
+  font-size: 0.9rem;
+  color: #495057;
+}
+
+.espares-product-features li {
+  margin-bottom: 5px;
+}
+
+.espares-add-to-cart {
+  background: #007bff !important;
+  color: white !important;
+  border: none !important;
+  padding: 12px 20px !important;
+  border-radius: 6px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  width: 100% !important;
+  font-size: 0.9rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  margin-top: auto !important;
+}
+
+.espares-add-to-cart:hover {
+  background: #0056b3;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+}
+/* duplicate/stray block removed above */
+
+.espares-product-rating {
+  margin: 10px 0;
+  font-size: 0.9rem;
+}
+
+.espares-product-rating .stars {
+  color: #ffc107;
+  margin-right: 5px;
+}
+
+.espares-product-rating .rating-text {
+  color: #6c757d;
+  font-size: 0.8rem;
+}
+
+.espares-filter-checkbox:checked + label {
+  font-weight: 600;
+  color: #007bff;
+  background: #f0f8ff;
+}
+
+.espares-filter-checkbox:checked + label::before {
+  content: "✓ ";
+  color: #007bff;
+  font-weight: bold;
+  margin-right: 4px;
+}
+
+.filter-active-count {
+  background: #007bff;
+  color: white;
+  border-radius: 12px;
+  padding: 2px 8px;
+  font-size: 0.8rem;
+  margin-left: 10px;
+}
+
+.clear-filters-btn:hover {
+  background: #5a6268 !important;
+}
+
+.no-results-message {
+  text-align: center;
+  padding: 40px 20px;
+  color: #6c757d;
+  font-size: 1.1rem;
+}
+
+.espares-product-list-item {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  border-bottom: 1px solid #e9ecef;
+  align-items: center;
+  min-width: 0;
+}
+
+.espares-product-list-item:last-child {
+  border-bottom: none;
+}
+
+.espares-list-image {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.espares-list-details {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.espares-list-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #212529;
+  margin-bottom: 8px;
+}
+
+.espares-list-description {
+  color: #6c757d;
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.espares-list-price {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #28a745;
+}
+
+.espares-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 30px 25px;
+  border-top: 1px solid #e9ecef;
+}
+
+.espares-page-btn {
+  padding: 8px 12px;
+  border: 1px solid #ced4da;
+  background: white;
+  color: #495057;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.espares-page-btn:hover,
+.espares-page-btn.active {
+  background: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.espares-page-btn:focus-visible,
+.espares-view-btn:focus-visible,
+.mobile-filter-toggle:focus-visible,
+.clear-filters-btn:focus-visible {
+  outline: 3px solid #80bdff;
+  outline-offset: 2px;
+}
+
+.espares-no-results {
+  text-align: center;
+  padding: 60px 25px;
+  color: #6c757d;
+}
+
+.espares-no-results h3 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: #495057;
+}
+
+@media (max-width: 768px) {
+  .espares-search-wrapper {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .espares-search-sidebar {
+    width: 100%;
+  }
+  
+  .espares-products-grid {
+  grid-template-columns: 1fr !important; /* single column on mobile */
+    gap: 15px !important;
+    padding: 15px !important;
+  }
+  
+  .espares-search-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 15px;
+  }
+  
+  .espares-results-info {
+    text-align: center;
+  }
+  
+  .espares-sort-controls {
+    justify-content: center;
+  }
+  
+  .espares-search-sidebar {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 85%;
+    max-width: 400px;
+    height: 100vh;
+    background: white;
+    z-index: 1000;
+    transition: left 0.3s ease;
+    overflow-y: auto;
+    padding: 20px;
+    box-shadow: 2px 0 15px rgba(0,0,0,0.3);
+  }
+  
+  .espares-search-sidebar.mobile-visible {
+    left: 0;
+  }
+}
+
+@media (min-width: 769px) {
+  .espares-products-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important; /* 2-up grid on tablet/desktop */
+  }
+}
+
+@media (min-width: 1200px) {
+  .espares-products-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important; /* keep 2-up on large screens */
+  }
+}
+  
+  .mobile-filter-toggle {
+    display: block;
+    width: 100%;
+    padding: 10px 15px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  
+  .mobile-filter-toggle:hover {
+    background: #0056b3;
+  }
+  
+  .mobile-filter-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 999;
+  }
+  
+  .mobile-filter-overlay.active {
+    display: block;
+  }
+  
+  .espares-search-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .espares-products-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+    padding: 20px;
+  }
+/* stray closing brace removed */
+
+/* Titles: safe defaults to avoid vertical text */
+.espares-product-title, .espares-list-title, div.espares-product-title {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  font-size: 1.05rem;
+  line-height: 1.35;
+  font-weight: 600;
+  color: #212529;
+  margin: 6px 0 8px;
+  white-space: normal;
+  word-break: normal;
+  overflow-wrap: anywhere;
+}
+
+/* Grid/List visibility controlled by body class to avoid inline conflicts */
+#gridView { display: grid !important; }
+#listView { display: none !important; }
+body.list-view-enabled #gridView { display: none !important; }
+body.list-view-enabled #listView { display: block !important; }
+
+/* List view: keep price/CTA on the right without wrapping per character */
+.espares-products-list .espares-product-list-item {
+  display: grid;
+  grid-template-columns: 120px 1fr minmax(70px, auto) minmax(180px, auto);
+  align-items: center;
+  column-gap: 20px;
+}
+.espares-products-list .espares-list-price {
+  white-space: nowrap;
+  word-break: normal;
+  overflow-wrap: normal;
+  text-align: right;
+  margin-left: 10px;
+  font-variant-numeric: tabular-nums;
+  writing-mode: horizontal-tb !important;
+}
+.espares-products-list .espares-add-to-cart {
+  width: auto !important;
+  flex: 0 0 auto !important;
+  margin-left: 16px !important;
+  padding: 10px 16px !important;
+}
+
+/* List view: make each row look like a wide card */
+.espares-products-list .espares-product-list-item {
+  background: #fff;
+  border: 1px solid #e9ecef;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 16px;
+}
+
+/* On small screens, allow CTA to span full width beneath details */
+@media (max-width: 768px) {
+  .espares-products-list .espares-product-list-item {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+  .espares-products-list .espares-add-to-cart {
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-top: 10px !important;
+  }
+  .espares-products-list .espares-list-price {
+    margin-left: auto !important;
+  }
+}
+</style>
+
+<div class="espares-search-main">
+  <div class="espares-search-wrapper">
+    <!-- Mobile Filter Toggle -->
+    <button class="mobile-filter-toggle" onclick="toggleMobileFilters()" style="display: none;">
+      🔍 Show Filters (0)
+    </button>
+    
+    <!-- Mobile Filter Overlay -->
+    <div class="mobile-filter-overlay" onclick="toggleMobileFilters()"></div>
+    
+    <!-- Search Sidebar -->
+    <div class="espares-search-sidebar">
+      <h3 class="espares-filter-title">
+        Refine Your Search 
+        <span class="filter-active-count" id="activeFilterCount" style="display: none;">0</span>
+      </h3>
+      
+      <!-- Category Filter -->
+      <div class="espares-filter-group">
+        <label class="espares-filter-label">Categories</label>
+        <ul class="espares-filter-list">
+          {%- for i in (0..14) -%}
+            {%- assign category_name = mock_categories[i] -%}
+            {%- assign category_count = mock_category_counts[i] -%}
+            {%- if category_name and category_count -%}
+              <li class="espares-filter-item">
+                <input type="checkbox" id="cat-{{ forloop.index }}" class="espares-filter-checkbox" data-category="{{ category_name }}">
+                <label for="cat-{{ forloop.index }}">{{ category_name }} ({{ category_count }})</label>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      </div>
+      
+      <!-- Brand Filter -->
+      <div class="espares-filter-group">
+        <label class="espares-filter-label">Brands</label>
+        <ul class="espares-filter-list">
+          {%- for i in (0..19) -%}
+            {%- assign brand_name = mock_brands[i] -%}
+            {%- assign brand_count = mock_brand_counts[i] -%}
+            {%- if brand_name and brand_count -%}
+              <li class="espares-filter-item">
+                <input type="checkbox" id="brand-{{ forloop.index }}" class="espares-filter-checkbox" data-brand="{{ brand_name }}">
+                <label for="brand-{{ forloop.index }}">{{ brand_name }} ({{ brand_count }})</label>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      </div>
+      
+      <!-- Price Filter -->
+      <div class="espares-filter-group">
+        <label class="espares-filter-label">Price Range</label>
+        <ul class="espares-filter-list">
+          <li class="espares-filter-item">
+            <input type="checkbox" id="price-1" class="espares-filter-checkbox" data-price="under-10">
+            <label for="price-1">Under £10 ({{ mock_price_range_counts[0] }})</label>
+          </li>
+          <li class="espares-filter-item">
+            <input type="checkbox" id="price-2" class="espares-filter-checkbox" data-price="10-25">
+            <label for="price-2">£10 - £25 ({{ mock_price_range_counts[1] }})</label>
+          </li>
+          <li class="espares-filter-item">
+            <input type="checkbox" id="price-3" class="espares-filter-checkbox" data-price="25-50">
+            <label for="price-3">£25 - £50 ({{ mock_price_range_counts[2] }})</label>
+          </li>
+          <li class="espares-filter-item">
+            <input type="checkbox" id="price-4" class="espares-filter-checkbox" data-price="50-100">
+            <label for="price-4">£50 - £100 ({{ mock_price_range_counts[3] }})</label>
+          </li>
+          <li class="espares-filter-item">
+            <input type="checkbox" id="price-5" class="espares-filter-checkbox" data-price="over-100">
+            <label for="price-5">Over £100 ({{ mock_price_range_counts[4] }})</label>
+          </li>
+        </ul>
+      </div>
+    </div>
+    
+    <!-- Search Results -->
+  <div class="espares-search-content" data-products-per-page="{{ section.settings.products_per_page }}" aria-live="polite" aria-busy="false">
+      <div class="espares-search-header">
+    <div class="espares-results-info" role="status" aria-live="polite">
+          {%- if search.performed and search.terms != "" -%}
+            {%- comment -%} Calculate dynamic result count based on search term {%- endcomment -%}
+            {%- assign search_term = search.terms | downcase -%}
+            {%- assign result_count = 0 -%}
+            
+            {%- comment -%} Count matching products {%- endcomment -%}
+            {%- for product_type in mock_product_types -%}
+              {%- assign product_type_lower = product_type | downcase -%}
+              {%- if product_type_lower contains search_term or search_term contains product_type_lower -%}
+                {%- assign result_count = result_count | plus: 1 -%}
+              {%- endif -%}
+            {%- endfor -%}
+            
+            {%- comment -%} Add some randomness to make it more realistic {%- endcomment -%}
+            {%- assign random_multiplier = search_term.size | modulo: 5 | plus: 1 -%}
+            {%- assign final_count = result_count | times: random_multiplier | plus: 12 -%}
+            
+            {%- if result_count > 0 -%}
+              Showing {{ final_count }} results for "{{ search.terms }}"
+            {%- else -%}
+              No results found for "{{ search.terms }}"
+            {%- endif -%}
+          {%- else -%}
+            Showing 2,847 parts and accessories
+          {%- endif -%}
+        </div>
+        
+        <div class="espares-sort-controls">
+          <select id="sortSelect" class="espares-sort-select" aria-label="Sort results" onchange="updateSort(this.value)">
+            <option value="relevance">Sort by Relevance</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+            <option value="name-asc">Name: A to Z</option>
+            <option value="name-desc">Name: Z to A</option>
+            <option value="newest">Newest First</option>
+            <option value="popular">Most Popular</option>
+          </select>
+          
+          <div class="espares-view-toggle">
+            <button class="espares-view-btn active" aria-label="Grid view" aria-pressed="true" onclick="switchView('grid')">📱</button>
+            <button class="espares-view-btn" aria-label="List view" aria-pressed="false" onclick="switchView('list')">📋</button>
+          </div>
+        </div>
+      </div>
+      
+      {%- comment -%} Check if we should show no results {%- endcomment -%}
+      {%- assign should_show_no_results = false -%}
+      {%- if search.performed and search.terms != "" -%}
+        {%- assign search_term = search.terms | downcase -%}
+        {%- assign matching_products = 0 -%}
+        
+        {%- for product_type in mock_product_types -%}
+          {%- assign product_type_lower = product_type | downcase -%}
+          {%- if product_type_lower contains search_term or search_term contains product_type_lower -%}
+            {%- assign matching_products = matching_products | plus: 1 -%}
+          {%- endif -%}
+        {%- endfor -%}
+        
+        {%- if matching_products == 0 -%}
+          {%- assign should_show_no_results = true -%}
+        {%- endif -%}
+      {%- endif -%}
+      
+      {%- if should_show_no_results -%}
+        <div class="espares-no-results">
+          <h3>No results found for "{{ search.terms }}"</h3>
+          <p>Try adjusting your search terms or browse our categories below.</p>
+        </div>
+      {%- else -%}
+  <!-- Grid View (initially seeded with mock cards; JS will re-render) -->
+  <div class="espares-products-grid" id="gridView">
+          {%- comment -%} Generate dynamic products based on search terms {%- endcomment -%}
+          {%- assign search_term = search.terms | downcase | default: "" -%}
+          {%- assign products_generated = 0 -%}
+          
+          {%- comment -%} First, try to match search terms with product types {%- endcomment -%}
+          {%- if search.performed and search_term != "" -%}
+            {%- for product_type in mock_product_types -%}
+              {%- assign product_type_lower = product_type | downcase -%}
+              {%- if product_type_lower contains search_term or search_term contains product_type_lower -%}
+                {%- if products_generated < 12 -%}
+                  {%- assign random_category_index = forloop.index | modulo: mock_categories.size -%}
+                  {%- assign random_brand_index = forloop.index | modulo: mock_brands.size -%}
+                  {%- assign random_price_index = forloop.index | modulo: mock_prices.size -%}
+                  {%- assign random_rating_index = forloop.index | modulo: mock_ratings.size -%}
+                  
+                  {%- assign product_category = mock_categories[random_category_index] -%}
+                  {%- assign product_brand = mock_brands[random_brand_index] -%}
+                  {%- assign product_price = mock_prices[random_price_index] -%}
+                  {%- assign product_rating = mock_ratings[random_rating_index] -%}
+                  
+                  {%- assign product_sku = product_brand | slice: 0, 2 | upcase | append: forloop.index | append: "78" | append: products_generated -%}
+                  {%- assign product_title = product_brand | append: " " | append: product_type | append: " for " | append: product_category | strip -%}
+                  
+                  <div class="espares-product-card" onclick="location.href='/search?q={{ product_type | handleize }}'">
+                    <img src="https://via.placeholder.com/300x200/f8f9fa/6c757d?text={{ product_type | url_encode }}" 
+                         alt="{{ product_title }}" 
+                         class="espares-product-image">
+                    <div class="espares-product-title">{{ product_title | strip | truncate: 60 }}</div>
+                    <p class="espares-product-sku">SKU: {{ product_sku }}</p>
+                    <div class="espares-product-rating">
+                      <span class="stars">★★★★★</span>
+                      <span class="rating-text">({{ product_rating }}) {{ mock_review_counts[random_rating_index] }} reviews</span>
+                    </div>
+                    <p class="espares-product-price">{{ product_price }}</p>
+                    <ul class="espares-product-features">
+                      <li>✓ Genuine {{ product_brand }} part</li>
+                      <li>✓ Fast delivery available</li>
+                      <li>✓ 12 month warranty</li>
+                    </ul>
+                    <button class="espares-add-to-cart" onclick="event.stopPropagation(); addToCart('{{ product_sku }}')">Add to Cart</button>
+                  </div>
+                  
+                  {%- assign products_generated = products_generated | plus: 1 -%}
+                {%- endif -%}
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endif -%}
+          
+          {%- comment -%} If no search results or need more products, generate general products {%- endcomment -%}
+          {%- if products_generated < 8 -%}
+            {%- for i in (1..12) -%}
+              {%- if products_generated < 12 -%}
+                {%- assign random_type_index = forloop.index | modulo: mock_product_types.size -%}
+                {%- assign random_category_index = forloop.index | modulo: mock_categories.size -%}
+                {%- assign random_brand_index = forloop.index | modulo: mock_brands.size -%}
+                {%- assign random_price_index = forloop.index | modulo: mock_prices.size -%}
+                {%- assign random_rating_index = forloop.index | modulo: mock_ratings.size -%}
+                
+                {%- assign product_type = mock_product_types[random_type_index] -%}
+                {%- assign product_category = mock_categories[random_category_index] -%}
+                {%- assign product_brand = mock_brands[random_brand_index] -%}
+                {%- assign product_price = mock_prices[random_price_index] -%}
+                {%- assign product_rating = mock_ratings[random_rating_index] -%}
+                
+                {%- assign product_sku = product_brand | slice: 0, 2 | upcase | append: forloop.index | append: "45" | append: products_generated -%}
+                {%- assign product_title = product_brand | append: " " | append: product_type | append: " for " | append: product_category -%}
+                
+                <div class="espares-product-card" onclick="location.href='/search?q={{ product_type | handleize }}'">
+                  <img src="https://via.placeholder.com/300x200/f8f9fa/6c757d?text={{ product_type | url_encode }}" 
+                       alt="{{ product_title }}" 
+                       class="espares-product-image">
+                  <div class="espares-product-title">{{ product_title | strip | truncate: 60 }}</div>
+                  <p class="espares-product-sku">SKU: {{ product_sku }}</p>
+                  <div class="espares-product-rating">
+                    <span class="stars">★★★★☆</span>
+                    <span class="rating-text">({{ product_rating }}) {{ mock_review_counts[random_rating_index] }} reviews</span>
+                  </div>
+                  <p class="espares-product-price">{{ product_price }}</p>
+                  <ul class="espares-product-features">
+                    <li>✓ Genuine {{ product_brand }} part</li>
+                    <li>✓ Next day delivery</li>
+                    <li>✓ 12 month warranty</li>
+                  </ul>
+                  <button class="espares-add-to-cart" onclick="event.stopPropagation(); addToCart('{{ product_sku }}')">Add to Cart</button>
+                </div>
+                
+                {%- assign products_generated = products_generated | plus: 1 -%}
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endif -%}
+        </div>
+        
+  <!-- List View (JS rendered) -->
+        <div class="espares-products-list" id="listView">
+          {%- comment -%} Generate same dynamic products for list view {%- endcomment -%}
+          {%- assign search_term = search.terms | downcase | default: "" -%}
+          {%- assign products_generated = 0 -%}
+          
+          {%- comment -%} First, try to match search terms with product types {%- endcomment -%}
+          {%- if search.performed and search_term != "" -%}
+            {%- for product_type in mock_product_types -%}
+              {%- assign product_type_lower = product_type | downcase -%}
+              {%- if product_type_lower contains search_term or search_term contains product_type_lower -%}
+                {%- if products_generated < 12 -%}
+                  {%- assign random_category_index = forloop.index | modulo: mock_categories.size -%}
+                  {%- assign random_brand_index = forloop.index | modulo: mock_brands.size -%}
+                  {%- assign random_price_index = forloop.index | modulo: mock_prices.size -%}
+                  {%- assign random_rating_index = forloop.index | modulo: mock_ratings.size -%}
+                  
+                  {%- assign product_category = mock_categories[random_category_index] -%}
+                  {%- assign product_brand = mock_brands[random_brand_index] -%}
+                  {%- assign product_price = mock_prices[random_price_index] -%}
+                  {%- assign product_rating = mock_ratings[random_rating_index] -%}
+                  
+                  {%- assign product_sku = product_brand | slice: 0, 2 | upcase | append: forloop.index | append: "78" | append: products_generated -%}
+                  {%- assign product_title = product_brand | append: " " | append: product_type | append: " for " | append: product_category -%}
+                  
+                  <div class="espares-product-list-item" onclick="location.href='/search?q={{ product_type | handleize }}'">
+                    <img src="https://via.placeholder.com/120x120/f8f9fa/6c757d?text={{ product_type | url_encode }}" 
+                         alt="{{ product_title }}" 
+                         class="espares-list-image">
+                    <div class="espares-list-details">
+                      <h4 class="espares-list-title">{{ product_title | truncate: 80 }}</h4>
+                      <p class="espares-list-description">High-quality genuine replacement part designed for optimal performance and durability. Professional-grade spare part backed by comprehensive warranty coverage.</p>
+                      <p class="espares-product-sku">SKU: {{ product_sku }}</p>
+                      <div class="espares-product-rating">
+                        <span class="stars">★★★★★</span>
+                        <span class="rating-text">({{ product_rating }}) {{ mock_review_counts[random_rating_index] }} reviews</span>
+                      </div>
+                    </div>
+                    <div class="espares-list-price">{{ product_price }}</div>
+                    <button class="espares-add-to-cart" onclick="event.stopPropagation(); addToCart('{{ product_sku }}')">Add to Cart</button>
+                  </div>
+                  
+                  {%- assign products_generated = products_generated | plus: 1 -%}
+                {%- endif -%}
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endif -%}
+          
+          {%- comment -%} If no search results or need more products, generate general products {%- endcomment -%}
+          {%- if products_generated < 8 -%}
+            {%- for i in (1..12) -%}
+              {%- if products_generated < 12 -%}
+                {%- assign random_type_index = forloop.index | modulo: mock_product_types.size -%}
+                {%- assign random_category_index = forloop.index | modulo: mock_categories.size -%}
+                {%- assign random_brand_index = forloop.index | modulo: mock_brands.size -%}
+                {%- assign random_price_index = forloop.index | modulo: mock_prices.size -%}
+                {%- assign random_rating_index = forloop.index | modulo: mock_ratings.size -%}
+                
+                {%- assign product_type = mock_product_types[random_type_index] -%}
+                {%- assign product_category = mock_categories[random_category_index] -%}
+                {%- assign product_brand = mock_brands[random_brand_index] -%}
+                {%- assign product_price = mock_prices[random_price_index] -%}
+                {%- assign product_rating = mock_ratings[random_rating_index] -%}
+                
+                {%- assign product_sku = product_brand | slice: 0, 2 | upcase | append: forloop.index | append: "45" | append: products_generated -%}
+                {%- assign product_title = product_brand | append: " " | append: product_type | append: " for " | append: product_category -%}
+                
+                <div class="espares-product-list-item" onclick="location.href='/search?q={{ product_type | handleize }}'">
+                  <img src="https://via.placeholder.com/120x120/f8f9fa/6c757d?text={{ product_type | url_encode }}" 
+                       alt="{{ product_title }}" 
+                       class="espares-list-image">
+                  <div class="espares-list-details">
+                    <h4 class="espares-list-title">{{ product_title | truncate: 80 }}</h4>
+                    <p class="espares-list-description">High-quality replacement part for your appliance. Genuine spare part with full warranty coverage and professional installation support.</p>
+                    <p class="espares-product-sku">SKU: {{ product_sku }}</p>
+                    <div class="espares-product-rating">
+                      <span class="stars">★★★★☆</span>
+                      <span class="rating-text">({{ product_rating }}) {{ mock_review_counts[random_rating_index] }} reviews</span>
+                    </div>
+                  </div>
+                  <div class="espares-list-price">{{ product_price }}</div>
+                  <button class="espares-add-to-cart" onclick="event.stopPropagation(); addToCart('{{ product_sku }}')">Add to Cart</button>
+                </div>
+                
+                {%- assign products_generated = products_generated | plus: 1 -%}
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endif -%}
+        </div>
+        
+  <!-- Pagination (JS will populate) -->
+  <div class="espares-pagination" id="pagination"></div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+<script>
+// ----- State & helpers -----
+const STATE = {
+  view: 'grid',
+  sort: 'relevance',
+  page: 1,
+  perPage: 24,
+  filters: { categories: [], brands: [], prices: [] },
+  products: []
+};
+
+function parseInitialProducts() {
+  const cards = Array.from(document.querySelectorAll('#gridView .espares-product-card'));
+  return cards.map(card => {
+    const title = card.querySelector('.espares-product-title')?.textContent.trim() || '';
+    const sku = card.querySelector('.espares-product-sku')?.textContent.replace('SKU:', '').trim() || '';
+    const priceText = card.querySelector('.espares-product-price')?.textContent.trim() || '£0';
+    const price = parseFloat(priceText.replace('£', '')) || 0;
+    const img = card.querySelector('img')?.getAttribute('src') || '';
+    const ratingText = card.querySelector('.rating-text')?.textContent || '';
+    const parts = title.split(' for ');
+    const category = parts[1] || '';
+    const brand = title.split(' ')[0] || '';
+    return { id: sku || title, title, sku, price, img, ratingText, category, brand };
+  });
+}
+
+function readURL() {
+  const p = new URLSearchParams(window.location.search);
+  STATE.view = p.get('view') || STATE.view;
+  STATE.sort = p.get('sort') || STATE.sort;
+  STATE.page = parseInt(p.get('page') || STATE.page, 10);
+  STATE.perPage = parseInt(p.get('perPage') || STATE.perPage, 10);
+  STATE.filters.categories = (p.get('categories') || '').split(',').filter(Boolean);
+  STATE.filters.brands = (p.get('brands') || '').split(',').filter(Boolean);
+  STATE.filters.prices = (p.get('prices') || '').split(',').filter(Boolean);
+}
+
+function writeURL(push = false) {
+  const p = new URLSearchParams(window.location.search);
+  p.set('view', STATE.view);
+  p.set('sort', STATE.sort);
+  p.set('page', String(STATE.page));
+  p.set('perPage', String(STATE.perPage));
+  const { categories, brands, prices } = STATE.filters;
+  categories.length ? p.set('categories', categories.join(',')) : p.delete('categories');
+  brands.length ? p.set('brands', brands.join(',')) : p.delete('brands');
+  prices.length ? p.set('prices', prices.join(',')) : p.delete('prices');
+  const url = `${window.location.pathname}?${p.toString()}`;
+  if (push) history.pushState(STATE, '', url); else history.replaceState(STATE, '', url);
+}
+
+function isPriceInRange(price, key) {
+  switch (key) {
+    case 'under-10': return price < 10;
+    case '10-25': return price >= 10 && price <= 25;
+    case '25-50': return price >= 25 && price <= 50;
+    case '50-100': return price >= 50 && price <= 100;
+    case 'over-100': return price > 100;
+    default: return true;
+  }
+}
+
+function getFilteredProducts() {
+  const { categories, brands, prices } = STATE.filters;
+  return STATE.products.filter(p => {
+    if (categories.length && !categories.some(c => (p.category || '').toLowerCase().includes(c.toLowerCase()))) return false;
+    if (brands.length && !brands.some(b => (p.brand || '').toLowerCase().includes(b.toLowerCase()))) return false;
+    if (prices.length && !prices.some(pr => isPriceInRange(p.price, pr))) return false;
+    return true;
+  });
+}
+
+function sortProducts(arr) {
+  const s = STATE.sort;
+  const copy = [...arr];
+  copy.sort((a, b) => {
+    switch (s) {
+      case 'price-low': return a.price - b.price;
+      case 'price-high': return b.price - a.price;
+      case 'name-asc': return a.title.localeCompare(b.title);
+      case 'name-desc': return b.title.localeCompare(a.title);
+      default: return 0;
+    }
+  });
+  return copy;
+}
+
+function renderGrid(items) {
+  const grid = document.getElementById('gridView');
+  grid.innerHTML = items.map(p => `
+    <div class="espares-product-card" onclick="location.href='/search?q=${encodeURIComponent(p.title)}'">
+      <img src="${p.img}" alt="${p.title}" class="espares-product-image" loading="lazy">
+      <div class="espares-product-title">${p.title.replace(/</g,'&lt;')}</div>
+      <p class="espares-product-sku">SKU: ${p.sku}</p>
+      <div class="espares-product-rating">
+        <span class="stars">★★★★★</span>
+        <span class="rating-text">${p.ratingText || ''}</span>
+      </div>
+      <p class="espares-product-price">£${p.price.toFixed(2)}</p>
+      <ul class="espares-product-features">
+        <li>✓ Genuine ${p.brand} part</li>
+        <li>✓ Fast delivery available</li>
+        <li>✓ 12 month warranty</li>
+      </ul>
+  <button class="espares-add-to-cart" onclick="event.stopPropagation(); MockCart.addItem({ sku: '${p.sku}', title: '${p.title.replace(/'/g,"\\'")}', price: ${p.price}, img: '${p.img.replace(/'/g,"\\'")}' }); MockCart.open();">Add to Cart</button>
+    </div>`).join('');
+}
+
+function renderList(items) {
+  const list = document.getElementById('listView');
+  list.innerHTML = items.map(p => `
+    <div class="espares-product-list-item" onclick="location.href='/search?q=${encodeURIComponent(p.title)}'">
+      <img src="${p.img}" alt="${p.title}" class="espares-list-image" loading="lazy">
+      <div class="espares-list-details">
+        <h4 class="espares-list-title">${p.title.replace(/</g,'&lt;')}</h4>
+        <p class="espares-list-description">High-quality replacement part for your appliance. Genuine spare with warranty.</p>
+        <p class="espares-product-sku">SKU: ${p.sku}</p>
+        <div class="espares-product-rating">
+          <span class="stars">★★★★★</span>
+          <span class="rating-text">${p.ratingText || ''}</span>
+        </div>
+      </div>
+      <div class="espares-list-price">£${p.price.toFixed(2)}</div>
+  <button class="espares-add-to-cart" onclick="event.stopPropagation(); MockCart.addItem({ sku: '${p.sku}', title: '${p.title.replace(/'/g,"\\'")}', price: ${p.price}, img: '${p.img.replace(/'/g,"\\'")}' }); MockCart.open();">Add to Cart</button>
+    </div>`).join('');
+}
+
+function renderPagination(total) {
+  const pag = document.getElementById('pagination');
+  const pages = Math.max(1, Math.ceil(total / STATE.perPage));
+  const cur = Math.min(STATE.page, pages);
+  STATE.page = cur;
+  const btn = (n, label, disabled = false, active = false) => `<button class="espares-page-btn${active ? ' active' : ''}" ${disabled ? 'disabled' : ''} data-page="${n}" aria-label="Go to page ${n}">${label}</button>`;
+  let html = '';
+  html += btn(Math.max(1, cur - 1), '« Previous', cur === 1);
+  for (let i = 1; i <= pages; i++) html += btn(i, String(i), false, i === cur);
+  html += btn(Math.min(pages, cur + 1), 'Next »', cur === pages);
+  pag.innerHTML = html;
+  pag.querySelectorAll('button[data-page]').forEach(b => b.addEventListener('click', (e) => {
+    STATE.page = parseInt(e.currentTarget.getAttribute('data-page'), 10);
+    writeURL(true);
+    update();
+  }));
+}
+
+function updateResultsInfo(total) {
+  const resultsInfo = document.querySelector('.espares-results-info');
+  const qp = new URLSearchParams(window.location.search);
+  const searchTerm = qp.get('q') || '';
+  if (searchTerm) resultsInfo.textContent = `Showing ${total} results for "${searchTerm}"`;
+  else resultsInfo.textContent = `Showing ${total} parts and accessories`;
+}
+
+function applyCheckboxStateFromURL() {
+  const { categories, brands, prices } = STATE.filters;
+  document.querySelectorAll('.espares-filter-checkbox[data-category]').forEach(cb => cb.checked = categories.includes(cb.getAttribute('data-category')));
+  document.querySelectorAll('.espares-filter-checkbox[data-brand]').forEach(cb => cb.checked = brands.includes(cb.getAttribute('data-brand')));
+  document.querySelectorAll('.espares-filter-checkbox[data-price]').forEach(cb => cb.checked = prices.includes(cb.getAttribute('data-price')));
+  const sortSel = document.getElementById('sortSelect');
+  if (sortSel) sortSel.value = STATE.sort;
+  const gridBtn = document.querySelectorAll('.espares-view-btn')[0];
+  const listBtn = document.querySelectorAll('.espares-view-btn')[1];
+  if (STATE.view === 'grid') { gridBtn.classList.add('active'); listBtn.classList.remove('active'); }
+  else { listBtn.classList.add('active'); gridBtn.classList.remove('active'); }
+}
+
+function computeActiveCount() {
+  return STATE.filters.categories.length + STATE.filters.brands.length + STATE.filters.prices.length;
+}
+
+function updateActiveCountBadge() {
+  const count = computeActiveCount();
+  const badge = document.getElementById('activeFilterCount');
+  if (badge) {
+    if (count > 0) { badge.textContent = count; badge.style.display = 'inline'; }
+    else { badge.style.display = 'none'; }
+  }
+}
+
+function update() {
+  const container = document.querySelector('.espares-search-content');
+  if (container) container.setAttribute('aria-busy', 'true');
+  const filtered = getFilteredProducts();
+  const sorted = sortProducts(filtered);
+  const total = sorted.length;
+  updateResultsInfo(total);
+  const start = (STATE.page - 1) * STATE.perPage;
+  const items = sorted.slice(start, start + STATE.perPage);
+  if (STATE.view === 'grid') { renderGrid(items); document.getElementById('gridView').style.display = 'grid'; document.getElementById('listView').style.display = 'none'; }
+  else { renderList(items); document.getElementById('gridView').style.display = 'none'; document.getElementById('listView').style.display = 'block'; }
+  renderPagination(total);
+  updateActiveCountBadge();
+  if (container) container.setAttribute('aria-busy', 'false');
+}
+
+// ----- Event wiring -----
+function switchView(viewType) {
+  STATE.view = viewType;
+  writeURL(true);
+  update();
+}
+
+function updateSort(value) {
+  STATE.sort = value;
+  STATE.page = 1; // reset page when sorting changes
+  writeURL(true);
+  update();
+}
+
+function addToCart(productId) { alert('Product ' + productId + ' added to cart!'); }
+
+function syncFiltersFromDOM() {
+  STATE.filters.categories = Array.from(document.querySelectorAll('.espares-filter-checkbox[data-category]:checked')).map(cb => cb.getAttribute('data-category'));
+  STATE.filters.brands = Array.from(document.querySelectorAll('.espares-filter-checkbox[data-brand]:checked')).map(cb => cb.getAttribute('data-brand'));
+  STATE.filters.prices = Array.from(document.querySelectorAll('.espares-filter-checkbox[data-price]:checked')).map(cb => cb.getAttribute('data-price'));
+}
+
+function clearAllFilters() {
+  document.querySelectorAll('.espares-filter-checkbox').forEach(cb => cb.checked = false);
+  syncFiltersFromDOM();
+  STATE.page = 1;
+  writeURL(true);
+  update();
+}
+
+function toggleMobileFilters() {
+  const sidebar = document.querySelector('.espares-search-sidebar');
+  const overlay = document.querySelector('.mobile-filter-overlay');
+  if (sidebar.classList.contains('mobile-visible')) { sidebar.classList.remove('mobile-visible'); overlay?.classList.remove('active'); }
+  else { sidebar.classList.add('mobile-visible'); overlay?.classList.add('active'); }
+}
+
+function updateMobileFilterCount() {
+  const count = computeActiveCount();
+  const toggle = document.querySelector('.mobile-filter-toggle');
+  if (toggle) toggle.innerHTML = (document.querySelector('.espares-search-sidebar').classList.contains('mobile-visible') ? '❌ Hide Filters ' : '🔍 Show Filters ') + '(' + count + ')';
+}
+
+window.addEventListener('popstate', () => { readURL(); applyCheckboxStateFromURL(); update(); });
+
+document.addEventListener('DOMContentLoaded', function() {
+  // initial state
+  STATE.products = parseInitialProducts();
+  const per = document.querySelector('.espares-search-content')?.getAttribute('data-products-per-page');
+  if (per) STATE.perPage = parseInt(per, 10) || STATE.perPage;
+  readURL();
+  applyCheckboxStateFromURL();
+  // checkbox listeners
+  document.querySelectorAll('.espares-filter-checkbox').forEach(cb => {
+    cb.addEventListener('change', () => {
+      syncFiltersFromDOM();
+      STATE.page = 1;
+      writeURL(true);
+      update();
+      updateMobileFilterCount();
+    });
+  });
+  // clear button ensure exists
+  const sidebar = document.querySelector('.espares-search-sidebar');
+  if (sidebar && !document.querySelector('.clear-filters-btn')) {
+    const clearBtn = document.createElement('button');
+    clearBtn.className = 'clear-filters-btn';
+    clearBtn.textContent = 'Clear All Filters';
+    clearBtn.style.cssText = 'width: 100%; padding: 10px; background: #6c757d; color: white; border: none; border-radius: 6px; margin-top: 20px; cursor: pointer;';
+    clearBtn.addEventListener('click', clearAllFilters);
+    sidebar.appendChild(clearBtn);
+  }
+  // mobile toggle visibility on small screens
+  if (window.innerWidth <= 768) {
+    const mobileToggle = document.querySelector('.mobile-filter-toggle');
+    if (mobileToggle) mobileToggle.style.display = 'block';
+  }
+  updateMobileFilterCount();
+  // initial render
+  update();
+});
+</script>
+
+{% schema %}
+{
+  "name": "Main Search Results",
+  "settings": [
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "label": "Products per page",
+      "min": 12,
+      "max": 48,
+      "step": 12,
+      "default": 24
+    },
+    {
+      "type": "checkbox",
+      "id": "show_filters",
+      "label": "Show search filters",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sort_options",
+      "label": "Show sort options",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

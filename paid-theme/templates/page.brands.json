@@ -1,19 +1,36 @@
 {
   "sections": {
-    "brand_index_main": {
-      "type": "brand-index",
+    "collection-breadcrumbs": {
+      "type": "collection-breadcrumbs"
+    },
+    "brand-alphabet-filter": {
+      "type": "brand-alphabet-filter",
       "settings": {
-        "heading": "Shop by Brand",
-        "show_heading": true,
-        "enable_search": true,
-        "search_placeholder": "Filter brands...",
-        "columns": 4,
-        "hide_empty": true,
-        "empty_text": "No brands for this letter."
+        "heading": "Select your brand",
+        "show_brand_grid": true,
+        "brands_per_page": 24,
+        "show_pagination": true
+      }
+    },
+    "popular-brands-category": {
+      "type": "popular-brands",
+      "settings": {
+        "heading": "Popular Brands",
+        "show_view_all": false
+      }
+    },
+    "spare-parts-categories-bottom": {
+      "type": "spare-parts-categories",
+      "settings": {
+        "heading": "Spare Parts By Category",
+        "layout": "grid"
       }
     }
   },
   "order": [
-    "brand_index_main"
+    "collection-breadcrumbs",
+    "brand-alphabet-filter",
+    "popular-brands-category", 
+    "spare-parts-categories-bottom"
   ]
 }

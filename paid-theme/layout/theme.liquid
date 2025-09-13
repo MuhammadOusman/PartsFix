@@ -22,6 +22,15 @@
 <html class="no-js" lang="{{ request.locale.iso_code }}" dir="{% if rtl %}rtl{% else %}ltr{% endif %}">
 <head>
   {%- render 'doc-head-core' -%}
+  <script>
+    (function(){
+      var enabled = /[?&]mock=1\b/.test(location.search) || localStorage.getItem('pf_mock') === '1';
+      if (!enabled) return;
+      var s = document.createElement('script');
+      s.src = '{{ 'mock-cart.js' | asset_url }}';
+      s.defer = true; document.head.appendChild(s);
+    })();
+  </script>
   {%- render 'doc-head-social' -%}
   {%- render 'structured-data-header' -%}
   {%- comment -%} Google Fonts could be self-hosted later; keep minimal external calls {%- endcomment -%}

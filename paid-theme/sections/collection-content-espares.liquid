@@ -1,0 +1,590 @@
+{%- comment -%}
+  Collection Content Section - eSpares Style
+  Main content area with sidebar filters and product grid
+{%- endcomment -%}
+
+<style>
+  .espares-collection-container {
+    padding: 0;
+    margin: 0;
+  }
+  
+  .espares-collection-row {
+    display: flex;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+  }
+  
+  .espares-side-column {
+    flex: 0 0 280px;
+    background: #ffffff;
+  }
+  
+  .espares-main-column {
+    flex: 1;
+    min-width: 0;
+  }
+  
+  /* Side Column Styles */
+  .espares-side-column-mobile-heading {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #212529;
+    margin-bottom: 20px;
+    display: none;
+  }
+  
+  .espares-mobile-refine-toggle-btn {
+    display: none;
+    width: 100%;
+    background: #007bff;
+    color: #ffffff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .espares-mobile-refine-toggle-btn:hover {
+    background: #0056b3;
+  }
+  
+  .espares-mobile-refine-hamburger-icon {
+    display: inline-block;
+    width: 20px;
+    height: 2px;
+    background: #ffffff;
+    margin-left: 10px;
+    position: relative;
+  }
+  
+  .espares-mobile-refine-hamburger-icon::before,
+  .espares-mobile-refine-hamburger-icon::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 2px;
+    background: #ffffff;
+    left: 0;
+  }
+  
+  .espares-mobile-refine-hamburger-icon::before {
+    top: -6px;
+  }
+  
+  .espares-mobile-refine-hamburger-icon::after {
+    top: 6px;
+  }
+  
+  .espares-mobile-refine-selection-container {
+    display: none;
+  }
+  
+  .espares-side-column-wrapper {
+    background: #f8f9fa;
+    border-radius: 6px;
+    padding: 20px;
+  }
+  
+  .espares-side-menu {
+    margin-bottom: 25px;
+    background: #ffffff;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid #dee2e6;
+  }
+  
+  .espares-side-menu-title {
+    background: #e9ecef;
+    padding: 15px 20px;
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #495057;
+    border-bottom: 1px solid #dee2e6;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .espares-side-menu-title:hover {
+    background: #dee2e6;
+  }
+  
+  .espares-side-menu-content {
+    padding: 15px 20px;
+  }
+  
+  .espares-side-menu-content ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .espares-side-menu-content li {
+    margin-bottom: 8px;
+  }
+  
+  .espares-side-menu-content li:last-child {
+    margin-bottom: 0;
+  }
+  
+  .espares-side-menu-content a {
+    color: #007bff;
+    text-decoration: none;
+    display: block;
+    padding: 5px 0;
+    transition: color 0.2s ease;
+  }
+  
+  .espares-side-menu-content a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+  }
+  
+  .espares-clear-all-link {
+    display: inline-flex;
+    align-items: center;
+    color: #6c757d;
+    text-decoration: none;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+    transition: color 0.2s ease;
+  }
+  
+  .espares-clear-all-link:hover {
+    color: #495057;
+    text-decoration: underline;
+  }
+  
+  .espares-clear-all-icon {
+    display: inline-block;
+    margin-left: 8px;
+    color: #dc3545;
+    font-weight: bold;
+  }
+  
+  /* Product Grid Styles */
+  .espares-products-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #dee2e6;
+  }
+  
+  .espares-products-count {
+    color: #6c757d;
+    font-size: 0.9rem;
+  }
+  
+  .espares-products-sort {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .espares-products-sort select {
+    padding: 8px 12px;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    background: #ffffff;
+    color: #495057;
+    font-size: 0.9rem;
+  }
+  
+  .espares-products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+    margin-bottom: 40px;
+  }
+  
+  .espares-product-card {
+    background: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .espares-product-card:hover {
+    border-color: #007bff;
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.15);
+    transform: translateY(-3px);
+  }
+  
+  .espares-product-image {
+    width: 100%;
+    height: 200px;
+    object-fit: contain;
+    margin-bottom: 15px;
+    border-radius: 4px;
+  }
+  
+  .espares-product-title {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #212529;
+    margin-bottom: 10px;
+    line-height: 1.4;
+  }
+  
+  .espares-product-price {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #007bff;
+    margin-bottom: 15px;
+  }
+  
+  .espares-product-btn {
+    background: #ffc107;
+    color: #212529;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    display: inline-block;
+  }
+  
+  .espares-product-btn:hover {
+    background: #e0a800;
+    color: #212529;
+    text-decoration: none;
+    transform: translateY(-1px);
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 992px) {
+    .espares-collection-row {
+      flex-direction: column;
+    }
+    
+    .espares-side-column {
+      flex: none;
+      width: 100%;
+      order: 2;
+    }
+    
+    .espares-main-column {
+      order: 1;
+    }
+    
+    .espares-side-column-mobile-heading {
+      display: block;
+    }
+    
+    .espares-mobile-refine-toggle-btn {
+      display: block;
+    }
+    
+    .espares-side-column-wrapper {
+      display: none;
+    }
+    
+    .espares-side-column-wrapper.mobile-open {
+      display: block;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .espares-collection-row {
+      padding: 0 10px;
+      gap: 20px;
+    }
+    
+    .espares-products-header {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 15px;
+    }
+    
+    .espares-products-grid {
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 15px;
+    }
+    
+    .espares-product-card {
+      padding: 15px;
+    }
+    
+    .espares-product-image {
+      height: 150px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .espares-products-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<div class="espares-collection-container">
+  <div class="espares-collection-row">
+    <!-- Sidebar -->
+    <div class="espares-side-column">
+      <h2 class="espares-side-column-mobile-heading">
+        {%- if collection.handle == 'all' -%}
+          All Products
+        {%- elsif collection -%}
+          {{ collection.title }}
+        {%- else -%}
+          Browse Products
+        {%- endif -%}
+      </h2>
+
+      <button class="espares-mobile-refine-toggle-btn" type="button" onclick="toggleMobileFilters()">
+        <span>Refine Selection</span>
+        <span class="espares-mobile-refine-hamburger-icon"></span>
+      </button>
+
+      <div class="espares-mobile-refine-selection-container">
+        <!-- Mobile filter modal would go here -->
+      </div>
+
+      <div class="espares-side-column-wrapper" id="collection-filters">
+        <a class="espares-clear-all-link" href="{{ routes.all_products_collection_url }}" title="Clear All">
+          <span>Clear All</span>
+          <span class="espares-clear-all-icon">×</span>
+        </a>
+
+        {%- if collection and collection.handle != 'all' -%}
+          <div class="espares-side-menu filtered">
+            <h2 class="espares-side-menu-title">
+              <span class="label-mobile">Your collection</span>
+              <span class="label-desktop">Collection</span>
+            </h2>
+            <div class="espares-side-menu-content">
+              {{ collection.title }}
+              <a class="espares-clear-all-icon" href="{{ routes.all_products_collection_url }}" title="Clear">×</a>
+            </div>
+          </div>
+        {%- endif -%}
+
+        <div class="espares-side-menu enabled open">
+          <h2 class="espares-side-menu-title">
+            <span class="label-mobile">Choose your appliance</span>
+            <span class="label-desktop">Appliance</span>
+          </h2>
+          <div class="espares-side-menu-content">
+            <ul>
+              <li><a href="{{ routes.collections_url }}/cooker-parts">Cooker & Oven</a></li>
+              <li><a href="{{ routes.collections_url }}/cooker-hood-parts">Cooker Hood</a></li>
+              <li><a href="{{ routes.collections_url }}/dishwasher-parts">Dishwasher</a></li>
+              <li><a href="{{ routes.collections_url }}/fridge-parts">Fridge / Freezer</a></li>
+              <li><a href="{{ routes.collections_url }}/microwave-parts">Microwave</a></li>
+              <li><a href="{{ routes.collections_url }}/tumble-dryer-parts">Tumble Dryer</a></li>
+              <li><a href="{{ routes.collections_url }}/vacuum-parts">Vacuum Cleaner</a></li>
+              <li><a href="{{ routes.collections_url }}/washing-machine-parts">Washing Machine</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="espares-side-menu enabled">
+          <h2 class="espares-side-menu-title">
+            <span class="label-mobile">Popular brands</span>
+            <span class="label-desktop">Popular Brands</span>
+          </h2>
+          <div class="espares-side-menu-content">
+            <ul>
+              <li><a href="{{ routes.collections_url }}/bosch-spares">Bosch</a></li>
+              <li><a href="{{ routes.collections_url }}/samsung-spares">Samsung</a></li>
+              <li><a href="{{ routes.collections_url }}/hotpoint-spares">Hotpoint</a></li>
+              <li><a href="{{ routes.collections_url }}/indesit-spares">Indesit</a></li>
+              <li><a href="{{ routes.collections_url }}/beko-spares">Beko</a></li>
+              <li><a href="{{ routes.collections_url }}/whirlpool-spares">Whirlpool</a></li>
+              <li><a href="{{ routes.collections_url }}/electrolux-spares">Electrolux</a></li>
+              <li><a href="{{ routes.collections_url }}/zanussi-spares">Zanussi</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="espares-main-column">
+      <div class="espares-products-header">
+        <div class="espares-products-count">
+          {%- if collection.products_count -%}
+            {{ collection.products_count }} products
+          {%- else -%}
+            All products
+          {%- endif -%}
+        </div>
+        <div class="espares-products-sort">
+          <label for="SortBy">Sort by:</label>
+          <select name="sort_by" id="SortBy" onchange="location = this.value;">
+            <option value="{{ collection.url }}?sort_by=best-selling">Best selling</option>
+            <option value="{{ collection.url }}?sort_by=title-ascending">Alphabetically, A-Z</option>
+            <option value="{{ collection.url }}?sort_by=title-descending">Alphabetically, Z-A</option>
+            <option value="{{ collection.url }}?sort_by=price-ascending">Price, low to high</option>
+            <option value="{{ collection.url }}?sort_by=price-descending">Price, high to low</option>
+            <option value="{{ collection.url }}?sort_by=created-descending">Date, new to old</option>
+            <option value="{{ collection.url }}?sort_by=created-ascending">Date, old to new</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="espares-products-grid">
+        {%- if collection and collection.products.size > 0 -%}
+          {%- paginate collection.products by section.settings.products_per_page -%}
+            {%- for product in collection.products -%}
+              <div class="espares-product-card">
+                <a href="{{ product.url }}">
+                  {%- if product.featured_image -%}
+                    <img class="espares-product-image" 
+                         src="{{ product.featured_image | image_url: width: 280 }}" 
+                         alt="{{ product.featured_image.alt | escape }}"
+                         loading="lazy" 
+                         width="280" 
+                         height="200"/>
+                  {%- else -%}
+                    <img class="espares-product-image"
+                         src="https://via.placeholder.com/280x200/f8f9fa/666?text={{ product.title | truncate: 20, '' | url_encode }}"
+                         alt="{{ product.title | escape }}"
+                         loading="lazy" 
+                         width="280" 
+                         height="200"/>
+                  {%- endif -%}
+                  <h3 class="espares-product-title">{{ product.title }}</h3>
+                  <div class="espares-product-price">
+                    {{ product.price | money }}
+                    {%- if product.compare_at_price > product.price -%}
+                      <span style="text-decoration: line-through; color: #6c757d; font-size: 0.9rem; margin-left: 8px;">
+                        {{ product.compare_at_price | money }}
+                      </span>
+                    {%- endif -%}
+                  </div>
+                </a>
+                <a href="{{ product.url }}" class="espares-product-btn">
+                  View Details
+                </a>
+              </div>
+            {%- endfor -%}
+            {%- if paginate.pages > 1 -%}
+              <div class="espares-pagination" style="grid-column: 1 / -1; margin-top: 30px;">
+                {{ paginate | default_pagination }}
+              </div>
+            {%- endif -%}
+          {%- endpaginate -%}
+        {%- else -%}
+          {%- assign mock_products = section.settings.mock_products | default: '' -%}
+          {%- if mock_products == blank -%}
+            {%- assign mock_products = '[{"title":"Universal Cooker Element","price":19.99,"compare_at_price":24.99,"featured_image":"https://via.placeholder.com/280x200?text=Cooker+Element","url":"/products/universal-cooker-element"},{"title":"Fridge Door Seal","price":12.49,"compare_at_price":15.99,"featured_image":"https://via.placeholder.com/280x200?text=Fridge+Seal","url":"/products/fridge-door-seal"},{"title":"Vacuum Cleaner Filter","price":8.99,"compare_at_price":10.99,"featured_image":"https://via.placeholder.com/280x200?text=Vacuum+Filter","url":"/products/vacuum-cleaner-filter"}]' | parse_json -%}
+          {%- endif -%}
+          {%- for product in mock_products -%}
+            <div class="espares-product-card">
+              <a href="/products/mock-product-{{ forloop.index }}">
+                <img class="espares-product-image" src="{{ product.featured_image }}" alt="{{ product.title }}" loading="lazy" width="280" height="200"/>
+                <h3 class="espares-product-title">{{ product.title }}</h3>
+                <div class="espares-product-price">
+                  ${{ product.price }}
+                  <span style="text-decoration: line-through; color: #6c757d; font-size: 0.9rem; margin-left: 8px;">${{ product.compare_at_price }}</span>
+                </div>
+              </a>
+              <a href="/products/mock-product-{{ forloop.index }}" class="espares-product-btn">View Details</a>
+            </div>
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function toggleMobileFilters() {
+    const filters = document.getElementById('collection-filters');
+    filters.classList.toggle('mobile-open');
+  }
+  
+  // Auto-select current sort option
+  document.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const sortBy = urlParams.get('sort_by');
+    const sortSelect = document.getElementById('SortBy');
+    
+    if (sortBy && sortSelect) {
+      for (let option of sortSelect.options) {
+        if (option.value.includes(sortBy)) {
+          option.selected = true;
+          break;
+        }
+      }
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Collection eSpares",
+  "tag": "section",
+  "class": "section-collection-content-espares",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Collection Settings"
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "min": 12,
+      "max": 48,
+      "step": 6,
+      "label": "Products per page",
+      "default": 24
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sidebar",
+      "label": "Show sidebar filters",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sort_options",
+      "label": "Show sort options",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_product_count",
+      "label": "Show product count",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Style Settings"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent color",
+      "default": "#007bff"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Button color",
+      "default": "#ffc107"
+    }
+  ]
+}
+{% endschema %}

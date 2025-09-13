@@ -1,4 +1,7 @@
 {%- assign categories = section.settings.categories | split: '|' -%}
+{%- if categories == blank or categories.size == 0 or categories[0] == blank -%}
+  {%- assign categories = "Cooker|Cooker Hood|Dishwasher|Fridge|Microwave|Tumble Dryer|Vacuum Cleaner|Washing Machine|Blender & Mixer|Coffee Machine|Lawnmower|Pressure Washer" | split: '|' -%}
+{%- endif -%}
 
 <style>
 .espares-categories-section {
@@ -136,142 +139,57 @@
   <div class="container">
     <h2>{{ section.settings.title | default: "Spare Parts By Category" }}</h2>
     <div class="categories-grid">
-      <!-- Default categories matching eSpares layout -->
-      <div class="category-item">
-        <a href="/collections/cooker-parts" title="Cooker">
-          <div class="category-image">
-            <img loading="lazy" src="https://via.placeholder.com/160x120/f8f9fa/666?text=Cooker" alt="Cooker" width="160" height="120"/>
-          </div>
-          <div class="category-content">
-            <div class="category-name">Cooker</div>
-            <div class="category-description">Parts & accessories</div>
-          </div>
-        </a>
-      </div>
-      <div class="category-item">
-        <a href="/collections/cooker-hood-parts" title="Cooker Hood">
-          <div class="category-image">
-            <img loading="lazy" src="https://via.placeholder.com/160x120/f8f9fa/666?text=Hood" alt="Cooker Hood" width="160" height="120"/>
-          </div>
-          <div class="category-content">
-            <div class="category-name">Cooker Hood</div>
-            <div class="category-description">Parts & accessories</div>
-          </div>
-        </a>
-      </div>
-      <div class="category-item">
-        <a href="/collections/dishwasher-parts" title="Dishwasher">
-          <div class="category-image">
-            <img loading="lazy" src="https://via.placeholder.com/160x120/f8f9fa/666?text=Dishwasher" alt="Dishwasher" width="160" height="120"/>
-          </div>
-          <div class="category-content">
-            <div class="category-name">Dishwasher</div>
-            <div class="category-description">Parts & accessories</div>
-          </div>
-        </a>
-      </div>
-      <div class="category-item">
-        <a href="/collections/fridge-parts" title="Fridge">
-          <div class="category-image">
-            <img loading="lazy" src="https://via.placeholder.com/160x120/f8f9fa/666?text=Fridge" alt="Fridge" width="160" height="120"/>
-          </div>
-          <div class="category-content">
-            <div class="category-name">Fridge</div>
-            <div class="category-description">Parts & accessories</div>
-          </div>
-        </a>
-      </div>
-      <div class="category-item">
-        <a href="/collections/microwave-parts" title="Microwave">
-          <div class="category-image">
-            <img loading="lazy" src="https://via.placeholder.com/160x120/f8f9fa/666?text=Microwave" alt="Microwave" width="160" height="120"/>
-          </div>
-          <div class="category-content">
-            <div class="category-name">Microwave</div>
-            <div class="category-description">Parts & accessories</div>
-          </div>
-        </a>
-      </div>
-      <div class="category-item">
-        <a href="/collections/tumble-dryer-parts" title="Tumble Dryer">
-          <div class="category-image">
-            <img loading="lazy" src="https://via.placeholder.com/160x120/f8f9fa/666?text=Dryer" alt="Tumble Dryer" width="160" height="120"/>
-          </div>
-          <div class="category-content">
-            <div class="category-name">Tumble Dryer</div>
-            <div class="category-description">Parts & accessories</div>
-          </div>
-        </a>
-      </div>
-      <div class="category-item">
-        <a href="/collections/vacuum-parts" title="Vacuum Cleaner">
-          <div class="category-image">
-            <img loading="lazy" src="https://via.placeholder.com/160x120/f8f9fa/666?text=Vacuum" alt="Vacuum Cleaner" width="160" height="120"/>
-          </div>
-          <div class="category-content">
-            <div class="category-name">Vacuum Cleaner</div>
-            <div class="category-description">Parts & accessories</div>
-          </div>
-        </a>
-      </div>
-      <div class="category-item">
-        <a href="/collections/washing-machine-parts" title="Washing Machine">
-          <div class="category-image">
-            <img loading="lazy" src="https://via.placeholder.com/160x120/f8f9fa/666?text=Washer" alt="Washing Machine" width="160" height="120"/>
-          </div>
-          <div class="category-content">
-            <div class="category-name">Washing Machine</div>
-            <div class="category-description">Parts & accessories</div>
-          </div>
-        </a>
-      </div>
-      <div class="category-item">
-        <a href="/collections/blender-parts" title="Blender & Mixer">
-          <div class="category-image">
-            <img loading="lazy" src="https://via.placeholder.com/160x120/f8f9fa/666?text=Blender" alt="Blender & Mixer" width="160" height="120"/>
-          </div>
-          <div class="category-content">
-            <div class="category-name">Blender & Mixer</div>
-            <div class="category-description">Parts & accessories</div>
-          </div>
-        </a>
-      </div>
-      <div class="category-item">
-        <a href="/collections/coffee-machine-parts" title="Coffee Machine">
-          <div class="category-image">
-            <img loading="lazy" src="https://via.placeholder.com/160x120/f8f9fa/666?text=Coffee" alt="Coffee Machine" width="160" height="120"/>
-          </div>
-          <div class="category-content">
-            <div class="category-name">Coffee Machine</div>
-            <div class="category-description">Parts & accessories</div>
-          </div>
-        </a>
-      </div>
-      <div class="category-item">
-        <a href="/collections/lawnmower-parts" title="Lawnmower">
-          <div class="category-image">
-            <img loading="lazy" src="https://via.placeholder.com/160x120/f8f9fa/666?text=Mower" alt="Lawnmower" width="160" height="120"/>
-          </div>
-          <div class="category-content">
-            <div class="category-name">Lawnmower</div>
-            <div class="category-description">Parts & accessories</div>
-          </div>
-        </a>
-      </div>
-      <div class="category-item">
-        <a href="/collections/pressure-washer-parts" title="Pressure Washer">
-          <div class="category-image">
-            <img loading="lazy" src="https://via.placeholder.com/160x120/f8f9fa/666?text=Pressure" alt="Pressure Washer" width="160" height="120"/>
-          </div>
-          <div class="category-content">
-            <div class="category-name">Pressure Washer</div>
-            <div class="category-description">Parts & accessories</div>
-          </div>
-        </a>
-      </div>
+      {%- for category in categories -%}
+        {%- assign handle = category | downcase | replace: ' ', '-' | replace: '&', '' | replace: '--', '-' -%}
+        <div class="category-item">
+          <a href="/collections/all" title="{{ category }}">
+            <div class="category-image">
+              <img loading="lazy" src="https://via.placeholder.com/160x120/f8f9fa/666?text={{ category | url_encode }}" alt="{{ category }}" width="160" height="120"/>
+            </div>
+            <div class="category-content">
+              <div class="category-name">{{ category }}</div>
+              <div class="category-description">Parts & accessories</div>
+            </div>
+          </a>
+        </div>
+      {%- endfor -%}
     </div>
   </div>
 </div>
+
+<script>
+function showMockCategory(categoryName) {
+  const mockHTML = `
+    <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999;" onclick="this.remove()">
+      <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 30px; border-radius: 10px; max-width: 800px; width: 90%;">
+        <h2>${categoryName} Category - Mock Data</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 20px 0;">
+          <div style="border: 1px solid #ddd; padding: 15px; text-align: center; border-radius: 8px;">
+            <img src="https://via.placeholder.com/150x100?text=${categoryName}+Part+1" style="width: 100%; height: 100px; object-fit: contain; margin-bottom: 10px;">
+            <div style="font-weight: bold;">Universal ${categoryName} Element</div>
+            <div style="color: #007bff; font-size: 1.2em;">$19.99</div>
+            <button style="background: #ffc107; color: #333; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer;">View Details</button>
+          </div>
+          <div style="border: 1px solid #ddd; padding: 15px; text-align: center; border-radius: 8px;">
+            <img src="https://via.placeholder.com/150x100?text=${categoryName}+Part+2" style="width: 100%; height: 100px; object-fit: contain; margin-bottom: 10px;">
+            <div style="font-weight: bold;">${categoryName} Door Seal</div>
+            <div style="color: #007bff; font-size: 1.2em;">$12.49</div>
+            <button style="background: #ffc107; color: #333; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer;">View Details</button>
+          </div>
+          <div style="border: 1px solid #ddd; padding: 15px; text-align: center; border-radius: 8px;">
+            <img src="https://via.placeholder.com/150x100?text=${categoryName}+Filter" style="width: 100%; height: 100px; object-fit: contain; margin-bottom: 10px;">
+            <div style="font-weight: bold;">${categoryName} Filter</div>
+            <div style="color: #007bff; font-size: 1.2em;">$8.99</div>
+            <button style="background: #ffc107; color: #333; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer;">View Details</button>
+          </div>
+        </div>
+        <p style="text-align: center; color: #666;">Click anywhere to close</p>
+      </div>
+    </div>
+  `;
+  document.body.insertAdjacentHTML('beforeend', mockHTML);
+}
+</script>
 
 {% schema %}
 {

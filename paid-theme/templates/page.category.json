@@ -1,0 +1,18 @@
+{
+  "sections": {
+    "category_banner": {
+      "type": "category_banner"
+    },
+    "category_content": {
+      "type": "category_content"
+    },
+    "category_description": {
+      "type": "category_description"
+    }
+  },
+  "order": [
+    "category_banner",
+    "category_content", 
+    "category_description"
+  ]
+}

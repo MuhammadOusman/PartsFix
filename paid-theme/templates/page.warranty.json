@@ -1,0 +1,36 @@
+{
+  "sections": {
+    "banner": {
+      "type": "image-banner",
+      "settings": {
+        "overlay_text_align": "text-center",
+        "overlay_position": "justify-center items-center",
+        "height_mode": "auto",
+        "prevent_animation": false
+      },
+      "blocks": {
+        "banner_heading": {"type":"heading","settings":{"heading":"Warranty & Guarantees","heading_size":"h1","heading_h1":true}},
+        "banner_text": {"type":"text","settings":{"text":"<p>Peace of mind with every part.</p>","enlarge_text":true}}
+      },
+      "block_order": ["banner_heading","banner_text"]
+    },
+    "content": {
+      "type": "rich-text",
+      "settings": {
+        "text_position": "justify-center",
+        "text_align": "text-start",
+        "mob_center_text": true,
+        "wide": false,
+        "color_scheme": "none",
+        "full_width": true,
+        "prevent_animation": false
+      },
+      "blocks": {
+        "b1": {"type":"heading","settings":{"heading":"Coverage","heading_size":"h3","heading_h1":false}},
+        "b2": {"type":"text","settings":{"text":"<p>Most parts come with a 12‑month warranty against manufacturing defects.</p><h4>Exclusions</h4><p>Normal wear and tear and incorrect installation are not covered.</p><h4>Claims</h4><p>Contact customer service with proof of purchase and images where applicable.</p>","enlarge_text":false}}
+      },
+      "block_order": ["b1","b2"]
+    }
+  },
+  "order": ["banner","content"]
+}

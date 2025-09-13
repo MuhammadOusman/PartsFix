@@ -1,0 +1,91 @@
+<div class="category-banner">
+  <div class="page-width">
+    <!-- Breadcrumbs -->
+    <nav class="breadcrumbs" aria-label="breadcrumbs">
+      <a href="/" title="Home">Home</a>
+      <span class="breadcrumb-divider">&gt;</span>
+      <span>{{ page.title }}</span>
+    </nav>
+    
+    <!-- Category Header -->
+    <div class="category-header">
+      <h1 class="category-title">{{ page.title }} Spare Parts and Accessories</h1>
+      
+      {%- if page.content != blank -%}
+        <div class="category-intro">
+          {{ page.content }}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+<style>
+.category-banner {
+  background: #f8f9fa;
+  padding: 20px 0;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.breadcrumbs {
+  font-size: 14px;
+  margin-bottom: 15px;
+  color: #666;
+}
+
+.breadcrumbs a {
+  color: #0066cc;
+  text-decoration: none;
+}
+
+.breadcrumbs a:hover {
+  text-decoration: underline;
+}
+
+.breadcrumb-divider {
+  margin: 0 8px;
+}
+
+.category-header {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.category-title {
+  font-size: 2rem;
+  margin-bottom: 15px;
+  color: #333;
+  font-weight: 600;
+}
+
+.category-intro {
+  font-size: 16px;
+  color: #666;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .category-title {
+    font-size: 1.5rem;
+  }
+  
+  .category-banner {
+    padding: 15px 0;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Category Banner",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_breadcrumbs",
+      "label": "Show breadcrumbs",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

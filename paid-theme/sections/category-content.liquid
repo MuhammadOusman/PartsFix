@@ -1,0 +1,431 @@
+<div class="category-content">
+  <div class="page-width">
+    <div class="category-layout">
+      <!-- Left Sidebar - Filters -->
+      <div class="category-sidebar">
+        <!-- Find Your Spare Part -->
+        <div class="filter-section">
+          <h3>Find Your Spare Part</h3>
+          <a href="#" class="clear-all-link">Clear All</a>
+        </div>
+        
+        <!-- Your Appliance -->
+        <div class="filter-section">
+          <h4>Your appliance</h4>
+          <div class="appliance-tag">
+            {{ page.title }}
+            <a href="#" class="remove-filter">×</a>
+          </div>
+        </div>
+        
+        <!-- Choose Your Brand -->
+        <div class="filter-section">
+          <h4>Choose your brand</h4>
+          <div class="brand-grid">
+            {%- assign brands = "AEG,Ariston,Balay,Bauknecht,Baumatic,Belling,Bosch,CDA,Candy,Caple,DeDietrich,Electrolux,Fagor,Hotpoint,Indesit,Karcher,Kenwood,Neff,Rangemaster,Samsung,Smeg,Stoves,Whirlpool,Zanussi" | split: ',' -%}
+            
+            {%- for brand in brands limit: 12 -%}
+              <a href="/collections/{{ brand | downcase | replace: ' ', '-' }}" class="brand-link">
+                {{ brand }}
+              </a>
+            {%- endfor -%}
+            
+            <a href="#" class="more-brands-link">More...</a>
+          </div>
+        </div>
+        
+        <!-- Model Search -->
+        <div class="filter-section">
+          <h4>Start typing your model</h4>
+          <input type="text" class="model-search" placeholder="Enter model number...">
+        </div>
+        
+        <!-- Choose Your Part -->
+        <div class="filter-section">
+          <h4>Choose your part</h4>
+          <div class="part-categories">
+            {%- assign parts = "Filter,Bulb,Motor,Switch,Door,Handle,Seal,Element" | split: ',' -%}
+            {%- for part in parts -%}
+              <a href="#" class="part-link">{{ part }}</a>
+            {%- endfor -%}
+          </div>
+          <a href="#" class="clear-link">Clear</a>
+        </div>
+        
+        <!-- Refine Selection -->
+        <div class="filter-section">
+          <h4>Refine Selection</h4>
+          <div class="price-filter">
+            <label>Price Range:</label>
+            <select>
+              <option>All Prices</option>
+              <option>Under £10</option>
+              <option>£10 - £25</option>
+              <option>£25 - £50</option>
+              <option>Over £50</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Main Content Area -->
+      <div class="category-main">
+        <!-- Category Image -->
+        <div class="category-image-section">
+          <img src="https://via.placeholder.com/400x200/f8f9fa/666?text={{ page.title | url_encode }}" 
+               alt="{{ page.title }} Spare Parts" 
+               class="category-image"
+               width="400"
+               height="200">
+        </div>
+        
+        <!-- Select Your Brand (Main Section) -->
+        <div class="main-brand-section">
+          <h2>Select Your Brand</h2>
+          <div class="main-brand-grid">
+            {%- for brand in brands limit: 24 -%}
+              <a href="/collections/{{ brand | downcase | replace: ' ', '-' }}" class="main-brand-link">
+                {{ brand }}
+              </a>
+            {%- endfor -%}
+          </div>
+        </div>
+        
+        <!-- Top Products -->
+        <div class="top-products-section">
+          <h2>Top Products – {{ page.title }} Spare Parts and Accessories</h2>
+          
+          <div class="products-grid">
+            {%- comment -%} Sample products - in real implementation, these would come from collections {%- endcomment -%}
+            <div class="product-card">
+              <div class="product-image">
+                <img src="https://via.placeholder.com/200x200/f8f9fa/666?text=Filter" alt="Universal Filter" loading="lazy" width="200" height="200">
+              </div>
+              <div class="product-info">
+                <h3 class="product-title">Universal {{ page.title }} Filter</h3>
+                <p class="product-description">High-grade active filter that absorbs cooking odours...</p>
+                <div class="product-price">£4.99</div>
+              </div>
+            </div>
+            
+            <div class="product-card">
+              <div class="product-image">
+                <img src="https://via.placeholder.com/200x200/f8f9fa/666?text=Bulb" alt="LED Bulb" loading="lazy" width="200" height="200">
+              </div>
+              <div class="product-info">
+                <h3 class="product-title">40W E14 {{ page.title }} Bulb</h3>
+                <p class="product-description">Warm white illumination with small screw base...</p>
+                <div class="product-price">£1.93</div>
+              </div>
+            </div>
+            
+            <div class="product-card">
+              <div class="product-image">
+                <img src="https://via.placeholder.com/200x200/f8f9fa/666?text=Motor" alt="Motor" loading="lazy" width="200" height="200">
+              </div>
+              <div class="product-info">
+                <h3 class="product-title">{{ page.title }} Motor</h3>
+                <p class="product-description">Replacement motor for various {{ page.title | downcase }} models...</p>
+                <div class="product-price">£24.99</div>
+              </div>
+            </div>
+            
+            <div class="product-card">
+              <div class="product-image">
+                <img src="https://via.placeholder.com/200x200/f8f9fa/666?text=Switch" alt="Switch" loading="lazy" width="200" height="200">
+              </div>
+              <div class="product-info">
+                <h3 class="product-title">{{ page.title }} Switch</h3>
+                <p class="product-description">On/Off switch compatible with most models...</p>
+                <div class="product-price">£8.55</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.category-content {
+  padding: 30px 0;
+}
+
+.category-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 30px;
+  align-items: start;
+}
+
+/* Sidebar Styles */
+.category-sidebar {
+  background: #fff;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.filter-section {
+  padding: 20px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.filter-section:last-child {
+  border-bottom: none;
+}
+
+.filter-section h3 {
+  font-size: 18px;
+  margin: 0 0 10px 0;
+  color: #333;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.filter-section h4 {
+  font-size: 16px;
+  margin: 0 0 15px 0;
+  color: #333;
+  font-weight: 600;
+}
+
+.clear-all-link {
+  color: #0066cc;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.clear-all-link:hover {
+  text-decoration: underline;
+}
+
+.appliance-tag {
+  background: #e3f2fd;
+  padding: 8px 12px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  color: #1976d2;
+}
+
+.remove-filter {
+  color: #666;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.brand-grid {
+  display: grid;
+  gap: 8px;
+}
+
+.brand-link, .part-link {
+  color: #0066cc;
+  text-decoration: none;
+  padding: 4px 0;
+  font-size: 14px;
+}
+
+.brand-link:hover, .part-link:hover {
+  text-decoration: underline;
+}
+
+.more-brands-link {
+  color: #0066cc;
+  text-decoration: none;
+  font-weight: 600;
+  margin-top: 8px;
+  display: block;
+}
+
+.model-search {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.part-categories {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.clear-link {
+  color: #0066cc;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.price-filter select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-top: 8px;
+}
+
+/* Main Content Styles */
+.category-main {
+  background: #fff;
+}
+
+.category-image-section {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.category-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.main-brand-section {
+  margin-bottom: 40px;
+}
+
+.main-brand-section h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.main-brand-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 12px;
+}
+
+.main-brand-link {
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  text-align: center;
+  color: #0066cc;
+  text-decoration: none;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.main-brand-link:hover {
+  background: #f8f9fa;
+  border-color: #0066cc;
+}
+
+.top-products-section h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.product-card {
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: box-shadow 0.2s ease;
+}
+
+.product-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.product-image img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.product-info {
+  padding: 15px;
+}
+
+.product-title {
+  font-size: 16px;
+  margin: 0 0 8px 0;
+  color: #333;
+  font-weight: 600;
+}
+
+.product-description {
+  font-size: 14px;
+  color: #666;
+  margin: 0 0 12px 0;
+  line-height: 1.4;
+}
+
+.product-price {
+  font-size: 18px;
+  font-weight: 600;
+  color: #0066cc;
+}
+
+/* Mobile Responsive */
+@media (max-width: 1024px) {
+  .category-layout {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .category-sidebar {
+    order: 2;
+  }
+  
+  .category-main {
+    order: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .category-content {
+    padding: 20px 0;
+  }
+  
+  .main-brand-grid {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 8px;
+  }
+  
+  .products-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .filter-section {
+    padding: 15px;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Category Content",
+  "settings": [
+    {
+      "type": "text",
+      "id": "featured_brands",
+      "label": "Featured Brands",
+      "default": "AEG,Bosch,Hotpoint,Samsung,Zanussi",
+      "info": "Comma-separated list of featured brands"
+    },
+    {
+      "type": "number",
+      "id": "products_to_show",
+      "label": "Number of products to show",
+      "default": 4
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,602 @@
+{%- comment -%}
+  Main Search Results Section - eSpares Style
+  Search filters, sorting, and product results
+{%- endcomment -%}
+
+<style>
+.espares-search-main {
+  padding: 40px 0;
+  background: #f8f9fa;
+}
+
+.espares-search-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 30px;
+}
+
+.espares-search-sidebar {
+  background: white;
+  border-radius: 12px;
+  padding: 25px;
+  height: fit-content;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.espares-filter-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #212529;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #007bff;
+}
+
+.espares-filter-group {
+  margin-bottom: 25px;
+}
+
+.espares-filter-label {
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.espares-filter-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.espares-filter-item {
+  margin-bottom: 8px;
+}
+
+.espares-filter-checkbox {
+  margin-right: 8px;
+}
+
+.espares-search-content {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.espares-search-header {
+  padding: 20px 25px;
+  border-bottom: 1px solid #e9ecef;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.espares-results-info {
+  font-size: 1.1rem;
+  color: #495057;
+}
+
+.espares-sort-controls {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.espares-sort-select {
+  padding: 8px 12px;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  background: white;
+  font-size: 0.9rem;
+}
+
+.espares-view-toggle {
+  display: flex;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.espares-view-btn {
+  padding: 8px 12px;
+  background: white;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.espares-view-btn.active {
+  background: #007bff;
+  color: white;
+}
+
+.espares-products-grid {
+  padding: 25px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 25px;
+}
+
+.espares-products-list {
+  padding: 25px;
+  display: none;
+}
+
+.espares-products-list.active {
+  display: block;
+}
+
+.espares-products-grid.list-view {
+  display: none;
+}
+
+.espares-product-card {
+  background: white;
+  border: 1px solid #e9ecef;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.espares-product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  border-color: #007bff;
+}
+
+.espares-product-image {
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+  margin-bottom: 15px;
+  border-radius: 8px;
+}
+
+.espares-product-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #212529;
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+
+.espares-product-sku {
+  font-size: 0.85rem;
+  color: #6c757d;
+  margin-bottom: 10px;
+}
+
+.espares-product-price {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #28a745;
+  margin-bottom: 15px;
+}
+
+.espares-product-features {
+  list-style: none;
+  padding: 0;
+  margin: 15px 0;
+  font-size: 0.9rem;
+  color: #495057;
+}
+
+.espares-product-features li {
+  margin-bottom: 5px;
+}
+
+.espares-add-to-cart {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  width: 100%;
+}
+
+.espares-add-to-cart:hover {
+  background: #0056b3;
+}
+
+.espares-product-list-item {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  border-bottom: 1px solid #e9ecef;
+  align-items: center;
+}
+
+.espares-product-list-item:last-child {
+  border-bottom: none;
+}
+
+.espares-list-image {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.espares-list-details {
+  flex: 1;
+}
+
+.espares-list-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #212529;
+  margin-bottom: 8px;
+}
+
+.espares-list-description {
+  color: #6c757d;
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.espares-list-price {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #28a745;
+}
+
+.espares-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 30px 25px;
+  border-top: 1px solid #e9ecef;
+}
+
+.espares-page-btn {
+  padding: 8px 12px;
+  border: 1px solid #ced4da;
+  background: white;
+  color: #495057;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.espares-page-btn:hover,
+.espares-page-btn.active {
+  background: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.espares-no-results {
+  text-align: center;
+  padding: 60px 25px;
+  color: #6c757d;
+}
+
+.espares-no-results h3 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: #495057;
+}
+
+@media (max-width: 768px) {
+  .espares-search-wrapper {
+    grid-template-columns: 1fr;
+  }
+  
+  .espares-search-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .espares-products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+  }
+}
+</style>
+
+<div class="espares-search-main">
+  <div class="espares-search-wrapper">
+    <!-- Search Sidebar -->
+    <div class="espares-search-sidebar">
+      <h3 class="espares-filter-title">Refine Your Search</h3>
+      
+      <!-- Category Filter -->
+      <div class="espares-filter-group">
+        <label class="espares-filter-label">Categories</label>
+        <ul class="espares-filter-list">
+          <li class="espares-filter-item">
+            <input type="checkbox" id="cat-washing" class="espares-filter-checkbox">
+            <label for="cat-washing">Washing Machines (147)</label>
+          </li>
+          <li class="espares-filter-item">
+            <input type="checkbox" id="cat-dishwasher" class="espares-filter-checkbox">
+            <label for="cat-dishwasher">Dishwashers (89)</label>
+          </li>
+          <li class="espares-filter-item">
+            <input type="checkbox" id="cat-oven" class="espares-filter-checkbox">
+            <label for="cat-oven">Ovens & Cookers (234)</label>
+          </li>
+          <li class="espares-filter-item">
+            <input type="checkbox" id="cat-fridge" class="espares-filter-checkbox">
+            <label for="cat-fridge">Fridges & Freezers (156)</label>
+          </li>
+          <li class="espares-filter-item">
+            <input type="checkbox" id="cat-vacuum" class="espares-filter-checkbox">
+            <label for="cat-vacuum">Vacuum Cleaners (78)</label>
+          </li>
+        </ul>
+      </div>
+      
+      <!-- Brand Filter -->
+      <div class="espares-filter-group">
+        <label class="espares-filter-label">Brands</label>
+        <ul class="espares-filter-list">
+          <li class="espares-filter-item">
+            <input type="checkbox" id="brand-bosch" class="espares-filter-checkbox">
+            <label for="brand-bosch">Bosch (45)</label>
+          </li>
+          <li class="espares-filter-item">
+            <input type="checkbox" id="brand-samsung" class="espares-filter-checkbox">
+            <label for="brand-samsung">Samsung (38)</label>
+          </li>
+          <li class="espares-filter-item">
+            <input type="checkbox" id="brand-whirlpool" class="espares-filter-checkbox">
+            <label for="brand-whirlpool">Whirlpool (52)</label>
+          </li>
+          <li class="espares-filter-item">
+            <input type="checkbox" id="brand-lg" class="espares-filter-checkbox">
+            <label for="brand-lg">LG (29)</label>
+          </li>
+        </ul>
+      </div>
+      
+      <!-- Price Filter -->
+      <div class="espares-filter-group">
+        <label class="espares-filter-label">Price Range</label>
+        <ul class="espares-filter-list">
+          <li class="espares-filter-item">
+            <input type="checkbox" id="price-1" class="espares-filter-checkbox">
+            <label for="price-1">Under £10 (67)</label>
+          </li>
+          <li class="espares-filter-item">
+            <input type="checkbox" id="price-2" class="espares-filter-checkbox">
+            <label for="price-2">£10 - £25 (124)</label>
+          </li>
+          <li class="espares-filter-item">
+            <input type="checkbox" id="price-3" class="espares-filter-checkbox">
+            <label for="price-3">£25 - £50 (89)</label>
+          </li>
+          <li class="espares-filter-item">
+            <input type="checkbox" id="price-4" class="espares-filter-checkbox">
+            <label for="price-4">£50 - £100 (45)</label>
+          </li>
+          <li class="espares-filter-item">
+            <input type="checkbox" id="price-5" class="espares-filter-checkbox">
+            <label for="price-5">Over £100 (23)</label>
+          </li>
+        </ul>
+      </div>
+    </div>
+    
+    <!-- Search Results -->
+    <div class="espares-search-content">
+      <div class="espares-search-header">
+        <div class="espares-results-info">
+          {%- if search.performed -%}
+            {%- if search.results_count > 0 -%}
+              Showing {{ search.results_count }} results
+            {%- else -%}
+              No results found
+            {%- endif -%}
+          {%- else -%}
+            Showing 348 results
+          {%- endif -%}
+        </div>
+        
+        <div class="espares-sort-controls">
+          <select class="espares-sort-select" onchange="updateSort(this.value)">
+            <option value="relevance">Sort by Relevance</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+            <option value="newest">Newest First</option>
+            <option value="popular">Most Popular</option>
+          </select>
+          
+          <div class="espares-view-toggle">
+            <button class="espares-view-btn active" onclick="switchView('grid')">📱</button>
+            <button class="espares-view-btn" onclick="switchView('list')">📋</button>
+          </div>
+        </div>
+      </div>
+      
+      {%- if search.performed and search.results_count == 0 -%}
+        <div class="espares-no-results">
+          <h3>No results found for "{{ search.terms }}"</h3>
+          <p>Try adjusting your search terms or browse our categories below.</p>
+        </div>
+      {%- else -%}
+        <!-- Grid View -->
+        <div class="espares-products-grid" id="gridView">
+          {% assign mock_products = "Washing Machine Door Seal|Oven Heating Element|Fridge Water Filter|Dishwasher Spray Arm|Vacuum Belt|Microwave Turntable|Dryer Lint Filter|Cooker Hood Filter" | split: "|" %}
+          {% assign mock_skus = "WDS45621|OHE78932|FWF12345|DSA56789|VB24681|MT97531|DLF13579|CHF86420" | split: "|" %}
+          {% assign mock_prices = "£24.99|£45.99|£18.99|£12.99|£8.99|£32.99|£15.99|£28.99" | split: "|" %}
+          
+          {%- if search.performed -%}
+            {%- for item in search.results -%}
+              <div class="espares-product-card" onclick="location.href='{{ item.url }}'">
+                <img src="{{ item.featured_image | img_url: '300x300' }}" alt="{{ item.title }}" class="espares-product-image">
+                <h4 class="espares-product-title">{{ item.title }}</h4>
+                <p class="espares-product-sku">SKU: {{ item.sku | default: "N/A" }}</p>
+                <p class="espares-product-price">{{ item.price | money }}</p>
+                <ul class="espares-product-features">
+                  <li>✓ Genuine spare part</li>
+                  <li>✓ Fast delivery</li>
+                  <li>✓ 12 month warranty</li>
+                </ul>
+                <button class="espares-add-to-cart">Add to Cart</button>
+              </div>
+            {%- endfor -%}
+          {%- else -%}
+            {%- for i in (1..8) -%}
+              {% assign index = forloop.index0 %}
+              <div class="espares-product-card" onclick="location.href='/products/product-{{ forloop.index }}'">
+                <img src="https://via.placeholder.com/300x200/f8f9fa/6c757d?text={{ mock_products[index] | url_encode }}" 
+                     alt="{{ mock_products[index] }}" 
+                     class="espares-product-image">
+                <h4 class="espares-product-title">{{ mock_products[index] }}</h4>
+                <p class="espares-product-sku">SKU: {{ mock_skus[index] }}</p>
+                <p class="espares-product-price">{{ mock_prices[index] }}</p>
+                <ul class="espares-product-features">
+                  <li>✓ Genuine spare part</li>
+                  <li>✓ Fast delivery</li>
+                  <li>✓ 12 month warranty</li>
+                </ul>
+                <button class="espares-add-to-cart" onclick="event.stopPropagation(); addToCart({{ forloop.index }})">Add to Cart</button>
+              </div>
+            {%- endfor -%}
+          {%- endif -%}
+        </div>
+        
+        <!-- List View -->
+        <div class="espares-products-list" id="listView">
+          {%- if search.performed -%}
+            {%- for item in search.results -%}
+              <div class="espares-product-list-item" onclick="location.href='{{ item.url }}'">
+                <img src="{{ item.featured_image | img_url: '120x120' }}" alt="{{ item.title }}" class="espares-list-image">
+                <div class="espares-list-details">
+                  <h4 class="espares-list-title">{{ item.title }}</h4>
+                  <p class="espares-list-description">{{ item.description | strip_html | truncate: 150 }}</p>
+                  <p class="espares-product-sku">SKU: {{ item.sku | default: "N/A" }}</p>
+                </div>
+                <div class="espares-list-price">{{ item.price | money }}</div>
+                <button class="espares-add-to-cart">Add to Cart</button>
+              </div>
+            {%- endfor -%}
+          {%- else -%}
+            {%- for i in (1..8) -%}
+              {% assign index = forloop.index0 %}
+              <div class="espares-product-list-item" onclick="location.href='/products/product-{{ forloop.index }}'">
+                <img src="https://via.placeholder.com/120x120/f8f9fa/6c757d?text={{ mock_products[index] | url_encode }}" 
+                     alt="{{ mock_products[index] }}" 
+                     class="espares-list-image">
+                <div class="espares-list-details">
+                  <h4 class="espares-list-title">{{ mock_products[index] }}</h4>
+                  <p class="espares-list-description">High-quality replacement part for your appliance. Genuine spare part with full warranty coverage.</p>
+                  <p class="espares-product-sku">SKU: {{ mock_skus[index] }}</p>
+                </div>
+                <div class="espares-list-price">{{ mock_prices[index] }}</div>
+                <button class="espares-add-to-cart" onclick="event.stopPropagation(); addToCart({{ forloop.index }})">Add to Cart</button>
+              </div>
+            {%- endfor -%}
+          {%- endif -%}
+        </div>
+        
+        <!-- Pagination -->
+        <div class="espares-pagination">
+          <a href="#" class="espares-page-btn">« Previous</a>
+          <a href="#" class="espares-page-btn active">1</a>
+          <a href="#" class="espares-page-btn">2</a>
+          <a href="#" class="espares-page-btn">3</a>
+          <a href="#" class="espares-page-btn">4</a>
+          <a href="#" class="espares-page-btn">5</a>
+          <a href="#" class="espares-page-btn">Next »</a>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+<script>
+function switchView(viewType) {
+  const gridView = document.getElementById('gridView');
+  const listView = document.getElementById('listView');
+  const buttons = document.querySelectorAll('.espares-view-btn');
+  
+  buttons.forEach(btn => btn.classList.remove('active'));
+  
+  if (viewType === 'grid') {
+    gridView.style.display = 'grid';
+    listView.style.display = 'none';
+    buttons[0].classList.add('active');
+  } else {
+    gridView.style.display = 'none';
+    listView.style.display = 'block';
+    buttons[1].classList.add('active');
+  }
+}
+
+function updateSort(sortValue) {
+  console.log('Sorting by:', sortValue);
+  // Add sorting logic here
+}
+
+function addToCart(productId) {
+  alert('Product ' + productId + ' added to cart!');
+  // Add cart functionality here
+}
+
+// Filter functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const checkboxes = document.querySelectorAll('.espares-filter-checkbox');
+  
+  checkboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', function() {
+      applyFilters();
+    });
+  });
+});
+
+function applyFilters() {
+  const activeFilters = [];
+  const checkboxes = document.querySelectorAll('.espares-filter-checkbox:checked');
+  
+  checkboxes.forEach(checkbox => {
+    activeFilters.push(checkbox.id);
+  });
+  
+  console.log('Active filters:', activeFilters);
+  // Add filter application logic here
+}
+</script>
+
+{% schema %}
+{
+  "name": "Main Search Results",
+  "settings": [
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "label": "Products per page",
+      "min": 12,
+      "max": 48,
+      "step": 12,
+      "default": 24
+    },
+    {
+      "type": "checkbox",
+      "id": "show_filters",
+      "label": "Show search filters",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sort_options",
+      "label": "Show sort options",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

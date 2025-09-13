@@ -1,1 +1,74 @@
-{"sections":{"collection-banner":{"type":"main-collection-banner","settings":{"show_collection_title":true,"show_product_count":true,"show_collection_description":true,"text_align":"text-start","collection_image":"natural","use_product_image":false,"text_width":"standard","color_scheme":"default"}},"collection-products":{"type":"main-collection-products","custom_css":["img {object-fit: contain;}"],"settings":{"products_per_page":16,"card_size_mobile":"small","card_size":"medium","show_layout_toggle":true,"enable_filtering":true,"filters_open_lg":true,"stick_on_scroll":true,"show_filter_counts":true,"expand_filters":true,"max_filter_options":7,"enable_sorting":true,"sort_show_featured":false,"sort_show_best":true,"sort_show_alpha":true,"sort_show_price":true,"sort_show_date":true,"sort_first":true}}},"order":["collection-banner","collection-products"]}
+{
+  "sections": {
+    "collection-banner": {
+      "type": "main-collection-banner",
+      "settings": {
+        "show_collection_title": true,
+        "show_product_count": true,
+        "show_collection_description": true,
+        "text_align": "text-start",
+        "collection_image": "natural",
+        "use_product_image": false,
+        "text_width": "standard",
+        "color_scheme": "default"
+      }
+    },
+    "collection-content": {
+      "type": "collection-content-espares",
+      "settings": {
+        "products_per_page": 24,
+        "show_sidebar": true,
+        "show_sort_options": true,
+        "show_product_count": true,
+        "background_color": "#ffffff",
+        "accent_color": "#007bff",
+        "button_color": "#ffc107",
+        "mock_products": [
+          {
+            "title": "Universal Cooker Element",
+            "price": 19.99,
+            "compare_at_price": 24.99,
+            "featured_image": "https://via.placeholder.com/280x200?text=Cooker+Element",
+            "url": "/products/universal-cooker-element"
+          },
+          {
+            "title": "Fridge Door Seal",
+            "price": 12.49,
+            "compare_at_price": 15.99,
+            "featured_image": "https://via.placeholder.com/280x200?text=Fridge+Seal",
+            "url": "/products/fridge-door-seal"
+          },
+          {
+            "title": "Vacuum Cleaner Filter",
+            "price": 8.99,
+            "compare_at_price": 10.99,
+            "featured_image": "https://via.placeholder.com/280x200?text=Vacuum+Filter",
+            "url": "/products/vacuum-cleaner-filter"
+          }
+        ]
+      }
+    },
+    "popular-brands-category": {
+      "type": "popular-brands",
+      "settings": {
+        "title": "Popular Brands",
+        "view_all_url": "/collections/brands",
+        "view_all_text": "View all brands",
+        "brands": "Beko,Bosch,DeLonghi,Dyson,Electrolux,Flymo,Hoover,Hotpoint,Indesit,Karcher,Kenwood,Neff,Rangemaster,Samsung,Smeg,Stoves,Whirlpool,Zanussi"
+      }
+    },
+    "spare-parts-categories-bottom": {
+      "type": "spare-parts-categories",
+      "settings": {
+        "title": "Spare Parts By Category",
+        "categories": "Cooker|Cooker Hood|Dishwasher|Fridge|Microwave|Tumble Dryer|Vacuum Cleaner|Washing Machine|Blender & Mixer|Coffee Machine|Lawnmower|Pressure Washer"
+      }
+    }
+  },
+  "order": [
+    "collection-banner",
+    "collection-content",
+    "popular-brands-category",
+    "spare-parts-categories-bottom"
+  ]
+}

@@ -1,0 +1,112 @@
+{%- comment -%}
+  Product Breadcrumbs Section - eSpares Style
+  Shows navigation path for product pages
+{%- endcomment -%}
+
+<style>
+.espares-breadcrumbs {
+  background: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+  padding: 12px 0;
+  font-size: 14px;
+}
+
+.espares-breadcrumbs .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.espares-breadcrumbs-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.espares-breadcrumbs-item {
+  display: flex;
+  align-items: center;
+}
+
+.espares-breadcrumbs-item:not(:last-child)::after {
+  content: ">";
+  margin: 0 8px;
+  color: #6c757d;
+  font-weight: bold;
+}
+
+.espares-breadcrumbs-link {
+  color: #007bff;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.espares-breadcrumbs-link:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+.espares-breadcrumbs-current {
+  color: #495057;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .espares-breadcrumbs-list {
+    font-size: 12px;
+  }
+  
+  .espares-breadcrumbs-item:not(:last-child)::after {
+    margin: 0 4px;
+  }
+}
+</style>
+
+{%- if section.settings.show_breadcrumbs -%}
+<div class="espares-breadcrumbs">
+  <div class="container">
+    <ul class="espares-breadcrumbs-list">
+      <li class="espares-breadcrumbs-item">
+        <a href="{{ routes.root_url }}" class="espares-breadcrumbs-link">Home</a>
+      </li>
+      
+      {%- if product.type != blank -%}
+        <li class="espares-breadcrumbs-item">
+          <a href="{{ routes.collections_url }}/{{ product.type | handleize }}" class="espares-breadcrumbs-link">
+            {{ product.type }}
+          </a>
+        </li>
+      {%- endif -%}
+      
+      {%- if product.vendor != blank -%}
+        <li class="espares-breadcrumbs-item">
+          <a href="{{ routes.collections_url }}/{{ product.vendor | handleize }}" class="espares-breadcrumbs-link">
+            {{ product.vendor }}
+          </a>
+        </li>
+      {%- endif -%}
+      
+      <li class="espares-breadcrumbs-item">
+        <span class="espares-breadcrumbs-current">{{ product.title | truncate: 50 }}</span>
+      </li>
+    </ul>
+  </div>
+</div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Product Breadcrumbs",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_breadcrumbs",
+      "label": "Show breadcrumbs",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

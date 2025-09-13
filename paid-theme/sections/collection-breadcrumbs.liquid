@@ -1,0 +1,132 @@
+{%- comment -%}
+  Collection Breadcrumbs Section
+  Displays navigation hierarchy like eSpares breadcrumb system
+{%- endcomment -%}
+
+<style>
+  .espares-breadcrumb-container {
+    background: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+    padding: 12px 0;
+  }
+  
+  .espares-breadcrumb-navigation {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    font-size: 14px;
+  }
+  
+  .espares-breadcrumb-navigation li {
+    display: flex;
+    align-items: center;
+  }
+  
+  .espares-breadcrumb-navigation li:not(:last-child)::after {
+    content: ">";
+    margin: 0 8px;
+    color: #6c757d;
+    font-weight: bold;
+  }
+  
+  .espares-breadcrumb-navigation a {
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  
+  .espares-breadcrumb-navigation a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+  }
+  
+  .espares-breadcrumb-selected {
+    color: #495057;
+    font-weight: 500;
+  }
+  
+  @media (max-width: 768px) {
+    .espares-breadcrumb-container {
+      padding: 8px 0;
+    }
+    
+    .espares-breadcrumb-navigation {
+      font-size: 13px;
+    }
+  }
+</style>
+
+<div id="breadcrumb-container" class="espares-breadcrumb-container">
+  <div class="container">
+    <ul class="espares-breadcrumb-navigation">
+      <li class="breadcrumb-first">
+        <a href="{{ routes.root_url }}" title="Home">Home</a>
+      </li>
+      
+      {%- if collection.handle == 'all' -%}
+        <li class="espares-breadcrumb-selected">
+          <span>All Products</span>
+        </li>
+      {%- elsif collection -%}
+        {%- assign collection_handle_parts = collection.handle | split: '-' -%}
+        {%- if collection_handle_parts.size > 1 and collection_handle_parts contains 'spares' -%}
+          {%- comment -%} Brand collection like "bosch-spares" {%- endcomment -%}
+          {%- assign brand_name = collection_handle_parts.first | capitalize -%}
+          <li class="espares-breadcrumb-selected">
+            <span>{{ brand_name }} - Spares and Accessories</span>
+          </li>
+        {%- else -%}
+          {%- comment -%} Regular collection {%- endcomment -%}
+          <li class="espares-breadcrumb-selected">
+            <span>{{ collection.title }}</span>
+          </li>
+        {%- endif -%}
+      {%- else -%}
+        <li class="espares-breadcrumb-selected">
+          <span>Collections</span>
+        </li>
+      {%- endif -%}
+    </ul>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Collection Breadcrumbs",
+  "tag": "section",
+  "class": "section-collection-breadcrumbs",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Breadcrumb Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_breadcrumbs",
+      "label": "Show breadcrumbs",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#f8f9fa"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#495057"
+    },
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "Link color",
+      "default": "#007bff"
+    }
+  ]
+}
+{% endschema %}

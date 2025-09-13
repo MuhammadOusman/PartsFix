@@ -1,0 +1,677 @@
+{%- comment -%}
+  Main Product Section - eSpares Style
+  Product images, details, price, specifications, and add to cart
+{%- endcomment -%}
+
+<style>
+.espares-product-main {
+  padding: 30px 0;
+  background: #ffffff;
+}
+
+.espares-product-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.espares-product-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: start;
+}
+
+/* Product Images */
+.espares-product-media {
+  position: sticky;
+  top: 20px;
+}
+
+.espares-main-image {
+  width: 100%;
+  height: 400px;
+  object-fit: contain;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  cursor: zoom-in;
+}
+
+.espares-thumbnail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 10px;
+}
+
+.espares-thumbnail {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  border: 2px solid #e9ecef;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.espares-thumbnail:hover,
+.espares-thumbnail.active {
+  border-color: #007bff;
+}
+
+/* Product Info */
+.espares-product-info h1 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #212529;
+  margin-bottom: 15px;
+  line-height: 1.3;
+}
+
+.espares-product-vendor {
+  color: #007bff;
+  font-weight: 500;
+  margin-bottom: 10px;
+  text-decoration: none;
+}
+
+.espares-product-vendor:hover {
+  text-decoration: underline;
+}
+
+.espares-product-sku {
+  color: #6c757d;
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+}
+
+.espares-product-price {
+  margin-bottom: 20px;
+}
+
+.espares-current-price {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #007bff;
+}
+
+.espares-compare-price {
+  font-size: 1.2rem;
+  color: #6c757d;
+  text-decoration: line-through;
+  margin-left: 10px;
+}
+
+.espares-savings {
+  display: inline-block;
+  background: #dc3545;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin-left: 10px;
+}
+
+.espares-product-form {
+  margin-bottom: 30px;
+}
+
+.espares-variant-select,
+.espares-quantity-input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  font-size: 1rem;
+  margin-bottom: 15px;
+}
+
+.espares-add-to-cart {
+  width: 100%;
+  background: #ffc107;
+  color: #212529;
+  border: none;
+  padding: 15px 20px;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 15px;
+}
+
+.espares-add-to-cart:hover {
+  background: #e0a800;
+  transform: translateY(-1px);
+}
+
+.espares-buy-now {
+  width: 100%;
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.espares-buy-now:hover {
+  background: #0056b3;
+}
+
+.espares-delivery-info {
+  background: #f8f9fa;
+  border-radius: 6px;
+  padding: 15px;
+  margin: 20px 0;
+}
+
+.espares-delivery-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  color: #495057;
+}
+
+.espares-delivery-item:last-child {
+  margin-bottom: 0;
+}
+
+.espares-delivery-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  color: #28a745;
+}
+
+.espares-product-description {
+  margin-top: 30px;
+}
+
+.espares-description-tabs {
+  border-bottom: 1px solid #dee2e6;
+  margin-bottom: 20px;
+}
+
+.espares-tab-button {
+  background: none;
+  border: none;
+  padding: 12px 20px;
+  margin-right: 10px;
+  font-size: 1rem;
+  color: #6c757d;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.espares-tab-button.active {
+  color: #007bff;
+  border-bottom-color: #007bff;
+}
+
+.espares-tab-content {
+  display: none;
+  line-height: 1.6;
+}
+
+.espares-tab-content.active {
+  display: block;
+}
+
+.espares-specs-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+.espares-specs-table th,
+.espares-specs-table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.espares-specs-table th {
+  background: #f8f9fa;
+  font-weight: 600;
+  width: 30%;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .espares-product-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  
+  .espares-product-media {
+    position: static;
+  }
+}
+
+@media (max-width: 768px) {
+  .espares-product-main {
+    padding: 20px 0;
+  }
+  
+  .espares-product-container {
+    padding: 0 15px;
+  }
+  
+  .espares-main-image {
+    height: 300px;
+  }
+  
+  .espares-product-info h1 {
+    font-size: 1.5rem;
+  }
+  
+  .espares-current-price {
+    font-size: 1.6rem;
+  }
+}
+</style>
+
+<div class="espares-product-main">
+  <div class="espares-product-container">
+    <div class="espares-product-grid">
+      <!-- Product Images -->
+      <div class="espares-product-media">
+        {%- if product.media.size > 0 -%}
+          <img id="mainImage" 
+               class="espares-main-image" 
+               src="{{ product.featured_media | image_url: width: 600 }}" 
+               alt="{{ product.featured_media.alt | escape }}"
+               onclick="openImageModal(this.src)">
+          
+          {%- if product.media.size > 1 -%}
+            <div class="espares-thumbnail-grid">
+              {%- for media in product.media -%}
+                <img class="espares-thumbnail {% if forloop.first %}active{% endif %}" 
+                     src="{{ media | image_url: width: 100 }}" 
+                     alt="{{ media.alt | escape }}"
+                     onclick="changeMainImage(this, '{{ media | image_url: width: 600 }}')">
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+        {%- else -%}
+          <!-- Mock Images for Testing -->
+          <img id="mainImage" 
+               class="espares-main-image" 
+               src="https://via.placeholder.com/600x400/f8f9fa/666?text=Product+Image" 
+               alt="Product Image"
+               onclick="openImageModal(this.src)">
+          
+          <div class="espares-thumbnail-grid">
+            <img class="espares-thumbnail active" 
+                 src="https://via.placeholder.com/100x100/f8f9fa/666?text=1" 
+                 alt="Image 1"
+                 onclick="changeMainImage(this, 'https://via.placeholder.com/600x400/f8f9fa/666?text=Product+Image')">
+            <img class="espares-thumbnail" 
+                 src="https://via.placeholder.com/100x100/f8f9fa/666?text=2" 
+                 alt="Image 2"
+                 onclick="changeMainImage(this, 'https://via.placeholder.com/600x400/f8f9fa/666?text=Side+View')">
+            <img class="espares-thumbnail" 
+                 src="https://via.placeholder.com/100x100/f8f9fa/666?text=3" 
+                 alt="Image 3"
+                 onclick="changeMainImage(this, 'https://via.placeholder.com/600x400/f8f9fa/666?text=Back+View')">
+          </div>
+        {%- endif -%}
+      </div>
+
+      <!-- Product Info -->
+      <div class="espares-product-info">
+        {%- if product.vendor != blank -%}
+          <a href="/collections/{{ product.vendor | handleize }}" class="espares-product-vendor">
+            {{ product.vendor }}
+          </a>
+        {%- else -%}
+          <a href="/collections/universal-parts" class="espares-product-vendor">Universal Parts</a>
+        {%- endif -%}
+        
+        <h1>
+          {%- if product.title != blank -%}
+            {{ product.title }}
+          {%- else -%}
+            Universal Washing Machine Door Seal - Premium Quality
+          {%- endif -%}
+        </h1>
+        
+        <div class="espares-product-sku">
+          {%- if product.selected_or_first_available_variant.sku != blank -%}
+            SKU: {{ product.selected_or_first_available_variant.sku }}
+          {%- else -%}
+            SKU: ESP-WM-SEAL-001
+          {%- endif -%}
+        </div>
+        
+        <div class="espares-product-price">
+          {%- if product.price -%}
+            <span class="espares-current-price">{{ product.selected_or_first_available_variant.price | money }}</span>
+            {%- if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price -%}
+              <span class="espares-compare-price">{{ product.selected_or_first_available_variant.compare_at_price | money }}</span>
+              <span class="espares-savings">
+                Save {{ product.selected_or_first_available_variant.compare_at_price | minus: product.selected_or_first_available_variant.price | money }}
+              </span>
+            {%- endif -%}
+          {%- else -%}
+            <span class="espares-current-price">$24.99</span>
+            <span class="espares-compare-price">$34.99</span>
+            <span class="espares-savings">Save $10.00</span>
+          {%- endif -%}
+        </div>
+
+        <form class="espares-product-form" action="/cart/add" method="post" enctype="multipart/form-data">
+          {%- unless product.has_only_default_variant -%}
+            <select name="id" class="espares-variant-select">
+              {%- for variant in product.variants -%}
+                <option value="{{ variant.id }}"
+                        {% if variant == product.selected_or_first_available_variant %}selected="selected"{% endif %}
+                        {% unless variant.available %}disabled{% endunless %}>
+                  {{ variant.title }}
+                  {%- if variant.available -%}
+                    - {{ variant.price | money }}
+                  {%- else -%}
+                    - Sold out
+                  {%- endif -%}
+                </option>
+              {%- endfor -%}
+            </select>
+          {%- else -%}
+            <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+          {%- endunless -%}
+          
+          <input type="number" name="quantity" value="1" min="1" class="espares-quantity-input" id="quantity">
+          
+          <button type="submit" class="espares-add-to-cart"
+                  {% unless product.available %}disabled{% endunless %}>
+            {%- if product.available -%}
+              Add to Cart - {{ product.selected_or_first_available_variant.price | money }}
+            {%- else -%}
+              Sold Out
+            {%- endif -%}
+          </button>
+        </form>
+        
+        <button class="espares-buy-now" onclick="buyNow()">
+          Buy Now with Fast Checkout
+        </button>
+        
+        <div class="espares-delivery-info">
+          <div class="espares-delivery-item">
+            <span class="espares-delivery-icon">🚚</span>
+            <span>Free delivery on orders over $50</span>
+          </div>
+          <div class="espares-delivery-item">
+            <span class="espares-delivery-icon">⚡</span>
+            <span>Next day delivery available</span>
+          </div>
+          <div class="espares-delivery-item">
+            <span class="espares-delivery-icon">↩️</span>
+            <span>365 day returns policy</span>
+          </div>
+          <div class="espares-delivery-item">
+            <span class="espares-delivery-icon">🔧</span>
+            <span>Expert fitting advice available</span>
+          </div>
+        </div>
+
+        <div class="espares-product-description">
+          <div class="espares-description-tabs">
+            <button class="espares-tab-button active" onclick="openTab(event, 'description')">Description</button>
+            <button class="espares-tab-button" onclick="openTab(event, 'specifications')">Specifications</button>
+            <button class="espares-tab-button" onclick="openTab(event, 'compatibility')">Compatibility</button>
+            <button class="espares-tab-button" onclick="openTab(event, 'fitting')">Fitting Guide</button>
+          </div>
+          
+          <div id="description" class="espares-tab-content active">
+            {%- if product.description != blank -%}
+              {{ product.description }}
+            {%- else -%}
+              <p>This universal washing machine door seal is designed to fit most major brands including Bosch, Samsung, LG, and Whirlpool. Made from high-quality rubber material that's resistant to detergents and high temperatures.</p>
+              <p><strong>Key Features:</strong></p>
+              <ul>
+                <li>Universal fit for most washing machine brands</li>
+                <li>Premium rubber construction</li>
+                <li>Easy to install with step-by-step guide</li>
+                <li>Prevents water leaks and maintains efficiency</li>
+                <li>12-month warranty included</li>
+              </ul>
+            {%- endif -%}
+          </div>
+          
+          <div id="specifications" class="espares-tab-content">
+            <table class="espares-specs-table">
+              <tr><th>Material</th><td>High-grade EPDM Rubber</td></tr>
+              <tr><th>Color</th><td>Black</td></tr>
+              <tr><th>Dimensions</th><td>External: 34cm, Internal: 25cm</td></tr>
+              <tr><th>Weight</th><td>850g</td></tr>
+              <tr><th>Temperature Range</th><td>-20°C to +120°C</td></tr>
+              <tr><th>Warranty</th><td>12 months</td></tr>
+              <tr><th>Certifications</th><td>CE, RoHS compliant</td></tr>
+            </table>
+          </div>
+          
+          <div id="compatibility" class="espares-tab-content">
+            <p><strong>Compatible Brands:</strong></p>
+            <ul>
+              <li>Bosch - WAW28*, WAW32*, WAG28*</li>
+              <li>Samsung - WW80*, WW90*, WW10*</li>
+              <li>LG - F4V*, F2V*, F4J*</li>
+              <li>Whirlpool - FSCR*, AWE*, WTLS*</li>
+              <li>Hotpoint - NSWM*, WMFUG*, WMEUF*</li>
+            </ul>
+            <p><strong>Note:</strong> Please check your model number before ordering. If unsure, contact our expert team for advice.</p>
+          </div>
+          
+          <div id="fitting" class="espares-tab-content">
+            <p><strong>Tools Required:</strong> Screwdriver, pliers, towel</p>
+            <p><strong>Estimated Time:</strong> 30-45 minutes</p>
+            <ol>
+              <li>Disconnect power and water supply</li>
+              <li>Open the washing machine door</li>
+              <li>Remove the door boot clamp carefully</li>
+              <li>Pull out the old door seal</li>
+              <li>Clean the door frame thoroughly</li>
+              <li>Install the new seal ensuring proper alignment</li>
+              <li>Secure with the clamp and test</li>
+            </ol>
+            <p><strong>Video guide available:</strong> <a href="#" style="color: #007bff;">Watch installation video</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function changeMainImage(thumbnail, newSrc) {
+  document.getElementById('mainImage').src = newSrc;
+  
+  // Update active thumbnail
+  document.querySelectorAll('.espares-thumbnail').forEach(t => t.classList.remove('active'));
+  thumbnail.classList.add('active');
+}
+
+function openImageModal(src) {
+  // Simple image modal
+  const modal = document.createElement('div');
+  modal.innerHTML = `
+    <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; display: flex; align-items: center; justify-content: center;" onclick="this.remove()">
+      <img src="${src}" style="max-width: 90%; max-height: 90%; object-fit: contain;">
+    </div>
+  `;
+  document.body.appendChild(modal);
+}
+
+function openTab(evt, tabName) {
+  // Hide all tab contents
+  document.querySelectorAll('.espares-tab-content').forEach(content => {
+    content.classList.remove('active');
+  });
+  
+  // Remove active class from all buttons
+  document.querySelectorAll('.espares-tab-button').forEach(button => {
+    button.classList.remove('active');
+  });
+  
+  // Show selected tab and mark button as active
+  document.getElementById(tabName).classList.add('active');
+  evt.currentTarget.classList.add('active');
+}
+
+function buyNow() {
+  // Add to cart and redirect to checkout
+  const form = document.querySelector('.espares-product-form');
+  const formData = new FormData(form);
+  
+  fetch('/cart/add.js', {
+    method: 'POST',
+    body: formData
+  }).then(() => {
+    window.location.href = '/checkout';
+  });
+}
+</script>
+
+{% schema %}
+{
+  "name": "Main Product",
+  "class": "section-main-product-espares",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Product Media"
+    },
+    {
+      "type": "select",
+      "id": "media_layout",
+      "label": "Media layout",
+      "options": [
+        {
+          "value": "thumbnail_slider",
+          "label": "Thumbnail slider"
+        },
+        {
+          "value": "slider",
+          "label": "Slider"
+        }
+      ],
+      "default": "thumbnail_slider"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_zoom",
+      "label": "Enable image zoom",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Product Information"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "Show vendor",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sku",
+      "label": "Show SKU",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_delivery_info",
+      "label": "Show delivery information",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "title",
+      "name": "Product title",
+      "limit": 1
+    },
+    {
+      "type": "price",
+      "name": "Price",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_savings",
+          "label": "Show savings amount",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "vendor-sku",
+      "name": "Vendor & SKU",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_vendor",
+          "label": "Show vendor",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "show_sku",
+          "label": "Show SKU",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "variant-picker",
+      "name": "Variant picker",
+      "limit": 1
+    },
+    {
+      "type": "quantity-selector",
+      "name": "Quantity selector",
+      "limit": 1
+    },
+    {
+      "type": "buy-buttons",
+      "name": "Buy buttons",
+      "limit": 1
+    },
+    {
+      "type": "description",
+      "name": "Product description",
+      "limit": 1
+    },
+    {
+      "type": "specifications",
+      "name": "Specifications",
+      "limit": 1
+    },
+    {
+      "type": "compatibility",
+      "name": "Compatibility",
+      "limit": 1
+    },
+    {
+      "type": "delivery-info",
+      "name": "Delivery information",
+      "limit": 1
+    },
+    {
+      "type": "share",
+      "name": "Share buttons",
+      "limit": 1
+    }
+  ]
+}
+{% endschema %}

@@ -22,6 +22,19 @@
 .footer-es-wrap .captcha { display:block; margin-top:14px; color:#666; font-size:11px; max-width:600px; }
 .footer-es-wrap .captcha a { color:#888; }
 .footer-es-wrap .captcha a:hover { color:#ffd700; }
+/* Inline Policy Modal */
+.pf-modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;z-index:9997}
+.pf-modal{position:fixed;inset:40px 20px 40px 20px;max-width:960px;margin:auto;background:#fff;color:#111;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.35);display:none;z-index:9998;overflow:auto}
+.pf-modal.open{display:block}
+.pf-modal-backdrop.open{display:block}
+.pf-modal header{position:sticky;top:0;background:#fff;border-bottom:1px solid #eee;padding:14px 18px;display:flex;justify-content:space-between;align-items:center}
+.pf-modal header h3{margin:0;font-size:1.1rem}
+.pf-modal header button{background:#111;color:#fff;border:none;border-radius:6px;padding:6px 10px;cursor:pointer}
+.pf-modal .pf-body{padding:18px;line-height:1.65}
+.pf-modal .pf-body h4{margin:18px 0 8px;font-size:1rem}
+.pf-modal .pf-body ul{padding-left:18px;margin:6px 0}
+.pf-modal .pf-body li{margin:4px 0}
+body.pf-modal-open{overflow:hidden}
 @media (max-width:860px){
   .footer-es-wrap .accordion-menu { grid-template-columns:repeat(2,minmax(0,1fr)); gap:30px 24px; }
 }
@@ -63,16 +76,16 @@
         <label for="footer-link-1">Ordering</label>
         <ul>
           <li>
-            <a href="/pages/contact-us" title="Contact Us">Contact Us</a>
+            <a href="/pages/contact" title="Contact Us">Contact Us</a>
           </li>
           <li>
-            <a href="/pages/about-us" title="About Us">About Us</a>
+            <a href="#" data-pf-modal="about" title="About Us">About Us</a>
           </li>
           <li>
-            <a href="/pages/find-your-model-number" title="Finding My Model Number">Finding My Model Number</a>
+            <a href="#" data-pf-modal="model" title="Finding My Model Number">Finding My Model Number</a>
           </li>
           <li>
-            <a href="/pages/sitemap" title="Sitemap">Sitemap</a>
+            <a href="#" data-pf-modal="sitemap" title="Sitemap">Sitemap</a>
           </li>
         </ul>
       </li>
@@ -82,10 +95,10 @@
         <label for="footer-link-2">Delivery</label>
         <ul>
           <li>
-            <a href="/pages/delivery-information" title="Delivery Information">Delivery Information</a>
+            <a href="#" data-pf-modal="delivery" title="Delivery Information">Delivery Information</a>
           </li>
           <li>
-            <a href="/pages/returns-procedure" title="Returns Procedure">Returns Procedure</a>
+            <a href="#" data-pf-modal="returns" title="Returns Procedure">Returns Procedure</a>
           </li>
         </ul>
       </li>
@@ -95,13 +108,13 @@
         <label for="footer-link-3">Information</label>
         <ul>
           <li>
-            <a href="/pages/privacy-policy" title="Privacy Policy">Privacy Policy</a>
+            <a href="#" data-pf-modal="privacy" title="Privacy Policy">Privacy Policy</a>
           </li>
           <li>
-            <a href="/pages/cookies-policy" title="Cookies Policy">Cookies Policy</a>
+            <a href="#" data-pf-modal="cookies" title="Cookies Policy">Cookies Policy</a>
           </li>
           <li>
-            <a href="#" title="Cookie Settings" data-featherlight="#cookie-control-modal">Cookie Settings</a>
+            <a href="#" data-pf-modal="cookies" title="Cookie Settings">Cookie Settings</a>
           </li>
         </ul>
       </li>
@@ -111,17 +124,15 @@
         <label for="footer-link-4">Terms & Conditions</label>
         <ul>
           <li>
-            <a href="/pages/terms-conditions" title="Terms & Conditions">Terms & Conditions</a>
+            <a href="#" data-pf-modal="terms" title="Terms & Conditions">Terms & Conditions</a>
           </li>
           <li>
-            <a href="/pages/site-use-policy" title="Site Use Policy">Site Use Policy</a>
+            <a href="#" data-pf-modal="terms" title="Site Use Policy">Site Use Policy</a>
           </li>
           <li>
-            <a href="/pages/safety-information" title="Safety Information">Safety Information</a>
+            <a href="#" data-pf-modal="warranty" title="Safety Information">Safety Information</a>
           </li>
-          <li>
-            <a href="/pages/accessibility" title="Accessibility">Accessibility</a>
-          </li>
+
         </ul>
       </li>
     </ul>
@@ -155,4 +166,184 @@
     </div>
   </div>
  </div>
-</div>
+  </div>
+
+  <!-- Policy Modals (inline, no admin pages required) -->
+  <div class="pf-modal-backdrop" id="pf-modal-backdrop" aria-hidden="true"></div>
+
+  <section class="pf-modal" id="pf-modal-privacy" role="dialog" aria-modal="true" aria-labelledby="pf-privacy-title">
+    <header>
+      <h3 id="pf-privacy-title">Privacy Policy</h3>
+      <button type="button" data-pf-close>Close</button>
+    </header>
+    <div class="pf-body">
+      <p>We value your privacy. This summary explains what data we collect, how we use it, and your choices.</p>
+      <h4>What we collect</h4>
+      <ul>
+        <li>Contact details (name, email, phone)</li>
+        <li>Order and delivery information</li>
+        <li>Device and usage data (cookies, analytics)</li>
+      </ul>
+      <h4>How we use your data</h4>
+      <p>To fulfil orders, provide support, improve our services, and ensure security/compliance.</p>
+      <h4>Your rights</h4>
+      <p>Access, correction, deletion, and restriction. Contact customer support to exercise your rights.</p>
+    </div>
+    </section>
+
+  <section class="pf-modal" id="pf-modal-cookies" role="dialog" aria-modal="true" aria-labelledby="pf-cookies-title">
+    <header>
+      <h3 id="pf-cookies-title">Cookie Policy</h3>
+      <button type="button" data-pf-close>Close</button>
+    </header>
+    <div class="pf-body">
+      <p>Cookies help the site function and improve your experience.</p>
+      <h4>Types we use</h4>
+      <ul>
+        <li>Essential – required for basic features</li>
+        <li>Analytics – measure performance</li>
+        <li>Marketing – show relevant content</li>
+      </ul>
+      <p>You can control cookies in your browser settings.</p>
+    </div>
+  </section>
+
+  <!-- About Us Modal -->
+  <section class="pf-modal" id="pf-modal-about" role="dialog" aria-modal="true" aria-labelledby="pf-about-title">
+    <header>
+      <h3 id="pf-about-title">About Us</h3>
+      <button type="button" data-pf-close>Close</button>
+    </header>
+    <div class="pf-body">
+      <p>We're your trusted source for spare parts and accessories. Our mission is to make fixing easy with expert advice, quality parts, and fast delivery.</p>
+      <p>Questions? Use the Contact page to reach our support team.</p>
+    </div>
+  </section>
+
+  <section class="pf-modal" id="pf-modal-terms" role="dialog" aria-modal="true" aria-labelledby="pf-terms-title">
+    <header>
+      <h3 id="pf-terms-title">Terms & Conditions</h3>
+      <button type="button" data-pf-close>Close</button>
+    </header>
+    <div class="pf-body">
+      <h4>Agreement to Terms</h4>
+      <p>By using this site you agree to these terms and our privacy policy.</p>
+      <h4>Orders & Payments</h4>
+      <p>Orders are subject to acceptance and availability. Prices/promotions may change.</p>
+      <h4>Liability</h4>
+      <p>To the fullest extent permitted by law we disclaim warranties and liability arising from site use.</p>
+    </div>
+  </section>
+
+  <section class="pf-modal" id="pf-modal-delivery" role="dialog" aria-modal="true" aria-labelledby="pf-delivery-title">
+    <header>
+      <h3 id="pf-delivery-title">Delivery Information</h3>
+      <button type="button" data-pf-close>Close</button>
+    </header>
+    <div class="pf-body">
+      <h4>Timeframes</h4>
+      <p>Orders are processed within 24 hours. Delivery typically takes 1–3 working days.</p>
+      <h4>Costs</h4>
+      <p>Shipping fees are calculated at checkout based on weight and destination.</p>
+      <h4>Tracking</h4>
+      <p>We’ll send tracking details by email when your order is dispatched.</p>
+    </div>
+  </section>
+
+  <section class="pf-modal" id="pf-modal-returns" role="dialog" aria-modal="true" aria-labelledby="pf-returns-title">
+    <header>
+      <h3 id="pf-returns-title">Returns & Refunds</h3>
+      <button type="button" data-pf-close>Close</button>
+    </header>
+    <div class="pf-body">
+      <h4>Return Window</h4>
+      <p>Return items within 30 days, unused and in original packaging.</p>
+      <h4>Process</h4>
+      <p>Contact support with your order number to obtain a return authorization.</p>
+      <h4>Refunds</h4>
+      <p>Refunds are issued to the original payment method after inspection.</p>
+    </div>
+  </section>
+
+  <section class="pf-modal" id="pf-modal-warranty" role="dialog" aria-modal="true" aria-labelledby="pf-warranty-title">
+    <header>
+      <h3 id="pf-warranty-title">Safety & Warranty</h3>
+      <button type="button" data-pf-close>Close</button>
+    </header>
+    <div class="pf-body">
+      <h4>Coverage</h4>
+      <p>Most parts include a 12‑month warranty against manufacturing defects.</p>
+      <h4>Safety</h4>
+      <p>Always disconnect power and follow manufacturer guidance before repairs.</p>
+    </div>
+  </section>
+
+
+
+  <!-- Finding My Model Number Modal -->
+  <section class="pf-modal" id="pf-modal-model" role="dialog" aria-modal="true" aria-labelledby="pf-model-title">
+    <header>
+      <h3 id="pf-model-title">Finding My Model Number</h3>
+      <button type="button" data-pf-close>Close</button>
+    </header>
+    <div class="pf-body">
+      <p>Model numbers are usually found on the rating plate or sticker on your appliance. Common locations:</p>
+      <ul>
+        <li>Washing Machines: door frame or behind the door</li>
+        <li>Fridges/Freezers: inside the fridge wall or behind lower drawers</li>
+        <li>Cookers/Ovens: inside the door frame or on the back</li>
+        <li>Vacuum Cleaners: underside or behind the dust bin</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Sitemap Modal -->
+  <section class="pf-modal" id="pf-modal-sitemap" role="dialog" aria-modal="true" aria-labelledby="pf-sitemap-title">
+    <header>
+      <h3 id="pf-sitemap-title">Sitemap</h3>
+      <button type="button" data-pf-close>Close</button>
+    </header>
+    <div class="pf-body">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/search">Search</a></li>
+        <li><a href="/pages/contact">Contact</a></li>
+        <li><a href="#" data-pf-modal="delivery">Delivery</a></li>
+        <li><a href="#" data-pf-modal="returns">Returns</a></li>
+        <li><a href="#" data-pf-modal="privacy">Privacy</a></li>
+        <li><a href="#" data-pf-modal="terms">Terms</a></li>
+        <li><a href="#" data-pf-modal="cookies">Cookies</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <script>
+    (function(){
+      var backdrop = document.getElementById('pf-modal-backdrop');
+      function openModal(key){
+        var id = 'pf-modal-' + key;
+        var m = document.getElementById(id); if(!m) return;
+        m.classList.add('open'); backdrop.classList.add('open');
+        m.setAttribute('aria-hidden','false');
+        document.body.classList.add('pf-modal-open');
+      }
+      function closeAll(){
+        document.querySelectorAll('.pf-modal.open').forEach(function(m){ m.classList.remove('open'); m.setAttribute('aria-hidden','true'); });
+        backdrop.classList.remove('open');
+        document.body.classList.remove('pf-modal-open');
+      }
+      document.addEventListener('click', function(e){
+        var t = e.target.closest('[data-pf-modal]');
+        if(t){ e.preventDefault(); openModal(t.getAttribute('data-pf-modal')); }
+        if(e.target.hasAttribute('data-pf-close') || e.target === backdrop){ closeAll(); }
+      });
+      document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeAll(); });
+      function openFromHash(){
+        var h = (location.hash||'').replace('#','').toLowerCase();
+  var allowed = ['privacy','cookies','terms','delivery','returns','warranty','about','model','sitemap'];
+        if(allowed.indexOf(h) > -1){ openModal(h); }
+      }
+      window.addEventListener('hashchange', openFromHash);
+      openFromHash();
+    })();
+    </script>
