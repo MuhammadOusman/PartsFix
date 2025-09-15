@@ -1,103 +1,190 @@
 <style>
+/* Clean Footer Reset */
+.footer-es-wrap * {
+  box-sizing: border-box;
+}
+
+/* Modern Footer Design - 4 Column Layout */
 .footer-es-wrap {
-  background: #333c47;
-  color: #fff;
-  padding: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f8f9fa !important;
+  color: #333 !important;
+  padding: 0 !important;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+  border-top: 1px solid #e9ecef !important;
 }
 
 .footer-es-wrap .footer {
-  padding: 50px 0 0;
+  padding: 60px 0 40px !important;
+  background: transparent !important;
 }
 
 .footer-es-wrap .container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-
-.footer-es-wrap .social-signup {
-  padding-bottom: 30px;
-  border-bottom: 1px solid #555;
-  margin-bottom: 30px;
-}
-
-.footer-es-wrap .social {
-  list-style: none;
-  display: flex;
-  gap: 20px;
-  padding: 0;
-  margin: 0;
-  justify-content: center;
-}
-
-.footer-es-wrap .social li a {
-  display: block;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: #555;
-  color: #fff;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  transition: background 0.3s;
-}
-
-.footer-es-wrap .social li a:hover {
-  background: #ffd700;
-  color: #333;
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  padding: 0 24px !important;
 }
 
 .footer-es-wrap .accordion-menu {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 40px 30px;
-  margin-bottom: 40px;
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 40px !important;
+  margin-bottom: 40px !important;
+  list-style: none !important;
+  padding: 0 !important;
 }
 
 .footer-es-wrap .accordion-menu .has-children {
-  list-style: none;
+  list-style: none !important;
 }
 
 .footer-es-wrap .accordion-menu h3 {
-  display: block;
-  color: #fff;
-  font-weight: 600;
-  font-size: 15px;
-  margin-bottom: 12px;
-  margin-top: 0;
+  display: block !important;
+  color: #212529 !important;
+  font-weight: 700 !important;
+  font-size: 18px !important;
+  margin: 0 0 20px !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
 }
 
 .footer-es-wrap .accordion-menu ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
 }
 
 .footer-es-wrap .accordion-menu ul li {
-  margin-bottom: 8px;
+  margin-bottom: 12px !important;
 }
 
 .footer-es-wrap .accordion-menu ul li a {
-  color: #ccc;
-  text-decoration: none;
-  font-size: 13px;
-  line-height: 1.4;
-  transition: color 0.3s;
+  color: #6c757d !important;
+  text-decoration: none !important;
+  font-size: 15px !important;
+  line-height: 1.4 !important;
+  transition: color 0.2s !important;
 }
 
 .footer-es-wrap .accordion-menu ul li a:hover {
-  color: #ffd700;
+  color: #007bff !important;
+}
+
+/* Contact Info Styling */
+.footer-contact-info p {
+  margin: 0 0 16px !important;
+  line-height: 1.5 !important;
+  color: #6c757d !important;
+  font-size: 15px !important;
+}
+
+.footer-support, .footer-email {
+  margin-top: 24px !important;
+}
+
+.footer-support h4, .footer-email h4 {
+  font-weight: 600 !important;
+  font-size: 16px !important;
+  color: #212529 !important;
+  margin: 0 0 8px !important;
+}
+
+.footer-support p, .footer-email p {
+  margin: 0 !important;
+  color: #6c757d !important;
+  font-size: 15px !important;
+}
+
+/* Newsletter Styling */
+.footer-newsletter-desc {
+  color: #6c757d !important;
+  margin: 0 0 24px !important;
+  line-height: 1.5 !important;
+  font-size: 15px !important;
+}
+
+.newsletter-input-wrapper {
+  position: relative !important;
+  display: flex !important;
+}
+
+.newsletter-input {
+  flex: 1 !important;
+  padding: 12px 50px 12px 16px !important;
+  border: 2px solid #dee2e6 !important;
+  border-radius: 6px !important;
+  font-size: 15px !important;
+  transition: border-color 0.2s !important;
+  background: #fff !important;
+  color: #333 !important;
+}
+
+.newsletter-input:focus {
+  outline: none !important;
+  border-color: #007bff !important;
+}
+
+.newsletter-submit {
+  position: absolute !important;
+  right: 8px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  background: #007bff !important;
+  color: #fff !important;
+  border: none !important;
+  padding: 8px !important;
+  border-radius: 4px !important;
+  cursor: pointer !important;
+  transition: background 0.2s !important;
+}
+
+.newsletter-submit:hover {
+  background: #0056b3 !important;
 }
 
 .footer-es-wrap .sub-footer {
-  background: #2c3540;
-  margin: 0 -20px;
-  padding: 30px 20px 20px;
+  background: transparent !important;
+  border-top: 1px solid #dee2e6 !important;
+  margin: 0 !important;
+  padding: 24px 0 !important;
+  text-align: center !important;
+  color: #6c757d !important;
+  font-size: 14px !important;
 }
+
+.footer-es-wrap .sub-footer p {
+  margin: 0 !important;
+}
+
+/* Hide any old elements */
+.footer-international-links,
+.footer-slogan,
+.footer-disclaimer,
+.captcha,
+.international-flag-links {
+  display: none !important;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .footer-es-wrap .accordion-menu {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 32px !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .footer-es-wrap .accordion-menu {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+}
+
+/* Back to top styling fix */
+.footer-es-wrap .back-to-top {
+  display: none !important;
+}
+</style>
+</style>
 
 .footer-es-wrap .footer-international-links {
   margin-bottom: 20px;
@@ -207,118 +294,84 @@
 </style>
 
 <div class="footer-es-wrap">
-  {%- if section.settings.show_back_to_top -%}
-    <a href="#" class="back-to-top">{{ 'sections.footer.back_to_top' | t }}</a>
-  {%- endif -%}
-
   <div class="footer">
     <div class="container">
-      <div class="social-signup">
-        <ul class="social">
-          <li>
-            <a class="facebook" href="https://www.facebook.com/fixityourself" title="Facebook" target="_blank">f</a>
-          </li>
-          <li>
-            <a class="x-icon" href="https://x.com/espares" title="X" target="_blank">𝕏</a>
-          </li>
-          <li>
-            <a class="youtube" href="https://www.youtube.com/user/eSparesVideo" title="YouTube" target="_blank">▶</a>
-          </li>
-          <li>
-            <a class="instagram" href="https://www.instagram.com/espares_uk/" title="Instagram" target="_blank">📷</a>
-          </li>
-        </ul>
-      </div>
 
       <ul class="accordion-menu animated">
+        <!-- Where To Find Us Column -->
         <li class="has-children">
-          <h3>Ordering</h3>
+          <h3>Where To Find Us</h3>
+          <div class="footer-contact-info">
+            <p>Unit 2, Broughton Trade Centre,<br>
+            Broughton Ln,<br>
+            Salford, M7 1UH<br>
+            United Kingdom</p>
+            
+            <div class="footer-support">
+              <h4>Chat Support</h4>
+              <p>Mon - Fri 9.00am - 5.00pm</p>
+            </div>
+            
+            <div class="footer-email">
+              <h4>Email</h4>
+              <p>wecare@essentialsfix.co.uk</p>
+            </div>
+          </div>
+        </li>
+
+        <!-- Service For All Column -->
+        <li class="has-children">
+          <h3>Service For All</h3>
           <ul>
-            <li>
-              <a href="/pages/contact" title="Contact Us">Contact Us</a>
-            </li>
-            <li>
-              <a href="#" data-pf-modal="about" title="About Us">About Us</a>
-            </li>
-            <li>
-              <a href="#" data-pf-modal="model" title="Finding My Model Number">Finding My Model Number</a>
-            </li>
-            <li>
-              <a href="#" data-pf-modal="sitemap" title="Sitemap">Sitemap</a>
-            </li>
+            <li><a href="/pages/track-order" title="Track Order">Track Order</a></li>
+            <li><a href="#" data-pf-modal="about" title="About Us">About Us</a></li>
+            <li><a href="/pages/trade-application" title="Trade Application">Trade Application</a></li>
+            <li><a href="/pages/returns" title="Returns & Refunds">Returns & Refunds</a></li>
+            <li><a href="/pages/contact" title="Contact Us">Contact Us</a></li>
+            <li><a href="/pages/supplier" title="Become A Supplier">Become A Supplier</a></li>
+            <li><a href="/pages/faqs" title="FAQs">FAQs</a></li>
+            <li><a href="/blogs/news" title="Blogs">Blogs</a></li>
           </ul>
         </li>
 
+        <!-- Schemes For All Column -->
         <li class="has-children">
-          <h3>Delivery</h3>
+          <h3>Schemes For All</h3>
           <ul>
-            <li>
-              <a href="/pages/shipping" title="Delivery Information">Delivery Information</a>
-            </li>
-            <li>
-              <a href="/pages/returns" title="Returns Procedure">Returns Procedure</a>
-            </li>
+            <li><a href="/pages/privacy" title="Privacy Policy">Privacy Policy</a></li>
+            <li><a href="/pages/terms" title="Terms Of Service">Terms Of Service</a></li>
+            <li><a href="/pages/shipping" title="Shipping Policy">Shipping Policy</a></li>
           </ul>
         </li>
 
+        <!-- Subscribe For All Column -->
         <li class="has-children">
-          <h3>Information</h3>
-          <ul>
-            <li>
-              <a href="/pages/privacy" title="Privacy Policy">Privacy Policy</a>
-            </li>
-            <li>
-              <a href="/pages/cookies" title="Cookies Policy">Cookies Policy</a>
-            </li>
-            <li>
-              <a href="#" title="Cookie Settings" data-featherlight="#cookie-control-modal">Cookie Settings</a>
-            </li>
-          </ul>
-        </li>
-
-        <li class="has-children">
-          <h3>Terms & Conditions</h3>
-          <ul>
-            <li>
-              <a href="/pages/terms" title="Terms & Conditions">Terms & Conditions</a>
-            </li>
-            <li>
-              <a href="/pages/terms" title="Site Use Policy">Site Use Policy</a>
-            </li>
-            <li>
-              <a href="/pages/warranty" title="Safety Information">Safety Information</a>
-            </li>
-
-          </ul>
+          <h3>Subscribe For All</h3>
+          <div>
+            <p class="footer-newsletter-desc">Sign up for exclusive offers, original stories, events and more.</p>
+            
+            <form class="footer-newsletter" action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data">
+              <div class="newsletter-input-wrapper">
+                <input type="email" 
+                       name="contact[email]" 
+                       class="newsletter-input" 
+                       placeholder="Your email"
+                       required
+                       aria-label="Email address">
+                <button type="submit" class="newsletter-submit" aria-label="Subscribe">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                  </svg>
+                </button>
+              </div>
+              <input type="hidden" name="contact[tags]" value="newsletter">
+            </form>
+          </div>
         </li>
       </ul>
 
       <div class="sub-footer">
-        <div class="footer-international-links">
-          <p>eSpares International</p>
-          <ul class="international-flag-links">
-            <li><a href="https://www.espares.com" title="eSpares IE" target="_blank"><img loading="lazy" src="{{ 'ireland-flag.svg' | asset_url }}" alt="eSpares IE" width="24" height="16"/></a></li>
-            <li><a href="https://www.espares.at" title="eSpares AT" target="_blank"><img loading="lazy" src="{{ 'austria-flag.svg' | asset_url }}" alt="eSpares AT" width="24" height="16"/></a></li>
-            <li><a href="https://www.espares.fr" title="eSpares FR" target="_blank"><img loading="lazy" src="{{ 'france-flag.svg' | asset_url }}" alt="eSpares FR" width="24" height="16"/></a></li>
-            <li><a href="https://www.espares.de" title="eSpares DE" target="_blank"><img loading="lazy" src="{{ 'germany-flag.svg' | asset_url }}" alt="eSpares DE" width="24" height="16"/></a></li>
-            <li><a href="https://www.espares.it" title="eSpares IT" target="_blank"><img loading="lazy" src="{{ 'it-flag.svg' | asset_url }}" alt="eSpares IT" width="24" height="16"/></a></li>
-            <li><a href="https://www.espares.es" title="eSpares ES" target="_blank"><img loading="lazy" src="{{ 'es-flag.svg' | asset_url }}" alt="eSpares ES" width="24" height="16"/></a></li>
-          </ul>
-        </div>
-        <div class="footer-slogan">
-          <p>
-            The online store for all your parts and accessories.
-            <span class="footer-slogan-split">It's <span>easy</span> with eSpares.</span>
-          </p>
-        </div>
-
-        <p class="footer-disclaimer">
-          <span class="footer-copyright">&copy; {{ 'now' | date: '%Y' }} eSpares <span>All rights reserved</span></span>
-        </p>
-
-        <span class="captcha">
-          This site is protected by reCAPTCHA and the Google <a href="https://www.google.com/intl/en/policies/privacy/" target="_blank">Privacy Policy</a> and <a href="https://www.google.com/intl/en/policies/terms/" target="_blank">Terms of Service</a> apply.
-        </span>
+        <p>&copy; {{ 'now' | date: '%Y' }} eSpares - All rights reserved. The online store for all your parts and accessories.</p>
       </div>
     </div>
   </div>
