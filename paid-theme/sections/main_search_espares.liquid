@@ -698,7 +698,74 @@ body.list-view-enabled #listView { display: block !important; }
 }
 </style>
 
+{% comment %} Brand-Category Detection from URL parameters {% endcomment %}
+{% assign url_params = request.query_string | split: '&' %}
+{% assign brand_filter = '' %}
+{% assign category_filter = '' %}
+
+{% for param in url_params %}
+  {% assign param_parts = param | split: '=' %}
+  {% if param_parts[0] == 'filter.v.vendor' %}
+    {% assign brand_filter = param_parts[1] %}
+  {% elsif param_parts[0] == 'filter.p.product_type' %}
+    {% assign category_filter = param_parts[1] %}
+  {% endif %}
+{% endfor %}
+
+{% comment %} Brand and category display name mappings {% endcomment %}
+{% assign brand_display_names = 'beko:Beko,bosch:Bosch,delonghi:DeLonghi,dyson:Dyson,electrolux:Electrolux,flymo:Flymo,hoover:Hoover,hotpoint:Hotpoint,indesit:Indesit,karcher:Karcher,kenwood:Kenwood,neff:Neff,rangemaster:Rangemaster,samsung:Samsung,smeg:Smeg,stoves:Stoves,whirlpool:Whirlpool,zanussi:Zanussi' | split: ',' %}
+{% assign category_display_names = 'washing-machine:Washing Machine,dishwasher:Dishwasher,fridge-freezer:Fridge Freezer,cooker-oven:Cooker & Oven,vacuum-cleaner:Vacuum Cleaner,microwave:Microwave,coffee-maker:Coffee Maker,kettle:Kettle,toaster:Toaster,air-conditioner:Air Conditioner,air-purifier:Air Purifier,blender:Table Blender,breadmaker:Breadmaker,coffee-grinder:Coffee Grinder,fryer:Fryer,dehumidifier:Dehumidifier,heaters:Heaters,ice-cream-maker:Ice Cream Maker,juice-extractor:Juice Extractor,steam-cleaner:Steam Cleaner,steam-generator:Steam Generator,steam-iron:Steam Iron,tumble-dryer:Tumble Dryer,freezer:Freezer,pressure-washer:Pressure Washer,lawnmower:Lawnmower,hedge-trimmer:Hedge Trimmer,grass-trimmer:Grass Trimmer,chainsaw:Chainsaw,leaf-blower:Leaf Blower,carpet-cleaner:Carpet Cleaner,cordless-vacuum:Cordless Vacuum,robot-vacuum:Robot Vacuum,hair-dryer:Hair Dryer,fan:Fan,humidifier:Humidifier,food-mixer:Food Mixer,food-processor:Food Processor,hand-mixer:Hand Mixer,range-cooker:Range Cooker,extractor-fan:Extractor Fan,window-cleaner:Window Cleaner,floor-cleaner:Floor Cleaner,power-tools:Power Tools,garden-tools:Garden Tools,cooker:Cooker,cooker-hood:Cooker Hood,fridge:Fridge,blender-mixer:Blender & Mixer' | split: ',' %}
+
+{% comment %} Get display names {% endcomment %}
+{% assign brand_display = brand_filter | capitalize %}
+{% assign category_display = category_filter | replace: '-', ' ' | capitalize %}
+
+{% for brand_mapping in brand_display_names %}
+  {% assign mapping_parts = brand_mapping | split: ':' %}
+  {% if mapping_parts[0] == brand_filter %}
+    {% assign brand_display = mapping_parts[1] %}
+    {% break %}
+  {% endif %}
+{% endfor %}
+
+{% for category_mapping in category_display_names %}
+  {% assign mapping_parts = category_mapping | split: ':' %}
+  {% if mapping_parts[0] == category_filter %}
+    {% assign category_display = mapping_parts[1] %}
+    {% break %}
+  {% endif %}
+{% endfor %}
+
+{% comment %} Check if this is a brand-category or category-only search {% endcomment %}
+{% assign is_brand_category_search = false %}
+{% assign is_category_only_search = false %}
+{% if brand_filter != '' and category_filter != '' %}
+  {% assign is_brand_category_search = true %}
+{% elsif brand_filter == '' and category_filter != '' %}
+  {% assign is_category_only_search = true %}
+{% endif %}
+
 <div class="espares-search-main">
+  {% if is_brand_category_search %}
+    <!-- Brand-Category Header -->
+    <div style="background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%); color: white; padding: 40px 0; text-align: center; margin-bottom: 30px;">
+      <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+        <h1 style="font-size: 2.5rem; margin-bottom: 10px; font-weight: 600;">{{ brand_display }} {{ category_display }}</h1>
+        <p style="font-size: 1.1rem; opacity: 0.9; margin-bottom: 20px;">Spare Parts & Accessories</p>
+        <a href="javascript:history.back()" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; background: #6c757d; color: white; text-decoration: none; border-radius: 5px; font-size: 0.9rem; transition: all 0.3s ease;">← Back to Brands</a>
+      </div>
+    </div>
+  {% elsif is_category_only_search %}
+    <!-- Category-Only Header -->
+    <div style="background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%); color: white; padding: 40px 0; text-align: center; margin-bottom: 30px;">
+      <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+        <h1 style="font-size: 2.5rem; margin-bottom: 10px; font-weight: 600;">{{ category_display }}</h1>
+        <p style="font-size: 1.1rem; opacity: 0.9; margin-bottom: 20px;">Spare Parts & Accessories for All Brands</p>
+        <a href="/" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; background: rgba(255,255,255,0.2); color: white; text-decoration: none; border-radius: 5px; font-size: 0.9rem; transition: all 0.3s ease;">← Back to Categories</a>
+      </div>
+    </div>
+  {% endif %}
+
   <div class="espares-search-wrapper">
     <!-- Mobile Filter Toggle -->
     <button class="mobile-filter-toggle" onclick="toggleMobileFilters()" style="display: none;">
@@ -781,7 +848,11 @@ body.list-view-enabled #listView { display: block !important; }
   <div class="espares-search-content" data-products-per-page="{{ section.settings.products_per_page }}" aria-live="polite" aria-busy="false">
       <div class="espares-search-header">
     <div class="espares-results-info" role="status" aria-live="polite">
-          {%- if search.performed and search.terms != "" -%}
+          {% if is_brand_category_search %}
+            Showing {{ brand_display }} {{ category_display }} parts and accessories
+          {% elsif is_category_only_search %}
+            Showing {{ category_display }} parts and accessories from all brands
+          {% elsif search.performed and search.terms != "" %}
             {%- comment -%} Calculate dynamic result count based on search term {%- endcomment -%}
             {%- assign search_term = search.terms | downcase -%}
             {%- assign result_count = 0 -%}
@@ -852,6 +923,75 @@ body.list-view-enabled #listView { display: block !important; }
       {%- else -%}
   <!-- Grid View (initially seeded with mock cards; JS will re-render) -->
   <div class="espares-products-grid" id="gridView">
+          {% if is_brand_category_search %}
+            {% comment %} Brand-Category Specific Products {% endcomment %}
+            {% assign brand_category_products = 'Door Seal,Heating Element,Water Filter,Control Panel,Motor,Pump,Thermostat,Switch,Belt,Hose,Gasket,Handle,Glass Shelf,Drawer,Light Bulb,Drain Hose,Fan,Timer,Seal,Sensor' | split: ',' %}
+            {% assign brand_category_prices = '£15.99,£24.99,£12.50,£45.00,£89.99,£35.75,£18.25,£8.99,£14.50,£22.00,£9.99,£16.75,£28.99,£33.50,£7.25,£19.99,£42.50,£31.25,£26.75,£38.99' | split: ',' %}
+            
+            {% for i in (0..11) %}
+              {% assign product_name = brand_category_products[i] | default: 'Spare Part' %}
+              {% assign product_price = brand_category_prices[i] | default: '£19.99' %}
+              {% assign product_sku = brand_display | slice: 0, 2 | upcase | append: forloop.index | append: '00' | append: i %}
+              {% assign product_title = brand_display | append: ' ' | append: category_display | append: ' ' | append: product_name %}
+              
+              <div class="espares-product-card" onclick="location.href='/products/{{ product_sku | downcase }}'">
+                <img src="https://via.placeholder.com/300x200/f8f9fa/6c757d?text={{ product_name | url_encode }}" 
+                     alt="{{ product_title }}" 
+                     class="espares-product-image"
+                     width="300" height="200">
+                <div class="espares-product-title">{{ product_title | truncate: 60 }}</div>
+                <p class="espares-product-sku">SKU: {{ product_sku }}</p>
+                <div class="espares-product-rating">
+                  <span class="stars">★★★★★</span>
+                  <span class="rating-text">(4.8) 156 reviews</span>
+                </div>
+                <p class="espares-product-price">{{ product_price }}</p>
+                <ul class="espares-product-features">
+                  <li>✓ Genuine {{ brand_display }} part</li>
+                  <li>✓ Compatible with {{ category_display | downcase }}</li>
+                  <li>✓ Next day delivery</li>
+                  <li>✓ 12 month warranty</li>
+                </ul>
+                <button class="espares-add-to-cart" onclick="event.stopPropagation(); addToCart('{{ product_sku }}')">Add to Cart</button>
+              </div>
+            {% endfor %}
+          {% elsif is_category_only_search %}
+            {% comment %} Category-Only Products (from all brands) {% endcomment %}
+            {% assign category_only_products = 'Door Seal,Heating Element,Water Filter,Control Panel,Motor,Pump,Thermostat,Switch,Belt,Hose,Gasket,Handle,Glass Shelf,Drawer,Light Bulb,Drain Hose,Fan,Timer,Seal,Sensor' | split: ',' %}
+            {% assign category_only_prices = '£12.99,£28.50,£15.75,£52.00,£95.99,£38.25,£22.50,£9.99,£16.75,£24.99,£11.50,£18.99,£32.75,£36.50,£8.25,£21.99,£45.50,£34.25,£29.75,£42.99' | split: ',' %}
+            {% assign category_brands = 'Bosch,Samsung,LG,Whirlpool,Beko,Hotpoint,Siemens,AEG,Zanussi,Indesit,Electrolux,Candy' | split: ',' %}
+            
+            {% for i in (0..11) %}
+              {% assign product_name = category_only_products[i] | default: 'Spare Part' %}
+              {% assign product_price = category_only_prices[i] | default: '£19.99' %}
+              {% assign brand_index = i | modulo: category_brands.size %}
+              {% assign random_brand = category_brands[brand_index] %}
+              {% assign product_sku = random_brand | slice: 0, 2 | upcase | append: forloop.index | append: '01' | append: i %}
+              {% assign product_title = random_brand | append: ' ' | append: category_display | append: ' ' | append: product_name %}
+              
+              <div class="espares-product-card" onclick="location.href='/products/{{ product_sku | downcase }}'">
+                <img src="https://via.placeholder.com/300x200/f8f9fa/6c757d?text={{ product_name | url_encode }}" 
+                     alt="{{ product_title }}" 
+                     class="espares-product-image"
+                     width="300" height="200">
+                <div class="espares-product-title">{{ product_title | truncate: 60 }}</div>
+                <p class="espares-product-sku">SKU: {{ product_sku }}</p>
+                <div class="espares-product-rating">
+                  <span class="stars">★★★★★</span>
+                  <span class="rating-text">(4.6) {{ i | plus: 89 }} reviews</span>
+                </div>
+                <p class="espares-product-price">{{ product_price }}</p>
+                <ul class="espares-product-features">
+                  <li>✓ Genuine {{ random_brand }} part</li>
+                  <li>✓ Compatible with {{ category_display | downcase }}</li>
+                  <li>✓ Fast delivery available</li>
+                  <li>✓ 12 month warranty</li>
+                </ul>
+                <button class="espares-add-to-cart" onclick="event.stopPropagation(); addToCart('{{ product_sku }}')">Add to Cart</button>
+              </div>
+            {% endfor %}
+          {% else %}
+            {% comment %} Regular search products {% endcomment %}
           {%- comment -%} Generate dynamic products based on search terms {%- endcomment -%}
           {%- assign search_term = search.terms | downcase | default: "" -%}
           {%- assign products_generated = 0 -%}
@@ -944,10 +1084,74 @@ body.list-view-enabled #listView { display: block !important; }
               {%- endif -%}
             {%- endfor -%}
           {%- endif -%}
+          {% endif %}
         </div>
         
   <!-- List View (JS rendered) -->
         <div class="espares-products-list" id="listView">
+          {% if is_brand_category_search %}
+            {% comment %} Brand-Category Specific Products for List View {% endcomment %}
+            {% assign brand_category_products = 'Door Seal,Heating Element,Water Filter,Control Panel,Motor,Pump,Thermostat,Switch,Belt,Hose,Gasket,Handle,Glass Shelf,Drawer,Light Bulb,Drain Hose,Fan,Timer,Seal,Sensor' | split: ',' %}
+            {% assign brand_category_prices = '£15.99,£24.99,£12.50,£45.00,£89.99,£35.75,£18.25,£8.99,£14.50,£22.00,£9.99,£16.75,£28.99,£33.50,£7.25,£19.99,£42.50,£31.25,£26.75,£38.99' | split: ',' %}
+            
+            {% for i in (0..11) %}
+              {% assign product_name = brand_category_products[i] | default: 'Spare Part' %}
+              {% assign product_price = brand_category_prices[i] | default: '£19.99' %}
+              {% assign product_sku = brand_display | slice: 0, 2 | upcase | append: forloop.index | append: '00' | append: i %}
+              {% assign product_title = brand_display | append: ' ' | append: category_display | append: ' ' | append: product_name %}
+              
+              <div class="espares-product-list-item" onclick="location.href='/products/{{ product_sku | downcase }}'">
+                <img src="https://via.placeholder.com/120x120/f8f9fa/6c757d?text={{ product_name | url_encode }}" 
+                     alt="{{ product_title }}" 
+                     class="espares-list-image"
+                     width="120" height="120">
+                <div class="espares-list-details">
+                  <h4 class="espares-list-title">{{ product_title | truncate: 80 }}</h4>
+                  <p class="espares-list-description">Genuine {{ brand_display }} {{ category_display | downcase }} part designed for optimal performance and durability. Professional-grade spare part backed by comprehensive warranty coverage.</p>
+                  <p class="espares-product-sku">SKU: {{ product_sku }}</p>
+                  <div class="espares-product-rating">
+                    <span class="stars">★★★★★</span>
+                    <span class="rating-text">(4.8) 156 reviews</span>
+                  </div>
+                </div>
+                <div class="espares-list-price">{{ product_price }}</div>
+                <button class="espares-add-to-cart" onclick="event.stopPropagation(); addToCart('{{ product_sku }}')">Add to Cart</button>
+              </div>
+            {% endfor %}
+          {% elsif is_category_only_search %}
+            {% comment %} Category-Only Products for List View (from all brands) {% endcomment %}
+            {% assign category_only_products = 'Door Seal,Heating Element,Water Filter,Control Panel,Motor,Pump,Thermostat,Switch,Belt,Hose,Gasket,Handle,Glass Shelf,Drawer,Light Bulb,Drain Hose,Fan,Timer,Seal,Sensor' | split: ',' %}
+            {% assign category_only_prices = '£12.99,£28.50,£15.75,£52.00,£95.99,£38.25,£22.50,£9.99,£16.75,£24.99,£11.50,£18.99,£32.75,£36.50,£8.25,£21.99,£45.50,£34.25,£29.75,£42.99' | split: ',' %}
+            {% assign category_brands = 'Bosch,Samsung,LG,Whirlpool,Beko,Hotpoint,Siemens,AEG,Zanussi,Indesit,Electrolux,Candy' | split: ',' %}
+            
+            {% for i in (0..11) %}
+              {% assign product_name = category_only_products[i] | default: 'Spare Part' %}
+              {% assign product_price = category_only_prices[i] | default: '£19.99' %}
+              {% assign brand_index = i | modulo: category_brands.size %}
+              {% assign random_brand = category_brands[brand_index] %}
+              {% assign product_sku = random_brand | slice: 0, 2 | upcase | append: forloop.index | append: '01' | append: i %}
+              {% assign product_title = random_brand | append: ' ' | append: category_display | append: ' ' | append: product_name %}
+              
+              <div class="espares-product-list-item" onclick="location.href='/products/{{ product_sku | downcase }}'">
+                <img src="https://via.placeholder.com/120x120/f8f9fa/6c757d?text={{ product_name | url_encode }}" 
+                     alt="{{ product_title }}" 
+                     class="espares-list-image"
+                     width="120" height="120">
+                <div class="espares-list-details">
+                  <h4 class="espares-list-title">{{ product_title | truncate: 80 }}</h4>
+                  <p class="espares-list-description">High-quality {{ random_brand }} {{ category_display | downcase }} part from a trusted brand. Genuine spare part with full warranty coverage and professional installation support.</p>
+                  <p class="espares-product-sku">SKU: {{ product_sku }}</p>
+                  <div class="espares-product-rating">
+                    <span class="stars">★★★★★</span>
+                    <span class="rating-text">(4.6) {{ i | plus: 89 }} reviews</span>
+                  </div>
+                </div>
+                <div class="espares-list-price">{{ product_price }}</div>
+                <button class="espares-add-to-cart" onclick="event.stopPropagation(); addToCart('{{ product_sku }}')">Add to Cart</button>
+              </div>
+            {% endfor %}
+          {% else %}
+            {%- comment -%} Regular search products for list view {%- endcomment -%}
           {%- comment -%} Generate same dynamic products for list view {%- endcomment -%}
           {%- assign search_term = search.terms | downcase | default: "" -%}
           {%- assign products_generated = 0 -%}
@@ -1036,6 +1240,7 @@ body.list-view-enabled #listView { display: block !important; }
               {%- endif -%}
             {%- endfor -%}
           {%- endif -%}
+          {% endif %}
         </div>
         
   <!-- Pagination (JS will populate) -->

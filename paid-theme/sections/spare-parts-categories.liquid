@@ -140,8 +140,9 @@
     <h2>{{ section.settings.title | default: "Spare Parts By Category" }}</h2>
     <div class="categories-grid">
       {%- for category in categories -%}
+        {%- assign category_slug = category | handleize -%}
         <div class="category-item">
-          <a href="{{ routes.all_products_collection_url }}" title="{{ category }}">
+          <a href="/search?q=*&type=product&filter.p.product_type={{ category_slug }}" title="{{ category }}">
             <div class="category-image">
               <img loading="lazy" src="https://via.placeholder.com/160x120/f8f9fa/666?text={{ category | url_encode }}" alt="{{ category }}" width="160" height="120"/>
             </div>

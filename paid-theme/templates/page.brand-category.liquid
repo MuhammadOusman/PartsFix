@@ -1,0 +1,332 @@
+{% comment %}
+Brand Category Page Template
+Handles URLs like /pages/delonghi-coffee-maker, /pages/bosch-dishwasher, etc.
+{% endcomment %}
+
+{% layout none %}
+
+{% comment %} Extract brand and category from page handle {% endcomment %}
+{% assign page_parts = page.handle | split: '-' %}
+{% assign brand_name = page_parts[0] %}
+{% assign category_parts = page_parts | slice: 1, 10 %}
+{% assign category_name = category_parts | join: '-' %}
+
+{% comment %} Brand and category mappings {% endcomment %}
+{% assign brand_display_names = 'beko:Beko,bosch:Bosch,delonghi:DeLonghi,dyson:Dyson,electrolux:Electrolux,flymo:Flymo,hoover:Hoover,hotpoint:Hotpoint,indesit:Indesit,karcher:Karcher,kenwood:Kenwood,neff:Neff,rangemaster:Rangemaster,samsung:Samsung,smeg:Smeg,stoves:Stoves,whirlpool:Whirlpool,zanussi:Zanussi' | split: ',' %}
+{% assign category_display_names = 'washing-machine:Washing Machine,dishwasher:Dishwasher,fridge-freezer:Fridge Freezer,cooker-oven:Cooker & Oven,vacuum-cleaner:Vacuum Cleaner,microwave:Microwave,coffee-maker:Coffee Maker,kettle:Kettle,toaster:Toaster,air-conditioner:Air Conditioner,air-purifier:Air Purifier,blender:Table Blender,breadmaker:Breadmaker,coffee-grinder:Coffee Grinder,fryer:Fryer,dehumidifier:Dehumidifier,heaters:Heaters,ice-cream-maker:Ice Cream Maker,juice-extractor:Juice Extractor,steam-cleaner:Steam Cleaner,steam-generator:Steam Generator,steam-iron:Steam Iron,tumble-dryer:Tumble Dryer,freezer:Freezer,pressure-washer:Pressure Washer,lawnmower:Lawnmower,hedge-trimmer:Hedge Trimmer,grass-trimmer:Grass Trimmer,chainsaw:Chainsaw,leaf-blower:Leaf Blower,carpet-cleaner:Carpet Cleaner,cordless-vacuum:Cordless Vacuum,robot-vacuum:Robot Vacuum,hair-dryer:Hair Dryer,fan:Fan,humidifier:Humidifier,food-mixer:Food Mixer,food-processor:Food Processor,hand-mixer:Hand Mixer,range-cooker:Range Cooker,extractor-fan:Extractor Fan,window-cleaner:Window Cleaner,floor-cleaner:Floor Cleaner,power-tools:Power Tools,garden-tools:Garden Tools' | split: ',' %}
+
+{% comment %} Get display names {% endcomment %}
+{% assign brand_display = brand_name | capitalize %}
+{% assign category_display = category_name | replace: '-', ' ' | capitalize %}
+
+{% for brand_mapping in brand_display_names %}
+  {% assign mapping_parts = brand_mapping | split: ':' %}
+  {% if mapping_parts[0] == brand_name %}
+    {% assign brand_display = mapping_parts[1] %}
+    {% break %}
+  {% endif %}
+{% endfor %}
+
+{% for category_mapping in category_display_names %}
+  {% assign mapping_parts = category_mapping | split: ':' %}
+  {% if mapping_parts[0] == category_name %}
+    {% assign category_display = mapping_parts[1] %}
+    {% break %}
+  {% endif %}
+{% endfor %}
+
+<style>
+.brand-category-page {
+  min-height: 100vh;
+  background: #f8f9fa;
+}
+
+.brand-category-header {
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  color: white;
+  padding: 60px 0 40px;
+  text-align: center;
+}
+
+.brand-category-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.brand-category-header .subtitle {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  margin-bottom: 30px;
+}
+
+.breadcrumb {
+  background: white;
+  padding: 15px 0;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.breadcrumb-nav {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  font-size: 0.9rem;
+}
+
+.breadcrumb-nav a {
+  color: #6c757d;
+  text-decoration: none;
+}
+
+.breadcrumb-nav a:hover {
+  color: #ff6b35;
+}
+
+.breadcrumb-nav span {
+  color: #495057;
+  margin: 0 8px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.products-section {
+  padding: 40px 0;
+}
+
+.filters-bar {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.product-card {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: all 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+}
+
+.product-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.product-info {
+  padding: 20px;
+}
+
+.product-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+
+.product-code {
+  font-size: 0.85rem;
+  color: #6c757d;
+  margin-bottom: 12px;
+}
+
+.product-price {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #ff6b35;
+  margin-bottom: 15px;
+}
+
+.product-compatibility {
+  font-size: 0.8rem;
+  color: #495057;
+  margin-bottom: 15px;
+  line-height: 1.4;
+}
+
+.add-to-cart-btn {
+  width: 100%;
+  padding: 10px;
+  background: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.add-to-cart-btn:hover {
+  background: #218838;
+}
+
+.no-products {
+  text-align: center;
+  padding: 60px 20px;
+  color: #6c757d;
+}
+
+.no-products h3 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: #495057;
+}
+
+.back-to-brands {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: #6c757d;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  margin-top: 20px;
+  transition: all 0.3s ease;
+}
+
+.back-to-brands:hover {
+  background: #5a6268;
+  color: white;
+  text-decoration: none;
+}
+
+@media (max-width: 768px) {
+  .brand-category-header h1 {
+    font-size: 2rem;
+  }
+  
+  .products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+  }
+  
+  .container {
+    padding: 0 15px;
+  }
+}
+</style>
+
+<div class="brand-category-page">
+  <!-- Header Section -->
+  <div class="brand-category-header">
+    <div class="container">
+      <h1>{{ brand_display }} {{ category_display }}</h1>
+      <div class="subtitle">Spare Parts & Accessories</div>
+      <a href="javascript:history.back()" class="back-to-brands">← Back to Brands</a>
+    </div>
+  </div>
+
+  <!-- Breadcrumb -->
+  <div class="breadcrumb">
+    <div class="breadcrumb-nav">
+      <a href="/">Home</a>
+      <span>></span>
+      <a href="javascript:history.back()">Brands</a>
+      <span>></span>
+      <span>{{ brand_display }} {{ category_display }}</span>
+    </div>
+  </div>
+
+  <!-- Products Section -->
+  <div class="products-section">
+    <div class="container">
+      <!-- Filters Bar -->
+      <div class="filters-bar">
+        <h3>{{ category_display }} Parts for {{ brand_display }}</h3>
+        <p>Find genuine and compatible spare parts for your {{ brand_display }} {{ category_display | downcase }}.</p>
+      </div>
+
+      <!-- Mock Products Grid -->
+      <div class="products-grid">
+        {% comment %} Generate mock products for this brand-category combination {% endcomment %}
+        {% assign mock_products = 'Door Seal,Heating Element,Water Filter,Control Panel,Motor,Pump,Thermostat,Switch,Belt,Hose,Gasket,Handle,Glass Shelf,Drawer,Light Bulb' | split: ',' %}
+        {% assign mock_prices = '£15.99,£24.99,£12.50,£45.00,£89.99,£35.75,£18.25,£8.99,£14.50,£22.00,£9.99,£16.75,£28.99,£33.50,£7.25' | split: ',' %}
+        {% assign mock_codes = 'ESP001,ESP002,ESP003,ESP004,ESP005,ESP006,ESP007,ESP008,ESP009,ESP010,ESP011,ESP012,ESP013,ESP014,ESP015' | split: ',' %}
+
+        {% for i in (0..7) %}
+          {% assign product_name = mock_products[i] | default: 'Spare Part' %}
+          {% assign price = mock_prices[i] | default: '£19.99' %}
+          {% assign product_code = mock_codes[i] | default: 'ESP000' %}
+          
+          <div class="product-card">
+            <img src="https://via.placeholder.com/280x200/f8f9fa/666?text={{ product_name | url_encode }}" 
+                 alt="{{ brand_display }} {{ product_name }}" 
+                 class="product-image"
+                 loading="lazy"
+                 width="280" 
+                 height="200"/>
+            
+            <div class="product-info">
+              <h4 class="product-title">{{ brand_display }} {{ category_display }} {{ product_name }}</h4>
+              <div class="product-code">Part Code: {{ product_code }}</div>
+              <div class="product-price">{{ price }}</div>
+              <div class="product-compatibility">
+                Compatible with {{ brand_display }} {{ category_display | downcase }} models
+              </div>
+              <button class="add-to-cart-btn">Add to Cart</button>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+      <!-- Additional Info -->
+      <div class="filters-bar">
+        <h4>About {{ brand_display }} {{ category_display }} Parts</h4>
+        <p>Our range of {{ brand_display }} {{ category_display | downcase }} spare parts includes both genuine manufacturer parts and high-quality compatible alternatives. All parts come with our quality guarantee and fast delivery service.</p>
+        <p><strong>Need help finding the right part?</strong> Use our part finder tool or contact our expert customer service team who can help identify the exact part you need for your {{ brand_display }} appliance.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Add some interactivity
+document.addEventListener('DOMContentLoaded', function() {
+  // Add click handlers for product cards
+  const productCards = document.querySelectorAll('.product-card');
+  productCards.forEach(card => {
+    card.addEventListener('click', function(e) {
+      if (!e.target.classList.contains('add-to-cart-btn')) {
+        // Navigate to product page
+        console.log('Navigate to product page');
+      }
+    });
+  });
+
+  // Add to cart functionality
+  const addToCartBtns = document.querySelectorAll('.add-to-cart-btn');
+  addToCartBtns.forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      this.textContent = 'Added!';
+      this.style.background = '#28a745';
+      setTimeout(() => {
+        this.textContent = 'Add to Cart';
+        this.style.background = '#28a745';
+      }, 2000);
+    });
+  });
+});
+</script>
