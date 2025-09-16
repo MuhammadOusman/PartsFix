@@ -1,18 +1,18 @@
 {%- assign featured_products = section.settings.featured_products | split: '|' -%}
 
 <style>
-.espares-featured-products {
+.parts-featured-products {
   padding: 60px 0;
   background: white;
 }
 
-.espares-featured-products .container {
+.parts-featured-products .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
 }
 
-.espares-featured-products h2 {
+.parts-featured-products h2 {
   text-align: center;
   margin-bottom: 50px;
   font-size: 2.2rem;
@@ -178,7 +178,7 @@
     padding: 15px;
   }
   
-  .espares-featured-products h2 {
+  .parts-featured-products h2 {
     font-size: 1.8rem;
     margin-bottom: 30px;
   }
@@ -196,7 +196,7 @@
 </style>
 
 <div class="container">
-  <div class="espares-featured-products home-section">
+  <div class="parts-featured-products home-section">
     <h2>{{ section.settings.title | default: "Featured Products" }}</h2>
     <div class="featured-products-grid">
       {%- if featured_products.size > 0 -%}

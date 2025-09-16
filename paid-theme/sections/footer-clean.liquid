@@ -1,218 +1,508 @@
 <style>
-/* Modern Clean Footer - No conflicts */
-.footer-clean {
-  background: #f8f9fa;
-  color: #333;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  border-top: 1px solid #e9ecef;
-  padding: 60px 0 40px;
+:root {
+  --primary-orange: #ff6b35;
+  --primary-orange-light: #ff8a5e;
+  --primary-orange-dark: #e55a2b;
+  --accent-orange: #ffab47;
+  --pure-white: #ffffff;
+  --light-gray: #f8f9fa;
+  --border-gray: #e9ecef;
+  --text-dark: #2c3e50;
+  --text-muted: #6c757d;
+  --shadow-light: 0 4px 12px rgba(255, 107, 53, 0.08);
+  --shadow-medium: 0 6px 20px rgba(255, 107, 53, 0.12);
+  --shadow-heavy: 0 10px 30px rgba(255, 107, 53, 0.15);
+  --border-radius: 16px;
+  --border-radius-small: 8px;
+  --transition: all 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
-.footer-clean .container {
-  max-width: 1200px;
+/* PartsFix Modern Footer */
+.parts-footer-wrap {
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  color: var(--pure-white);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+.parts-footer-wrap::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(90deg, var(--primary-orange), var(--accent-orange), var(--primary-orange));
+  animation: footerTopFlow 8s ease-in-out infinite;
+}
+
+@keyframes footerTopFlow {
+  0%, 100% { transform: translateX(-100px); }
+  50% { transform: translateX(100px); }
+}
+
+.parts-footer-wrap::after {
+  content: '';
+  position: absolute;
+  top: 20%;
+  right: -10%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(255, 107, 53, 0.1) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: floatOrb 12s ease-in-out infinite;
+}
+
+@keyframes floatOrb {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-50px, -30px) scale(1.1); }
+  66% { transform: translate(30px, -60px) scale(0.9); }
+}
+
+.parts-footer {
+  padding: 80px 0 40px;
+  position: relative;
+  z-index: 2;
+}
+
+.parts-footer-container {
+  max-width: 1400px;
   margin: 0 auto;
   padding: 0 24px;
 }
 
-.footer-clean .footer-grid {
+.parts-footer-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 40px;
-  margin-bottom: 40px;
+  grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+  gap: 60px;
+  margin-bottom: 60px;
 }
 
-.footer-clean .footer-column h3 {
-  color: #212529;
-  font-weight: 700;
-  font-size: 18px;
+.parts-footer-column {
+  position: relative;
+}
+
+.parts-footer-heading {
+  font-weight: 800;
+  font-size: 1.4rem;
+  color: var(--pure-white);
+  margin: 0 0 32px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: relative;
+  padding-bottom: 16px;
+}
+
+.parts-footer-heading::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary-orange), var(--accent-orange));
+  border-radius: 2px;
+}
+
+/* Contact Info Styling */
+.parts-footer-contact {
+  line-height: 1.8;
+}
+
+.parts-footer-contact p {
   margin: 0 0 20px;
+  color: #bdc3c7;
+  font-size: 1rem;
+  font-weight: 400;
 }
 
-.footer-clean .footer-links {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.footer-clean .footer-links li {
-  margin-bottom: 12px;
-}
-
-.footer-clean .footer-links a {
-  color: #6c757d;
-  text-decoration: none;
-  font-size: 15px;
-  transition: color 0.2s;
-}
-
-.footer-clean .footer-links a:hover {
-  color: #007bff;
-}
-
-.footer-clean .contact-info p {
-  margin: 0 0 16px;
-  line-height: 1.5;
-  color: #6c757d;
-  font-size: 15px;
-}
-
-.footer-clean .contact-section {
-  margin-top: 24px;
-}
-
-.footer-clean .contact-section h4 {
+.parts-footer-contact strong {
+  color: var(--pure-white);
   font-weight: 600;
-  font-size: 16px;
-  color: #212529;
+}
+
+.parts-contact-item {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--border-radius);
+  padding: 24px;
+  margin-bottom: 20px;
+  backdrop-filter: blur(10px);
+  transition: var(--transition);
+}
+
+.parts-contact-item:hover {
+  background: rgba(255, 107, 53, 0.1);
+  border-color: rgba(255, 107, 53, 0.3);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-medium);
+}
+
+.parts-contact-item h4 {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--primary-orange);
   margin: 0 0 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.footer-clean .contact-section p {
+.parts-contact-item h4::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background: var(--accent-orange);
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.2); opacity: 0.7; }
+}
+
+.parts-contact-item p {
   margin: 0;
-  color: #6c757d;
-  font-size: 15px;
+  color: #ecf0f1;
+  font-size: 0.95rem;
 }
 
-.footer-clean .newsletter-desc {
-  color: #6c757d;
+/* Footer Links */
+.parts-footer-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.parts-footer-links li {
+  margin: 0 0 16px;
+  transform: translateX(0);
+  transition: var(--transition);
+}
+
+.parts-footer-links li:hover {
+  transform: translateX(8px);
+}
+
+.parts-footer-links a {
+  color: #bdc3c7;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  border-radius: var(--border-radius-small);
+}
+
+.parts-footer-links a::before {
+  content: '→';
+  font-size: 0.9rem;
+  color: var(--primary-orange);
+  transition: var(--transition);
+  opacity: 0;
+  transform: translateX(-10px);
+}
+
+.parts-footer-links a:hover {
+  color: var(--pure-white);
+  background: rgba(255, 107, 53, 0.1);
+  padding-left: 16px;
+}
+
+.parts-footer-links a:hover::before {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Newsletter Section */
+.parts-newsletter-section {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  padding: 32px;
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+
+.parts-newsletter-section::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 107, 53, 0.05) 0%, transparent 70%);
+  animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.parts-newsletter-section > * {
+  position: relative;
+  z-index: 2;
+}
+
+.parts-newsletter-desc {
+  color: #bdc3c7;
   margin: 0 0 24px;
-  line-height: 1.5;
-  font-size: 15px;
+  line-height: 1.6;
+  font-size: 1rem;
 }
 
-.footer-clean .newsletter-form {
+.parts-newsletter-form {
+  position: relative;
+}
+
+.parts-newsletter-input-wrapper {
   position: relative;
   display: flex;
+  margin-bottom: 16px;
 }
 
-.footer-clean .newsletter-input {
+.parts-newsletter-input {
   flex: 1;
-  padding: 12px 50px 12px 16px;
-  border: 2px solid #dee2e6;
-  border-radius: 6px;
-  font-size: 15px;
-  background: #fff;
-  color: #333;
+  padding: 16px 60px 16px 20px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--pure-white);
+  transition: var(--transition);
+  backdrop-filter: blur(10px);
 }
 
-.footer-clean .newsletter-input:focus {
+.parts-newsletter-input::placeholder {
+  color: #bdc3c7;
+}
+
+.parts-newsletter-input:focus {
   outline: none;
-  border-color: #007bff;
+  border-color: var(--primary-orange);
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 0 4px rgba(255, 107, 53, 0.2);
 }
 
-.footer-clean .newsletter-btn {
+.parts-newsletter-submit {
   position: absolute;
   right: 8px;
   top: 50%;
   transform: translateY(-50%);
-  background: #007bff;
-  color: #fff;
+  background: linear-gradient(135deg, var(--primary-orange), var(--accent-orange));
+  color: var(--pure-white);
   border: none;
-  padding: 8px;
-  border-radius: 4px;
+  padding: 12px;
+  border-radius: var(--border-radius-small);
   cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
 }
 
-.footer-clean .newsletter-btn:hover {
-  background: #0056b3;
+.parts-newsletter-submit:hover {
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: var(--shadow-medium);
 }
 
-.footer-clean .footer-bottom {
-  border-top: 1px solid #dee2e6;
-  padding-top: 24px;
+.parts-newsletter-submit svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Sub Footer */
+.parts-sub-footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 40px;
   text-align: center;
-  color: #6c757d;
-  font-size: 14px;
+  position: relative;
 }
 
-/* Responsive */
-@media (max-width: 992px) {
-  .footer-clean .footer-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 32px;
+.parts-sub-footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--primary-orange), transparent);
+}
+
+.parts-sub-footer p {
+  color: #95a5a6;
+  font-size: 0.95rem;
+  margin: 0;
+  font-weight: 400;
+}
+
+.parts-sub-footer strong {
+  color: var(--primary-orange);
+  font-weight: 700;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .parts-footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+  
+  .parts-footer {
+    padding: 60px 0 40px;
   }
 }
 
-@media (max-width: 576px) {
-  .footer-clean .footer-grid {
+@media (max-width: 768px) {
+  .parts-footer-container {
+    padding: 0 16px;
+  }
+  
+  .parts-footer-grid {
     grid-template-columns: 1fr;
-    gap: 32px;
+    gap: 40px;
+  }
+  
+  .parts-footer {
+    padding: 50px 0 30px;
+  }
+  
+  .parts-footer-heading {
+    font-size: 1.2rem;
+    margin-bottom: 24px;
+  }
+  
+  .parts-contact-item {
+    padding: 20px;
+  }
+  
+  .parts-newsletter-section {
+    padding: 24px;
+  }
+  
+  .parts-newsletter-input {
+    padding: 14px 50px 14px 16px;
+  }
+  
+  .parts-newsletter-submit {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .parts-footer-heading {
+    font-size: 1.1rem;
+  }
+  
+  .parts-footer-links a {
+    font-size: 0.95rem;
+  }
+  
+  .parts-newsletter-desc {
+    font-size: 0.95rem;
+  }
+  
+  .parts-sub-footer p {
+    font-size: 0.9rem;
   }
 }
 </style>
 
-<div class="footer-clean">
-  <div class="container">
-    <div class="footer-grid">
-      <!-- Where To Find Us Column -->
-      <div class="footer-column">
-        <h3>Where To Find Us</h3>
-        <div class="contact-info">
-          <p>Unit 2, Broughton Trade Centre,<br>
-          Broughton Ln,<br>
-          Salford, M7 1UH<br>
-          United Kingdom</p>
-          
-          <div class="contact-section">
-            <h4>Chat Support</h4>
-            <p>Mon - Fri 9.00am - 5.00pm</p>
+<div class="parts-footer-wrap">
+  <div class="parts-footer">
+    <div class="parts-footer-container">
+      <div class="parts-footer-grid">
+        <!-- Contact Information Column -->
+        <div class="parts-footer-column">
+          <h3 class="parts-footer-heading">Where To Find Us</h3>
+          <div class="parts-footer-contact">
+            <div class="parts-contact-item">
+              <h4>Visit Our Store</h4>
+              <p>Unit 2, Broughton Trade Centre,<br>
+              Broughton Ln,<br>
+              Salford, M7 1UH<br>
+              United Kingdom</p>
+            </div>
+            
+            <div class="parts-contact-item">
+              <h4>Chat Support</h4>
+              <p>Mon - Fri 9.00am - 5.00pm</p>
+            </div>
+            
+            <div class="parts-contact-item">
+              <h4>Email</h4>
+              <p>wecare@essentialsfix.co.uk</p>
+            </div>
           </div>
-          
-          <div class="contact-section">
-            <h4>Email</h4>
-            <p>wecare@essentialsfix.co.uk</p>
+        </div>
+
+        <!-- Service Links Column -->
+        <div class="parts-footer-column">
+          <h3 class="parts-footer-heading">Service For All</h3>
+          <ul class="parts-footer-links">
+            <li><a href="/pages/contact">Track Order</a></li>
+            <li><a href="/pages/about-us">About Us</a></li>
+            <li><a href="/pages/trade-application">Trade Application</a></li>
+            <li><a href="/pages/returns">Returns & Refunds</a></li>
+            <li><a href="/pages/contact">Contact Us</a></li>
+            <li><a href="/pages/contact">Become A Supplier</a></li>
+            <li><a href="/pages/contact">FAQs</a></li>
+            <li><a href="/pages/contact">Blogs</a></li>
+          </ul>
+        </div>
+
+        <!-- Policy Links Column -->
+        <div class="parts-footer-column">
+          <h3 class="parts-footer-heading">Schemes For All</h3>
+          <ul class="parts-footer-links">
+            <li><a href="/pages/privacy">Privacy Policy</a></li>
+            <li><a href="/pages/terms">Terms Of Service</a></li>
+            <li><a href="/pages/shipping">Shipping Policy</a></li>
+          </ul>
+        </div>
+
+        <!-- Newsletter Column -->
+        <div class="parts-footer-column">
+          <h3 class="parts-footer-heading">Subscribe For All</h3>
+          <div class="parts-newsletter-section">
+            <p class="parts-newsletter-desc">Sign up for exclusive offers, original stories, events and more.</p>
+            
+            {% form 'customer', class: 'parts-newsletter-form' %}
+              <input type="hidden" name="contact[tags]" value="newsletter">
+              <div class="parts-newsletter-input-wrapper">
+                <input
+                  type="email"
+                  name="contact[email]"
+                  class="parts-newsletter-input"
+                  placeholder="Your email"
+                  required
+                >
+                <button type="submit" class="parts-newsletter-submit">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22,2 15,22 11,13 2,9"></polygon>
+                  </svg>
+                </button>
+              </div>
+            {% endform %}
           </div>
         </div>
       </div>
-
-      <!-- Service For All Column -->
-      <div class="footer-column">
-        <h3>Service For All</h3>
-        <ul class="footer-links">
-          <li><a href="/pages/contact">Track Order</a></li>
-          <li><a href="/pages/about-us">About Us</a></li>
-          <li><a href="/pages/trade-application">Trade Application</a></li>
-          <li><a href="/pages/returns">Returns & Refunds</a></li>
-          <li><a href="/pages/contact">Contact Us</a></li>
-          <li><a href="/pages/contact">Become A Supplier</a></li>
-          <li><a href="/pages/contact">FAQs</a></li>
-          <li><a href="/pages/contact">Blogs</a></li>
-        </ul>
+      
+      <div class="parts-sub-footer">
+        <p>&copy; {{ 'now' | date: '%Y' }} <strong>PartsFix</strong> - All rights reserved. The online store for all your parts and accessories.</p>
       </div>
-
-      <!-- Schemes For All Column -->
-      <div class="footer-column">
-        <h3>Schemes For All</h3>
-        <ul class="footer-links">
-          <li><a href="/pages/privacy">Privacy Policy</a></li>
-          <li><a href="/pages/terms">Terms Of Service</a></li>
-          <li><a href="/pages/shipping">Shipping Policy</a></li>
-        </ul>
-      </div>
-
-      <!-- Subscribe For All Column -->
-      <div class="footer-column">
-        <h3>Subscribe For All</h3>
-        <p class="newsletter-desc">Sign up for exclusive offers, original stories, events and more.</p>
-        
-        <form class="newsletter-form" action="{{ routes.cart_add_url }}" method="post">
-          <input type="email" 
-                 name="contact[email]" 
-                 class="newsletter-input" 
-                 placeholder="Your email"
-                 required>
-          <button type="submit" class="newsletter-btn">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
-            </svg>
-          </button>
-          <input type="hidden" name="contact[tags]" value="newsletter">
-        </form>
-      </div>
-    </div>
-
-    <div class="footer-bottom">
-      <p>&copy; {{ 'now' | date: '%Y' }} eSpares - All rights reserved. The online store for all your parts and accessories.</p>
     </div>
   </div>
 </div>

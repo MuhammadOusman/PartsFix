@@ -1,3 +1,46 @@
+/* PartsFix Orange Color Scheme Override */
+.icons-with-text.color-scheme--3 {
+  --color-scheme-3-bg: linear-gradient(135deg, #ff6b35 0%, #ffab47 100%);
+  --color-scheme-3-heading: #ffffff;
+  --color-scheme-3-text: #ffffff;
+  --color-scheme-3-btn-bg: #ffffff;
+  --color-scheme-3-btn-text: #ff6b35;
+}
+
+.icons-with-text.color-scheme--3 {
+  background: linear-gradient(135deg, #ff6b35 0%, #ffab47 100%) !important;
+  color: #ffffff !important;
+}
+
+.icons-with-text.color-scheme--3 .icon {
+  color: #ffffff !important;
+}
+
+.icons-with-text.color-scheme--3 .icons-with-text__title {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+}
+
+.icons-with-text.color-scheme--3 .rte,
+.icons-with-text.color-scheme--3 .rte p {
+  color: #ffffff !important;
+  opacity: 0.95 !important;
+}
+
+/* Enhanced PartsFix Icons with Text Styling */
+.icons-with-text.color-scheme--3 .slider__item {
+  transition: all 0.3s ease;
+}
+
+.icons-with-text.color-scheme--3 .slider__item:hover {
+  transform: translateY(-3px);
+}
+
+.icons-with-text.color-scheme--3 .slider__item:hover .icon {
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+}
+
 .icons-with-text .carousel[inactive] .icons-with-text--narrow {
   max-width: 600px;
   margin: 0 auto;

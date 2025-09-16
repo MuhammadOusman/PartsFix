@@ -1,6 +1,6 @@
 {% comment %}
-  eSpares Header - Exact 1:1 Replica
-  Matches the eSpares.co.uk header design exactly
+  Modern Parts Store Header - Clean White & Orange Design
+  Professional appearance with modern styling
 {% endcomment %}
 
 {% liquid
@@ -11,25 +11,25 @@
 
 {{ 'espares-header.css' | asset_url | stylesheet_tag }}
 
-<header class="espares-header">
-  <!-- Fast-Win: Standard top black bar (if not already elsewhere) -->
-  <div class="espares-top-bar" role="note" aria-label="Store notice">
-    <div class="espares-header-content" style="justify-content:center; font-size:13px; font-weight:600; letter-spacing:.3px;">
+<header class="parts-header">
+  <!-- Top promotional bar -->
+  <div class="parts-top-bar" role="note" aria-label="Store notice">
+    <div class="parts-header-content" style="justify-content:center; font-size:14px; font-weight:600; letter-spacing:.5px;">
       Trusted by millions of customers | Genuine Parts | Price Match Promise
     </div>
   </div>
   <!-- Main header -->
-  <div class="espares-main-header">
-    <div class="espares-header-content">
+  <div class="parts-main-header">
+    <div class="parts-header-content">
       <!-- Logo -->
-      <div class="espares-logo">
+      <div class="parts-logo">
         <a href="{{ routes.root_url }}" title="{{ shop.name | escape }}">
           {%- if logo -%}
             <img src="{{ logo | image_url: width: logo_width }}" alt="{{ shop.name | escape }}" width="{{ logo_width }}" height="{{ logo_width | divided_by: logo.aspect_ratio | round }}">
           {%- else -%}
-            <span class="espares-logo-text">
-              espares
-              <span class="tagline">the online parts store</span>
+            <span class="parts-logo-text">
+              PartsFix
+              <span class="tagline">the parts store</span>
             </span>
           {%- endif -%}
         </a>
@@ -37,26 +37,26 @@
       
       <!-- Search bar -->
       {%- if search_enabled -%}
-        <div class="espares-search-container">
-          <form action="{{ routes.search_url }}" method="get" role="search" class="espares-search-form">
+        <div class="parts-search-container">
+          <form action="{{ routes.search_url }}" method="get" role="search" class="parts-search-form">
             <input 
               type="search" 
               name="q" 
               maxlength="120" 
               placeholder="Search your brand, part or model..." 
-              class="espares-search-input" 
+              class="parts-search-input" 
               value="{{ search.terms | escape }}" 
               spellcheck="false">
-            <button type="submit" class="espares-search-button">Search »</button>
+            <button type="submit" class="parts-search-button">Search</button>
           </form>
         </div>
       {%- endif -%}
       
       <!-- Header actions -->
-      <div class="espares-header-actions">
+      <div class="parts-header-actions">
         <!-- Account -->
-        <a href="{{ routes.account_url }}" class="espares-account">
-          <svg class="espares-icon" fill="currentColor" viewBox="0 0 24 24">
+        <a href="{{ routes.account_url }}" class="parts-account">
+          <svg class="parts-icon" fill="currentColor" viewBox="0 0 24 24">
             <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
           </svg>
           {%- if customer -%}
@@ -67,15 +67,15 @@
         </a>
         
         <!-- Basket -->
-        <a href="{{ routes.cart_url }}" class="espares-basket">
-          <svg class="espares-icon" fill="currentColor" viewBox="0 0 24 24">
+        <a href="{{ routes.cart_url }}" class="parts-basket">
+          <svg class="parts-icon" fill="currentColor" viewBox="0 0 24 24">
             <path d="M7 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12L8.1 13h7.45c.75 0 1.41-.41 1.75-1.03L21.7 4H5.21l-.94-2H1zm16 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
           </svg>
           Basket
           {%- if cart.item_count > 0 -%}
-            <span class="espares-basket-count">{{ cart.item_count }}</span>
+            <span class="parts-basket-count">{{ cart.item_count }}</span>
           {%- else -%}
-            <span class="espares-basket-count">0</span>
+            <span class="parts-basket-count">0</span>
           {%- endif -%}
         </a>
       </div>
@@ -83,11 +83,11 @@
   </div>
   
   <!-- Navigation menu -->
-  <nav class="espares-navigation" aria-label="Primary">
-    <div class="espares-nav-content">
-      {%- comment -%} Static mega menu data (expressed without parse_json for Theme Check compatibility) {%- endcomment -%}
+  <nav class="parts-navigation" aria-label="Primary">
+    <div class="parts-nav-content">
+      {%- comment -%} Static mega menu data {%- endcomment -%}
       {%- assign mega_menu_categories = "Kitchen Appliances|Washers & Dryers|Floorcare|Garden|Sound & Vision|Household|Advice Centre" | split: "|" -%}
-      <ul class="espares-nav-list" role="menubar">
+      <ul class="parts-nav-list" role="menubar">
         {%- for top_name in mega_menu_categories -%}
           {%- case top_name -%}
             {%- when 'Kitchen Appliances' -%}
@@ -107,22 +107,22 @@
             {%- else -%}
               {%- assign children = blank -%}
           {%- endcase -%}
-          <li class="espares-nav-item has-mega" role="none">
-            <a href="{{ routes.collections_url }}/{{ top_name | handleize }}" class="espares-nav-link" role="menuitem" aria-haspopup="true" aria-expanded="false">{{ top_name }}</a>
-            <div class="espares-mega" data-mega="{{ top_name | handleize }}" hidden>
-              <div class="espares-mega-inner">
-                <div class="espares-mega-col">
-                  <h3 class="espares-mega-heading">Spare Parts</h3>
-                  <ul class="espares-mega-links">
+          <li class="parts-nav-item has-mega" role="none">
+            <a href="{{ routes.collections_url }}/{{ top_name | handleize }}" class="parts-nav-link" role="menuitem" aria-haspopup="true" aria-expanded="false">{{ top_name }}</a>
+            <div class="parts-mega" data-mega="{{ top_name | handleize }}" hidden>
+              <div class="parts-mega-inner">
+                <div class="parts-mega-col">
+                  <h3 class="parts-mega-heading">Spare Parts</h3>
+                  <ul class="parts-mega-links">
                     {%- for c in children -%}
                       <li><a href="{{ routes.collections_url }}/{{ c | handleize }}" title="{{ c }}">{{ c }}</a></li>
                     {%- endfor -%}
                   </ul>
                 </div>
                 {%- if top_name == 'Kitchen Appliances' -%}
-                  <div class="espares-mega-col brands">
-                    <h3 class="espares-mega-heading">Top Brands</h3>
-                    <ul class="espares-mega-brands">
+                  <div class="parts-mega-col brands">
+                    <h3 class="parts-mega-heading">Top Brands</h3>
+                    <ul class="parts-mega-brands">
                       {%- assign top_brands = 'Bosch,Hotpoint,Beko,Indesit,Zanussi,Neff,Samsung,Siemens' | split: ',' -%}
                       {%- for b in top_brands -%}
                         <li><a href="{{ routes.collections_url }}/{{ b | handleize }}" title="{{ b }}">{{ b }}</a></li>
@@ -140,52 +140,147 @@
   </nav>
 
   <style>
-  /* Fast-Win additions */
-  .espares-top-bar { background:#000; color:#fff; padding:6px 0; font-family:'Lato',Arial,sans-serif; }
-  .espares-top-bar a { color:#ffd700; text-decoration:none; }
-  .espares-top-bar a:hover { text-decoration:underline; }
-  .espares-yellow-banner { font-family:'Lato',Arial,sans-serif; }
-  .espares-navigation { background:#111; font-family:'Lato',sans-serif; }
-  .espares-nav-list { list-style:none; margin:0; padding:0 20px; display:flex; gap:18px; }
-  .espares-nav-link { display:block; padding:14px 4px; color:#fff; text-decoration:none; font-weight:600; font-size:14px; position:relative; }
-  .espares-nav-link:hover, .espares-nav-link:focus { color:#ffd200; }
-  .has-mega { position:relative; }
-  .espares-mega { position:absolute; top:100%; left:0; right:0; background:#fff; border-top:3px solid #ffd200; box-shadow:0 6px 18px rgba(0,0,0,.15); padding:28px 40px; }
-  .espares-mega-inner { max-width:1200px; margin:0 auto; display:flex; gap:60px; }
-  .espares-mega-col { flex:1 1 260px; }
-  .espares-mega-heading { margin:0 0 14px; font-size:16px; font-weight:700; color:#222; text-transform:uppercase; letter-spacing:.5px; }
-  .espares-mega-links, .espares-mega-brands { list-style:none; margin:0; padding:0; columns:2; column-gap:30px; }
-  .espares-mega-links li, .espares-mega-brands li { break-inside:avoid; margin:0 0 6px; }
-  .espares-mega-links a, .espares-mega-brands a { color:#222; text-decoration:none; font-size:14px; line-height:1.3; }
-  .espares-mega-links a:hover, .espares-mega-brands a:hover { color:#ff6b35; }
-  .espares-mega-col.brands .espares-mega-brands { columns:1; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:6px 18px; }
-  .espares-mega-brands .view-all { grid-column:1/-1; margin-top:4px; }
-  .espares-mega-brands .view-all a { font-weight:600; color:#ff6b35; }
+  /* Modern Parts Store Header Inline Styles */
+  .parts-top-bar { 
+    background: linear-gradient(135deg, var(--primary-orange), var(--accent-orange)); 
+    color: var(--pure-white); 
+    padding: 12px 0; 
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+  }
+  .parts-top-bar a { 
+    color: var(--pure-white); 
+    text-decoration: none; 
+    font-weight: 600;
+  }
+  .parts-top-bar a:hover { 
+    text-decoration: underline; 
+  }
+  .parts-orange-banner { 
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+  }
+  .parts-navigation { 
+    background: linear-gradient(135deg, var(--light-gray), var(--pure-white)); 
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+  }
+  .parts-nav-list { 
+    list-style: none; 
+    margin: 0; 
+    padding: 0 24px; 
+    display: flex; 
+    gap: 8px; 
+  }
+  .parts-nav-link { 
+    display: block; 
+    padding: 16px 20px; 
+    color: var(--text-dark); 
+    text-decoration: none; 
+    font-weight: 600; 
+    font-size: 16px; 
+    position: relative; 
+    border-radius: var(--border-radius-small);
+    transition: var(--transition);
+  }
+  .parts-nav-link:hover, .parts-nav-link:focus { 
+    color: var(--primary-orange); 
+    background: rgba(255, 107, 53, 0.1);
+    transform: translateY(-1px);
+  }
+  .has-mega { position: relative; }
+  .parts-mega { 
+    position: absolute; 
+    top: 100%; 
+    left: 0; 
+    right: 0; 
+    background: var(--pure-white); 
+    border-top: 3px solid var(--primary-orange); 
+    box-shadow: var(--shadow-medium); 
+    padding: 32px 40px; 
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
+  }
+  .parts-mega-inner { 
+    max-width: 1400px; 
+    margin: 0 auto; 
+    display: flex; 
+    gap: 60px; 
+  }
+  .parts-mega-col { flex: 1 1 280px; }
+  .parts-mega-heading { 
+    margin: 0 0 16px; 
+    font-size: 18px; 
+    font-weight: 800; 
+    color: var(--text-dark); 
+    text-transform: uppercase; 
+    letter-spacing: 1px; 
+  }
+  .parts-mega-links, .parts-mega-brands { 
+    list-style: none; 
+    margin: 0; 
+    padding: 0; 
+    columns: 2; 
+    column-gap: 32px; 
+  }
+  .parts-mega-links li, .parts-mega-brands li { 
+    break-inside: avoid; 
+    margin: 0 0 8px; 
+  }
+  .parts-mega-links a, .parts-mega-brands a { 
+    color: var(--text-dark); 
+    text-decoration: none; 
+    font-size: 15px; 
+    font-weight: 500;
+    line-height: 1.4; 
+    transition: var(--transition);
+  }
+  .parts-mega-links a:hover, .parts-mega-brands a:hover { 
+    color: var(--primary-orange); 
+    transform: translateX(4px);
+  }
+  .parts-mega-col.brands .parts-mega-brands { 
+    columns: 1; 
+    display: grid; 
+    grid-template-columns: repeat(2, minmax(0, 1fr)); 
+    gap: 8px 20px; 
+  }
+  .parts-mega-brands .view-all { 
+    grid-column: 1/-1; 
+    margin-top: 8px; 
+  }
+  .parts-mega-brands .view-all a { 
+    font-weight: 700; 
+    color: var(--primary-orange); 
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
   @media (max-width: 980px){
-    .espares-nav-list { flex-wrap:wrap; }
-    .espares-mega { position:static; box-shadow:none; padding:10px 0 20px; border-top:none; }
-    .espares-mega[hidden] { display:none !important; }
-    .espares-mega-inner { flex-direction:column; gap:30px; }
-    .espares-mega-links, .espares-mega-brands { columns:1; }
+    .parts-nav-list { flex-wrap: wrap; }
+    .parts-mega { 
+      position: static; 
+      box-shadow: none; 
+      padding: 16px 0 24px; 
+      border-top: none; 
+    }
+    .parts-mega[hidden] { display: none !important; }
+    .parts-mega-inner { flex-direction: column; gap: 32px; }
+    .parts-mega-links, .parts-mega-brands { columns:1; }
   }
   /* Mega menu width fix: make panel span full navigation instead of narrow li */
-  .espares-nav-content { position:relative; }
+  .parts-nav-content { position:relative; }
   .has-mega { position:static; }
-  .has-mega > .espares-mega { left:0; right:0; width:100%; }
-  .espares-mega[hidden]{ display:none !important; }
+  .has-mega > .parts-mega { left:0; right:0; width:100%; }
+  .parts-mega[hidden]{ display:none !important; }
   /* Prevent overlapping decorative icons (theme base may inject pseudo-elements) */
-  .espares-mega-heading { display:flex; align-items:center; gap:8px; padding-left:0; position:relative; }
-  .espares-mega-heading:before, .espares-mega-heading:after, .espares-mega-col:before { content:none !important; display:none !important; }
+  .parts-mega-heading { display:flex; align-items:center; gap:8px; padding-left:0; position:relative; }
+  .parts-mega-heading:before, .parts-mega-heading:after, .parts-mega-col:before { content:none !important; display:none !important; }
   /* If existing global CSS applied background icons, strip them */
-  .espares-mega-heading { background:none !important; }
+  .parts-mega-heading { background:none !important; }
   </style>
   <script>
   // Accessible mega menu toggle (hover + focus + keyboard)
   document.addEventListener('DOMContentLoaded', function(){
-    const items = document.querySelectorAll('.espares-nav-item.has-mega');
+    const items = document.querySelectorAll('.parts-nav-item.has-mega');
     items.forEach(item=>{
-      const link = item.querySelector('.espares-nav-link');
-      const panel = item.querySelector('.espares-mega');
+      const link = item.querySelector('.parts-nav-link');
+      const panel = item.querySelector('.parts-mega');
       if(!link || !panel) return;
       function open(){ panel.hidden=false; link.setAttribute('aria-expanded','true'); }
       function close(){ panel.hidden=true; link.setAttribute('aria-expanded','false'); }
@@ -196,30 +291,30 @@
       link.addEventListener('keydown', e=>{ if(e.key==='Escape'){ close(); link.focus(); } });
     });
     // Close all on ESC globally
-    document.addEventListener('keydown', e=>{ if(e.key==='Escape'){ document.querySelectorAll('.espares-mega:not([hidden])').forEach(p=>{ p.hidden=true; }); document.querySelectorAll('.espares-nav-link[aria-expanded="true"]').forEach(l=>l.setAttribute('aria-expanded','false')); } });
+    document.addEventListener('keydown', e=>{ if(e.key==='Escape'){ document.querySelectorAll('.parts-mega:not([hidden])').forEach(p=>{ p.hidden=true; }); document.querySelectorAll('.parts-nav-link[aria-expanded="true"]').forEach(l=>l.setAttribute('aria-expanded','false')); } });
   });
   </script>
   <!-- Info bar -->
-  <div class="espares-info-bar">
-    <div class="espares-info-content">
-      <div class="espares-info-item">
-        <svg class="espares-info-icon" fill="currentColor" viewBox="0 0 24 24"><path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5z"/></svg>
+  <div class="parts-info-bar">
+    <div class="parts-info-content">
+      <div class="parts-info-item">
+        <svg class="parts-info-icon" fill="currentColor" viewBox="0 0 24 24"><path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5z"/></svg>
         Next Day Delivery Order By 9PM*
       </div>
-      <div class="espares-info-item">
-        <svg class="espares-info-icon" fill="currentColor" viewBox="0 0 24 24"><path d="M20 6h-2c0-2.21-1.79-4-4-4S10 3.79 10 6H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-6-2c1.1 0 2 .9 2 2h-4c0-1.1.9-2 2-2z"/></svg>
+      <div class="parts-info-item">
+        <svg class="parts-info-icon" fill="currentColor" viewBox="0 0 24 24"><path d="M20 6h-2c0-2.21-1.79-4-4-4S10 3.79 10 6H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-6-2c1.1 0 2 .9 2 2h-4c0-1.1.9-2 2-2z"/></svg>
         Over 1 Million Products
       </div>
-      <div class="espares-info-item">
-        <svg class="espares-info-icon" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <div class="parts-info-item">
+        <svg class="parts-info-icon" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
         Over 500 Brands
       </div>
     </div>
   </div>
 
-  <!-- Yellow promotional banner -->
-  <div class="espares-yellow-banner">
-    <div class="espares-yellow-content">
+  <!-- Promotional banner -->
+  <div class="parts-promo-banner">
+    <div class="parts-promo-content">
       Wide range of genuine spare parts and accessories for your household and garden appliances at low prices
     </div>
   </div>
@@ -227,7 +322,7 @@
 
 {% schema %}
 {
-  "name": "eSpares Header",
+  "name": "PartsFix Header",
   "class": "section-header",
   "settings": [
     {

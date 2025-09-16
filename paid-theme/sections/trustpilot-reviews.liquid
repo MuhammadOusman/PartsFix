@@ -1,7 +1,7 @@
 <style>
-/* Enhanced Trustpilot Section with eSpares styling */
+/* Enhanced Trustpilot Section with PartsFix styling */
 .home-trustpilot-wrapper {
-  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
   padding: 80px 0;
   color: #fff;
   position: relative;
@@ -14,14 +14,37 @@
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
-  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="white" opacity="0.05"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>') repeat;
-  pointer-events: none;
+  height: 6px;
+  background: linear-gradient(90deg, #ff6b35, #ffab47, #ff6b35);
+  animation: trustpilotTopFlow 8s ease-in-out infinite;
+}
+
+@keyframes trustpilotTopFlow {
+  0%, 100% { transform: translateX(-100px); }
+  50% { transform: translateX(100px); }
+}
+
+.home-trustpilot-wrapper::after {
+  content: '';
+  position: absolute;
+  top: 20%;
+  right: -10%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(255, 107, 53, 0.1) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: floatOrb 12s ease-in-out infinite;
+}
+
+@keyframes floatOrb {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-50px, -30px) scale(1.1); }
+  66% { transform: translate(30px, -60px) scale(0.9); }
 }
 
 .home-trustpilot {
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
 .home-trustpilot .quote {
@@ -269,7 +292,7 @@ document.addEventListener('DOMContentLoaded', function(){
       "type": "text",
       "id": "quote_line_2",
       "label": "Quote Title Line 2",
-      "default": "think eSpares"
+      "default": "think PartsFix"
     },
     {
       "type": "textarea",
@@ -281,7 +304,7 @@ document.addEventListener('DOMContentLoaded', function(){
       "type": "text",
       "id": "quote_author",
       "label": "Quote Author",
-      "default": "Matt Betteridge, eSpares eXpert"
+      "default": "Matt Betteridge, PartsFix Expert"
     },
     {
       "type": "text",
@@ -364,9 +387,9 @@ document.addEventListener('DOMContentLoaded', function(){
       "name": "Trustpilot Reviews",
       "settings": {
         "quote_line_1": "Think Fix First",
-        "quote_line_2": "think eSpares",
+        "quote_line_2": "think PartsFix",
   "quote_content": "Many people are surprised to learn that repairs are actually quite easy, requiring only a little knowledge about the appliance and of course a little patience!",
-        "quote_author": "Matt Betteridge, eSpares eXpert",
+        "quote_author": "Matt Betteridge, PartsFix Expert",
         "trustpilot_locale": "en-GB",
         "trustpilot_template_id": "53aa8912dec7e10d38f59f36",
         "trustpilot_business_id": "4834c3790000640005028b5d",

@@ -1,105 +1,149 @@
 {%- comment -%}
-  Collection Content Section - eSpares Style
+  Collection Content Section - PartsFix Modern Style
   Main content area with sidebar filters and product grid
 {%- endcomment -%}
 
 <style>
-  .espares-collection-container {
-    padding: 0;
-    margin: 0;
-  }
+:root {
+  --primary-orange: #ff6b35;
+  --primary-orange-light: #ff8a5e;
+  --primary-orange-dark: #e55a2b;
+  --accent-orange: #ffab47;
+  --pure-white: #ffffff;
+  --light-gray: #f8f9fa;
+  --border-gray: #e9ecef;
+  --text-dark: #2c3e50;
+  --text-muted: #6c757d;
+  --shadow-light: 0 2px 12px rgba(255, 107, 53, 0.1);
+  --shadow-medium: 0 4px 20px rgba(255, 107, 53, 0.15);
+  --border-radius: 12px;
+  --border-radius-small: 6px;
+  --transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.parts-collection-container {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.parts-collection-row {
+  display: flex;
+  gap: 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.parts-side-column {
+  flex: 0 0 320px;
+  background: var(--pure-white);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-light);
+  height: fit-content;
+  position: sticky;
+  top: 20px;
+}
+
+.parts-main-column {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Side Column Styles */
+.parts-side-column-mobile-heading {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--text-dark);
+  margin-bottom: 24px;
+  display: none;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.parts-mobile-refine-toggle-btn {
+  display: none;
+  width: 100%;
+  background: linear-gradient(135deg, var(--primary-orange), var(--primary-orange-light));
+  color: var(--pure-white);
+  border: none;
+  padding: 16px 24px;
+  border-radius: var(--border-radius);
+  font-weight: 700;
+  margin-bottom: 24px;
+  cursor: pointer;
+  transition: var(--transition);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: var(--shadow-medium);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.parts-mobile-refine-toggle-btn:hover {
+  background: linear-gradient(135deg, var(--primary-orange-dark), var(--primary-orange));
+  transform: translateY(-2px);
+}
+
+.parts-mobile-refine-hamburger-icon {
+  display: inline-block;
+  width: 20px;
+  height: 2px;
+  background: var(--pure-white);
+  margin-left: 12px;
+  position: relative;
+  border-radius: 1px;
+}
+
+.parts-mobile-refine-hamburger-icon::before,
+.parts-mobile-refine-hamburger-icon::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 2px;
+  background: var(--pure-white);
+  left: 0;
+  border-radius: 1px;
+}
+
+.parts-mobile-refine-hamburger-icon::before {
+  top: -6px;
+}
+
+.parts-mobile-refine-hamburger-icon::after {
+  top: 6px;
+}
+
+.parts-mobile-refine-selection-container {
+  display: none;
+}
+
+.parts-side-column-wrapper {
+  background: linear-gradient(135deg, var(--pure-white), var(--light-gray));
+  border-radius: var(--border-radius);
+  padding: 24px;
+  border: 2px solid transparent;
+  transition: var(--transition);
+}
+
+.parts-side-column-wrapper:hover {
+  border-color: var(--primary-orange);
+}
+
+.parts-side-menu {
+  margin-bottom: 28px;
+  background: var(--pure-white);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  border: 2px solid var(--border-gray);
+  box-shadow: var(--shadow-light);
+  transition: var(--transition);
+}
+
+.parts-side-menu:hover {
+  border-color: var(--primary-orange);
+  box-shadow: var(--shadow-medium);
+}
   
-  .espares-collection-row {
-    display: flex;
-    gap: 30px;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 15px;
-  }
-  
-  .espares-side-column {
-    flex: 0 0 280px;
-    background: #ffffff;
-  }
-  
-  .espares-main-column {
-    flex: 1;
-    min-width: 0;
-  }
-  
-  /* Side Column Styles */
-  .espares-side-column-mobile-heading {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #212529;
-    margin-bottom: 20px;
-    display: none;
-  }
-  
-  .espares-mobile-refine-toggle-btn {
-    display: none;
-    width: 100%;
-    background: #007bff;
-    color: #ffffff;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 6px;
-    font-weight: 500;
-    margin-bottom: 20px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-  }
-  
-  .espares-mobile-refine-toggle-btn:hover {
-    background: #0056b3;
-  }
-  
-  .espares-mobile-refine-hamburger-icon {
-    display: inline-block;
-    width: 20px;
-    height: 2px;
-    background: #ffffff;
-    margin-left: 10px;
-    position: relative;
-  }
-  
-  .espares-mobile-refine-hamburger-icon::before,
-  .espares-mobile-refine-hamburger-icon::after {
-    content: '';
-    position: absolute;
-    width: 20px;
-    height: 2px;
-    background: #ffffff;
-    left: 0;
-  }
-  
-  .espares-mobile-refine-hamburger-icon::before {
-    top: -6px;
-  }
-  
-  .espares-mobile-refine-hamburger-icon::after {
-    top: 6px;
-  }
-  
-  .espares-mobile-refine-selection-container {
-    display: none;
-  }
-  
-  .espares-side-column-wrapper {
-    background: #f8f9fa;
-    border-radius: 6px;
-    padding: 20px;
-  }
-  
-  .espares-side-menu {
-    margin-bottom: 25px;
-    background: #ffffff;
-    border-radius: 6px;
-    overflow: hidden;
-    border: 1px solid #dee2e6;
-  }
-  
-  .espares-side-menu-title {
+  .parts-side-menu-title {
     background: #e9ecef;
     padding: 15px 20px;
     margin: 0;
@@ -111,29 +155,29 @@
     transition: background-color 0.2s ease;
   }
   
-  .espares-side-menu-title:hover {
+  .parts-side-menu-title:hover {
     background: #dee2e6;
   }
   
-  .espares-side-menu-content {
+  .parts-side-menu-content {
     padding: 15px 20px;
   }
   
-  .espares-side-menu-content ul {
+  .parts-side-menu-content ul {
     list-style: none;
     margin: 0;
     padding: 0;
   }
   
-  .espares-side-menu-content li {
+  .parts-side-menu-content li {
     margin-bottom: 8px;
   }
   
-  .espares-side-menu-content li:last-child {
+  .parts-side-menu-content li:last-child {
     margin-bottom: 0;
   }
   
-  .espares-side-menu-content a {
+  .parts-side-menu-content a {
     color: #007bff;
     text-decoration: none;
     display: block;
@@ -141,12 +185,12 @@
     transition: color 0.2s ease;
   }
   
-  .espares-side-menu-content a:hover {
+  .parts-side-menu-content a:hover {
     color: #0056b3;
     text-decoration: underline;
   }
   
-  .espares-clear-all-link {
+  .parts-clear-all-link {
     display: inline-flex;
     align-items: center;
     color: #6c757d;
@@ -156,12 +200,12 @@
     transition: color 0.2s ease;
   }
   
-  .espares-clear-all-link:hover {
+  .parts-clear-all-link:hover {
     color: #495057;
     text-decoration: underline;
   }
   
-  .espares-clear-all-icon {
+  .parts-clear-all-icon {
     display: inline-block;
     margin-left: 8px;
     color: #dc3545;
@@ -169,7 +213,7 @@
   }
   
   /* Product Grid Styles */
-  .espares-products-header {
+  .parts-products-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -178,18 +222,18 @@
     border-bottom: 1px solid #dee2e6;
   }
   
-  .espares-products-count {
+  .parts-products-count {
     color: #6c757d;
     font-size: 0.9rem;
   }
   
-  .espares-products-sort {
+  .parts-products-sort {
     display: flex;
     align-items: center;
     gap: 10px;
   }
   
-  .espares-products-sort select {
+  .parts-products-sort select {
     padding: 8px 12px;
     border: 1px solid #dee2e6;
     border-radius: 4px;
@@ -198,14 +242,14 @@
     font-size: 0.9rem;
   }
   
-  .espares-products-grid {
+  .parts-products-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 25px;
     margin-bottom: 40px;
   }
   
-  .espares-product-card {
+  .parts-product-card {
     background: #ffffff;
     border: 1px solid #dee2e6;
     border-radius: 8px;
@@ -216,13 +260,13 @@
     overflow: hidden;
   }
   
-  .espares-product-card:hover {
+  .parts-product-card:hover {
     border-color: #007bff;
     box-shadow: 0 4px 12px rgba(0, 123, 255, 0.15);
     transform: translateY(-3px);
   }
   
-  .espares-product-image {
+  .parts-product-image {
     width: 100%;
     height: 200px;
     object-fit: contain;
@@ -230,7 +274,7 @@
     border-radius: 4px;
   }
   
-  .espares-product-title {
+  .parts-product-title {
     font-size: 1rem;
     font-weight: 500;
     color: #212529;
@@ -238,14 +282,14 @@
     line-height: 1.4;
   }
   
-  .espares-product-price {
+  .parts-product-price {
     font-size: 1.25rem;
     font-weight: 600;
     color: #007bff;
     margin-bottom: 15px;
   }
   
-  .espares-product-btn {
+  .parts-product-btn {
     background: #ffc107;
     color: #212529;
     border: none;
@@ -258,7 +302,7 @@
     display: inline-block;
   }
   
-  .espares-product-btn:hover {
+  .parts-product-btn:hover {
     background: #e0a800;
     color: #212529;
     text-decoration: none;
@@ -267,75 +311,75 @@
   
   /* Responsive Design */
   @media (max-width: 992px) {
-    .espares-collection-row {
+    .parts-collection-row {
       flex-direction: column;
     }
     
-    .espares-side-column {
+    .parts-side-column {
       flex: none;
       width: 100%;
       order: 2;
     }
     
-    .espares-main-column {
+    .parts-main-column {
       order: 1;
     }
     
-    .espares-side-column-mobile-heading {
+    .parts-side-column-mobile-heading {
       display: block;
     }
     
-    .espares-mobile-refine-toggle-btn {
+    .parts-mobile-refine-toggle-btn {
       display: block;
     }
     
-    .espares-side-column-wrapper {
+    .parts-side-column-wrapper {
       display: none;
     }
     
-    .espares-side-column-wrapper.mobile-open {
+    .parts-side-column-wrapper.mobile-open {
       display: block;
     }
   }
   
   @media (max-width: 768px) {
-    .espares-collection-row {
+    .parts-collection-row {
       padding: 0 10px;
       gap: 20px;
     }
     
-    .espares-products-header {
+    .parts-products-header {
       flex-direction: column;
       align-items: stretch;
       gap: 15px;
     }
     
-    .espares-products-grid {
+    .parts-products-grid {
       grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
       gap: 15px;
     }
     
-    .espares-product-card {
+    .parts-product-card {
       padding: 15px;
     }
     
-    .espares-product-image {
+    .parts-product-image {
       height: 150px;
     }
   }
   
   @media (max-width: 480px) {
-    .espares-products-grid {
+    .parts-products-grid {
       grid-template-columns: 1fr;
     }
   }
 </style>
 
-<div class="espares-collection-container">
-  <div class="espares-collection-row">
+<div class="parts-collection-container">
+  <div class="parts-collection-row">
     <!-- Sidebar -->
-    <div class="espares-side-column">
-      <h2 class="espares-side-column-mobile-heading">
+    <div class="parts-side-column">
+      <h2 class="parts-side-column-mobile-heading">
         {%- if collection.handle == 'all' -%}
           All Products
         {%- elsif collection -%}
@@ -345,40 +389,40 @@
         {%- endif -%}
       </h2>
 
-      <button class="espares-mobile-refine-toggle-btn" type="button" onclick="toggleMobileFilters()">
+      <button class="parts-mobile-refine-toggle-btn" type="button" onclick="toggleMobileFilters()">
         <span>Refine Selection</span>
-        <span class="espares-mobile-refine-hamburger-icon"></span>
+        <span class="parts-mobile-refine-hamburger-icon"></span>
       </button>
 
-      <div class="espares-mobile-refine-selection-container">
+      <div class="parts-mobile-refine-selection-container">
         <!-- Mobile filter modal would go here -->
       </div>
 
-      <div class="espares-side-column-wrapper" id="collection-filters">
-        <a class="espares-clear-all-link" href="{{ routes.all_products_collection_url }}" title="Clear All">
+      <div class="parts-side-column-wrapper" id="collection-filters">
+        <a class="parts-clear-all-link" href="{{ routes.all_products_collection_url }}" title="Clear All">
           <span>Clear All</span>
-          <span class="espares-clear-all-icon">×</span>
+          <span class="parts-clear-all-icon">×</span>
         </a>
 
         {%- if collection and collection.handle != 'all' -%}
-          <div class="espares-side-menu filtered">
-            <h2 class="espares-side-menu-title">
+          <div class="parts-side-menu filtered">
+            <h2 class="parts-side-menu-title">
               <span class="label-mobile">Your collection</span>
               <span class="label-desktop">Collection</span>
             </h2>
-            <div class="espares-side-menu-content">
+            <div class="parts-side-menu-content">
               {{ collection.title }}
-              <a class="espares-clear-all-icon" href="{{ routes.all_products_collection_url }}" title="Clear">×</a>
+              <a class="parts-clear-all-icon" href="{{ routes.all_products_collection_url }}" title="Clear">×</a>
             </div>
           </div>
         {%- endif -%}
 
-        <div class="espares-side-menu enabled open">
-          <h2 class="espares-side-menu-title">
+        <div class="parts-side-menu enabled open">
+          <h2 class="parts-side-menu-title">
             <span class="label-mobile">Choose your appliance</span>
             <span class="label-desktop">Appliance</span>
           </h2>
-          <div class="espares-side-menu-content">
+          <div class="parts-side-menu-content">
             <ul>
               <li><a href="{{ routes.collections_url }}/cooker-parts">Cooker & Oven</a></li>
               <li><a href="{{ routes.collections_url }}/cooker-hood-parts">Cooker Hood</a></li>
@@ -392,12 +436,12 @@
           </div>
         </div>
 
-        <div class="espares-side-menu enabled">
-          <h2 class="espares-side-menu-title">
+        <div class="parts-side-menu enabled">
+          <h2 class="parts-side-menu-title">
             <span class="label-mobile">Popular brands</span>
             <span class="label-desktop">Popular Brands</span>
           </h2>
-          <div class="espares-side-menu-content">
+          <div class="parts-side-menu-content">
             <ul>
               <li><a href="{{ routes.collections_url }}/bosch-spares">Bosch</a></li>
               <li><a href="{{ routes.collections_url }}/samsung-spares">Samsung</a></li>
@@ -414,16 +458,16 @@
     </div>
 
     <!-- Main Content -->
-    <div class="espares-main-column">
-      <div class="espares-products-header">
-        <div class="espares-products-count">
+    <div class="parts-main-column">
+      <div class="parts-products-header">
+        <div class="parts-products-count">
           {%- if collection.products_count -%}
             {{ collection.products_count }} products
           {%- else -%}
             All products
           {%- endif -%}
         </div>
-        <div class="espares-products-sort">
+        <div class="parts-products-sort">
           <label for="SortBy">Sort by:</label>
           <select name="sort_by" id="SortBy" onchange="location = this.value;">
             <option value="{{ collection.url }}?sort_by=best-selling">Best selling</option>
@@ -437,29 +481,29 @@
         </div>
       </div>
 
-      <div class="espares-products-grid">
+      <div class="parts-products-grid">
         {%- if collection and collection.products.size > 0 -%}
           {%- paginate collection.products by section.settings.products_per_page -%}
             {%- for product in collection.products -%}
-              <div class="espares-product-card">
+              <div class="parts-product-card">
                 <a href="{{ product.url }}">
                   {%- if product.featured_image -%}
-                    <img class="espares-product-image" 
+                    <img class="parts-product-image" 
                          src="{{ product.featured_image | image_url: width: 280 }}" 
                          alt="{{ product.featured_image.alt | escape }}"
                          loading="lazy" 
                          width="280" 
                          height="200"/>
                   {%- else -%}
-                    <img class="espares-product-image"
+                    <img class="parts-product-image"
                          src="https://via.placeholder.com/280x200/f8f9fa/666?text={{ product.title | truncate: 20, '' | url_encode }}"
                          alt="{{ product.title | escape }}"
                          loading="lazy" 
                          width="280" 
                          height="200"/>
                   {%- endif -%}
-                  <h3 class="espares-product-title">{{ product.title }}</h3>
-                  <div class="espares-product-price">
+                  <h3 class="parts-product-title">{{ product.title }}</h3>
+                  <div class="parts-product-price">
                     {{ product.price | money }}
                     {%- if product.compare_at_price > product.price -%}
                       <span style="text-decoration: line-through; color: #6c757d; font-size: 0.9rem; margin-left: 8px;">
@@ -468,13 +512,13 @@
                     {%- endif -%}
                   </div>
                 </a>
-                <a href="{{ product.url }}" class="espares-product-btn">
+                <a href="{{ product.url }}" class="parts-product-btn">
                   View Details
                 </a>
               </div>
             {%- endfor -%}
             {%- if paginate.pages > 1 -%}
-              <div class="espares-pagination" style="grid-column: 1 / -1; margin-top: 30px;">
+              <div class="parts-pagination" style="grid-column: 1 / -1; margin-top: 30px;">
                 {{ paginate | default_pagination }}
               </div>
             {%- endif -%}
@@ -484,16 +528,16 @@
           {%- assign mock_prices = "19.99,12.49,8.99" | split: "," -%}
           {%- assign mock_compare_prices = "24.99,15.99,10.99" | split: "," -%}
           {%- for title in mock_titles -%}
-            <div class="espares-product-card">
+            <div class="parts-product-card">
               <a href="/products/mock-product-{{ forloop.index }}">
-                <img class="espares-product-image" src="https://via.placeholder.com/280x200/f8f9fa/666?text={{ title | url_encode }}" alt="{{ title }}" loading="lazy" width="280" height="200"/>
-                <h3 class="espares-product-title">{{ title }}</h3>
-                <div class="espares-product-price">
+                <img class="parts-product-image" src="https://via.placeholder.com/280x200/f8f9fa/666?text={{ title | url_encode }}" alt="{{ title }}" loading="lazy" width="280" height="200"/>
+                <h3 class="parts-product-title">{{ title }}</h3>
+                <div class="parts-product-price">
                   ${{ mock_prices[forloop.index0] }}
                   <span style="text-decoration: line-through; color: #6c757d; font-size: 0.9rem; margin-left: 8px;">${{ mock_compare_prices[forloop.index0] }}</span>
                 </div>
               </a>
-              <a href="/products/mock-product-{{ forloop.index }}" class="espares-product-btn">View Details</a>
+              <a href="/products/mock-product-{{ forloop.index }}" class="parts-product-btn">View Details</a>
             </div>
           {%- endfor -%}
         {%- endif -%}

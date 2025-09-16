@@ -1,101 +1,813 @@
 <style>
-.model-fit-section { background:#f5f5f5; padding:40px 0; }
-.modelfit-input-container { max-width:1200px; margin:0 auto; padding:0 20px; }
-.modelfit-inputs { display:flex; flex-wrap:wrap; gap:12px; align-items:flex-start; }
-.modelfit-select, .modelfit-text-box { padding:10px 12px; min-width:200px; font-size:14px; }
-.modelfit-select-button { padding:11px 18px; background:#ff6b35; color:#fff; border:none; cursor:pointer; font-weight:600; }
-.btn-disabled { opacity:.55; cursor:not-allowed; }
-.autocomplete-wrapper { position:relative; flex:1 1 260px; }
-.modelfit-suggestions li:hover, .modelfit-suggestions li:focus { background:#ffd200; outline:none; }
-.model-number p { margin:6px 0 0; font-size:12px; }
+:root {
+  --primary-orange: #ff6b35;
+  --primary-orange-light: #ff8a5e;
+  --primary-orange-dark: #e55a2b;
+  --accent-orange: #ffab47;
+  --pure-white: #ffffff;
+  --light-gray: #f8f9fa;
+  --border-gray: #e9ecef;
+  --text-dark: #2c3e50;
+  --text-muted: #6c757d;
+  --shadow-light: 0 4px 12px rgba(255, 107, 53, 0.08);
+  --shadow-medium: 0 6px 20px rgba(255, 107, 53, 0.12);
+  --shadow-heavy: 0 10px 30px rgba(255, 107, 53, 0.15);
+  --shadow-mega: 0 20px 60px rgba(255, 107, 53, 0.2);
+  --border-radius: 16px;
+  --border-radius-small: 8px;
+  --transition: all 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.parts-finder-hero {
+  background: linear-gradient(135deg, #fef7f4 0%, var(--pure-white) 50%, #fef7f4 100%);
+  padding: 120px 0;
+  position: relative;
+  overflow: hidden;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+}
+
+.parts-finder-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(255, 107, 53, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(255, 171, 71, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 40% 60%, rgba(255, 107, 53, 0.03) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.parts-finder-hero::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(90deg, var(--primary-orange), var(--accent-orange), var(--primary-orange));
+  animation: flow 8s ease-in-out infinite;
+}
+
+@keyframes flow {
+  0%, 100% { transform: translateX(-100px); }
+  50% { transform: translateX(100px); }
+}
+
+.parts-finder-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 2;
+}
+
+.parts-finder-content {
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+.parts-finder-title {
+  font-size: 5.5rem;
+  font-weight: 900;
+  color: var(--text-dark);
+  margin-bottom: 24px;
+  line-height: 1.1;
+  letter-spacing: -2px;
+  background: linear-gradient(45deg, var(--text-dark), var(--primary-orange), var(--accent-orange));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+  animation: titleGlow 4s ease-in-out infinite;
+}
+
+@keyframes titleGlow {
+  0%, 100% { filter: drop-shadow(0 0 20px rgba(255, 107, 53, 0.3)); }
+  50% { filter: drop-shadow(0 0 40px rgba(255, 107, 53, 0.5)); }
+}
+
+.parts-finder-subtitle {
+  font-size: 1.6rem;
+  color: var(--text-muted);
+  font-weight: 400;
+  max-width: 700px;
+  margin: 0 auto 40px;
+  line-height: 1.6;
+}
+
+.parts-finder-form {
+  background: var(--pure-white);
+  border-radius: 32px;
+  padding: 60px 40px;
+  box-shadow: var(--shadow-mega);
+  border: 2px solid transparent;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  animation: formFloat 6s ease-in-out infinite;
+}
+
+@keyframes formFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+.parts-finder-form::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(90deg, var(--primary-orange), var(--accent-orange));
+  animation: formTopFlow 3s ease-in-out infinite;
+}
+
+@keyframes formTopFlow {
+  0%, 100% { transform: scaleX(0.8); }
+  50% { transform: scaleX(1); }
+}
+
+.parts-finder-form::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(45deg, var(--primary-orange), var(--accent-orange), var(--primary-orange));
+  border-radius: 32px;
+  z-index: -1;
+  opacity: 0;
+  transition: var(--transition);
+}
+
+.parts-finder-form:hover::after {
+  opacity: 0.1;
+}
+
+.finder-form-title {
+  font-size: 2.6rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.finder-form-subtitle {
+  font-size: 1.3rem;
+  color: var(--text-muted);
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.parts-finder-inputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.2fr auto;
+  gap: 20px;
+  align-items: end;
+  margin-bottom: 32px;
+}
+
+.input-group {
+  position: relative;
+}
+
+.input-label {
+  display: block;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 8px;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.parts-select,
+.parts-input {
+  width: 100%;
+  padding: 20px 22px;
+  border: 2px solid var(--border-gray);
+  border-radius: var(--border-radius);
+  font-size: 1.1rem;
+  font-weight: 500;
+  background: var(--pure-white);
+  color: var(--text-dark);
+  transition: var(--transition);
+  appearance: none;
+  position: relative;
+}
+
+.parts-select {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 16px center;
+  background-repeat: no-repeat;
+  background-size: 16px;
+  padding-right: 50px;
+}
+
+.parts-select:focus,
+.parts-input:focus {
+  outline: none;
+  border-color: var(--primary-orange);
+  box-shadow: 0 0 0 4px rgba(255, 107, 53, 0.1);
+  transform: translateY(-2px);
+}
+
+.parts-select:disabled,
+.parts-input:disabled {
+  background: #f9fafb;
+  color: #9ca3af;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.autocomplete-wrapper {
+  position: relative;
+}
+
+.parts-suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: var(--pure-white);
+  border: 2px solid var(--primary-orange);
+  border-top: none;
+  border-radius: 0 0 var(--border-radius) var(--border-radius);
+  max-height: 280px;
+  overflow-y: auto;
+  list-style: none;
+  margin: 0;
+  padding: 8px 0;
+  display: none;
+  box-shadow: var(--shadow-heavy);
+  backdrop-filter: blur(10px);
+}
+
+.parts-suggestions li {
+  padding: 16px 22px;
+  cursor: pointer;
+  transition: var(--transition);
+  font-weight: 500;
+  font-size: 1.05rem;
+  color: var(--text-dark);
+  border-bottom: 1px solid rgba(255, 107, 53, 0.1);
+}
+
+.parts-suggestions li:last-child {
+  border-bottom: none;
+}
+
+.parts-suggestions li:hover,
+.parts-suggestions li:focus {
+  background: linear-gradient(90deg, rgba(255, 107, 53, 0.1), rgba(255, 171, 71, 0.1));
+  color: var(--primary-orange-dark);
+  transform: translateX(4px);
+  outline: none;
+}
+
+.find-button {
+  padding: 20px 36px;
+  background: linear-gradient(135deg, var(--primary-orange), var(--accent-orange));
+  color: var(--pure-white);
+  border: none;
+  border-radius: var(--border-radius);
+  font-weight: 700;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: var(--transition);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-medium);
+  min-width: 180px;
+}
+
+.find-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: var(--transition);
+}
+
+.find-button:hover::before {
+  left: 100%;
+}
+
+.find-button:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: var(--shadow-heavy);
+}
+
+.find-button:active {
+  transform: translateY(-2px) scale(1.02);
+}
+
+.find-button:disabled {
+  background: #e5e7eb;
+  color: #9ca3af;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.find-button:disabled::before {
+  display: none;
+}
+
+.model-help-link {
+  text-align: center;
+  margin-top: 24px;
+}
+
+.model-help-link a {
+  color: var(--primary-orange);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: var(--transition);
+  padding: 8px 16px;
+  border-radius: 50px;
+  border: 2px solid transparent;
+}
+
+.model-help-link a:hover {
+  color: var(--primary-orange-dark);
+  background: rgba(255, 107, 53, 0.05);
+  border-color: rgba(255, 107, 53, 0.2);
+  transform: translateY(-2px);
+}
+
+.model-help-link a::after {
+  content: '→';
+  transition: var(--transition);
+}
+
+.model-help-link a:hover::after {
+  transform: translateX(4px);
+}
+
+.parts-finder-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 32px;
+  margin-top: 80px;
+}
+
+.finder-feature {
+  text-align: center;
+  padding: 32px 24px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 24px;
+  border: 2px solid transparent;
+  transition: var(--transition);
+  backdrop-filter: blur(10px);
+}
+
+.finder-feature:hover {
+  transform: translateY(-8px);
+  border-color: rgba(255, 107, 53, 0.2);
+  box-shadow: var(--shadow-medium);
+}
+
+.finder-feature-icon {
+  font-size: 3.5rem;
+  margin-bottom: 16px;
+  display: block;
+  filter: drop-shadow(0 4px 8px rgba(255, 107, 53, 0.2));
+}
+
+.finder-feature-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 8px;
+}
+
+.finder-feature-desc {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+@media (max-width: 1024px) {
+  .parts-finder-inputs {
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  
+  .autocomplete-wrapper {
+    grid-column: 1 / -1;
+  }
+  
+  .find-button {
+    grid-column: 1 / -1;
+    justify-self: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .parts-finder-hero {
+    padding: 80px 0;
+    min-height: 60vh;
+  }
+  
+  .parts-finder-container {
+    padding: 0 16px;
+  }
+  
+  .parts-finder-title {
+    font-size: 3.5rem;
+    margin-bottom: 16px;
+  }
+  
+  .parts-finder-subtitle {
+    font-size: 1.4rem;
+    margin-bottom: 32px;
+  }
+  
+  .parts-finder-form {
+    padding: 40px 24px;
+    border-radius: 24px;
+  }
+  
+  .finder-form-title {
+    font-size: 2.2rem;
+  }
+  
+  .finder-form-subtitle {
+    font-size: 1.2rem;
+  }
+  
+  .parts-finder-inputs {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .parts-select,
+  .parts-input {
+    padding: 18px 20px;
+    font-size: 1.05rem;
+  }
+  
+  .input-label {
+    font-size: 1rem;
+  }
+  
+  .find-button {
+    padding: 18px 32px;
+    font-size: 1.1rem;
+  }
+  
+  .parts-finder-features {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-top: 60px;
+  }
+}
+
+@media (max-width: 480px) {
+  .parts-finder-title {
+    font-size: 2.8rem;
+    letter-spacing: -1px;
+  }
+  
+  .parts-finder-subtitle {
+    font-size: 1.25rem;
+  }
+  
+  .finder-form-title {
+    font-size: 1.9rem;
+  }
+  
+  .finder-form-subtitle {
+    font-size: 1.15rem;
+  }
+  
+  .parts-finder-form {
+    padding: 32px 20px;
+  }
+  
+  .input-label {
+    font-size: 0.95rem;
+  }
+  
+  .parts-select,
+  .parts-input {
+    font-size: 1rem;
+  }
+}
+
+/* Loading animation for form */
+.parts-finder-form.loading::before {
+  animation: loadingPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes loadingPulse {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; }
+}
+
+/* Success state animations */
+.parts-select.success,
+.parts-input.success {
+  border-color: #10b981;
+  animation: successPulse 0.6s ease-out;
+}
+
+@keyframes successPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
 </style>
 
-<div class="model-fit-section">
-	<div class="modelfit-input-container">
-		<div class="form">
-			<h2>Find the right part for you&hellip;</h2>
-			<div class="modelfit-inputs">
-				<select id="appliance-select-menu" class="modelfit-select">
-					<option value="">Choose your appliance</option>
-				</select>
-				<select id="brand-select-menu" class="modelfit-select" disabled>
-					<option value="">Choose your brand</option>
-				</select>
-				<div id="model-container" class="autocomplete-wrapper">
-					<input id="model-select-menu" class="modelfit-text-box" type="text" placeholder="Start typing your model" disabled autocomplete="off">
-					<div class="model-number"><a href="/find-your-model-number/help.pl"><p>Where can I find my model number?</p></a></div>
+<section class="parts-finder-hero">
+	<div class="parts-finder-container">
+		<div class="parts-finder-content">
+			<h1 class="parts-finder-title">Find the Perfect Part</h1>
+			<p class="parts-finder-subtitle">Search through over 1 million genuine spare parts and accessories with our intelligent part finder</p>
+		</div>
+		
+		<div class="parts-finder-form">
+			<h2 class="finder-form-title">Start Your Search</h2>
+			<p class="finder-form-subtitle">Just three simple steps to find your exact part</p>
+			
+			<div class="parts-finder-inputs">
+				<div class="input-group">
+					<label class="input-label" for="appliance-select-menu">Appliance Type</label>
+					<select id="appliance-select-menu" class="parts-select">
+						<option value="">Choose your appliance</option>
+					</select>
 				</div>
-				<button id="model-search" type="button" class="btn btn-continue modelfit-select-button btn-disabled" disabled>Find my part</button>
+				
+				<div class="input-group">
+					<label class="input-label" for="brand-select-menu">Brand</label>
+					<select id="brand-select-menu" class="parts-select" disabled>
+						<option value="">Choose your brand</option>
+					</select>
+				</div>
+				
+				<div class="input-group">
+					<label class="input-label" for="model-select-menu">Model Number</label>
+					<div id="model-container" class="autocomplete-wrapper">
+						<input id="model-select-menu" class="parts-input" type="text" placeholder="Start typing your model" disabled autocomplete="off">
+						<ul class="parts-suggestions" style="display: none;"></ul>
+					</div>
+				</div>
+				
+				<div class="input-group">
+					<label class="input-label" style="opacity: 0; pointer-events: none;">Search</label>
+					<button id="model-search" type="button" class="find-button" disabled>Find My Part</button>
+				</div>
+			</div>
+			
+			<div class="model-help-link">
+				<a href="/find-your-model-number/help.pl">Where can I find my model number?</a>
+			</div>
+		</div>
+		
+		<div class="parts-finder-features">
+			<div class="finder-feature">
+				<span class="finder-feature-icon">🔍</span>
+				<h3 class="finder-feature-title">Smart Search</h3>
+				<p class="finder-feature-desc">Intelligent matching technology finds your exact part every time</p>
+			</div>
+			
+			<div class="finder-feature">
+				<span class="finder-feature-icon">✅</span>
+				<h3 class="finder-feature-title">Guaranteed Fit</h3>
+				<p class="finder-feature-desc">100% compatibility guaranteed or your money back</p>
+			</div>
+			
+			<div class="finder-feature">
+				<span class="finder-feature-icon">🚚</span>
+				<h3 class="finder-feature-title">Fast Delivery</h3>
+				<p class="finder-feature-desc">Next day delivery when you order before 9pm</p>
 			</div>
 		</div>
 	</div>
-</div>
+</section>
 
 <script>
 document.addEventListener('DOMContentLoaded', function(){
-	const applianceSel=document.getElementById('appliance-select-menu');
-	const brandSel=document.getElementById('brand-select-menu');
-	const modelInput=document.getElementById('model-select-menu');
-	const submitBtn=document.getElementById('model-search');
-	const wrapper=document.querySelector('.autocomplete-wrapper');
+	const applianceSel = document.getElementById('appliance-select-menu');
+	const brandSel = document.getElementById('brand-select-menu');
+	const modelInput = document.getElementById('model-select-menu');
+	const submitBtn = document.getElementById('model-search');
+	const wrapper = document.querySelector('.autocomplete-wrapper');
+	const form = document.querySelector('.parts-finder-form');
+	
 	if(!applianceSel) return;
 
-	// Suggestion list
-	const sugg=document.createElement('ul');
-	sugg.className='modelfit-suggestions';
-	Object.assign(sugg.style,{position:'absolute',top:'100%',left:0,right:0,zIndex:20,background:'#fff',border:'1px solid #ddd',borderTop:'none',maxHeight:'220px',overflowY:'auto',listStyle:'none',margin:0,padding:'4px 0',display:'none'});
-	wrapper.appendChild(sugg);
+	// Create suggestion list
+	const sugg = document.querySelector('.parts-suggestions');
+	
+	let DATA = null;
+	let currentAppliance = null;
+	let currentBrand = null;
+	let modelPool = [];
 
-	let DATA=null,currentAppliance=null,currentBrand=null,modelPool=[];
+	// Load data and initialize
 	fetch('{{ 'model-fit-data.json' | asset_url }}')
-		.then(r=>r.json())
-		.then(json=>{ DATA=json.appliances; populateAppliances(); })
-		.catch(()=>{});
+		.then(r => r.json())
+		.then(json => { 
+			DATA = json.appliances; 
+			populateAppliances();
+			addFormAnimations();
+		})
+		.catch(() => {});
 
-	function populateAppliances(){ clearSelect(applianceSel,'Choose your appliance'); DATA.forEach(a=>addOption(applianceSel,a.name,a.slug)); }
-	function populateBrands(app){ clearSelect(brandSel,'Choose your brand'); app.brands.forEach(b=>addOption(brandSel,b.name,b.name)); }
-	function clearSelect(sel,placeholder){ sel.innerHTML=''; const o=document.createElement('option'); o.textContent=placeholder; o.value=''; sel.appendChild(o); }
-	function addOption(sel,label,val){ const o=document.createElement('option'); o.textContent=label; o.value=val; sel.appendChild(o); }
+	function populateAppliances(){ 
+		clearSelect(applianceSel, 'Choose your appliance'); 
+		if(DATA) {
+			DATA.forEach(a => addOption(applianceSel, a.name, a.slug)); 
+		}
+	}
+	
+	function populateBrands(app){ 
+		clearSelect(brandSel, 'Choose your brand'); 
+		app.brands.forEach(b => addOption(brandSel, b.name, b.name)); 
+	}
+	
+	function clearSelect(sel, placeholder){ 
+		sel.innerHTML = ''; 
+		const o = document.createElement('option'); 
+		o.textContent = placeholder; 
+		o.value = ''; 
+		sel.appendChild(o); 
+	}
+	
+	function addOption(sel, label, val){ 
+		const o = document.createElement('option'); 
+		o.textContent = label; 
+		o.value = val; 
+		sel.appendChild(o); 
+	}
 
-	applianceSel.addEventListener('change',()=>{
-		const slug=applianceSel.value; brandSel.disabled=true; modelInput.disabled=true; submitBtn.disabled=true; modelInput.value=''; hideSuggestions();
-		currentAppliance = DATA ? DATA.find(a=>a.slug===slug) : null;
-		if(currentAppliance){ populateBrands(currentAppliance); brandSel.disabled=false; brandSel.focus(); }
+	// Enhanced appliance selection with animations
+	applianceSel.addEventListener('change', () => {
+		const slug = applianceSel.value; 
+		brandSel.disabled = true; 
+		modelInput.disabled = true; 
+		submitBtn.disabled = true; 
+		modelInput.value = ''; 
+		hideSuggestions();
+		
+		// Add success animation
+		if(slug) {
+			applianceSel.classList.add('success');
+			setTimeout(() => applianceSel.classList.remove('success'), 600);
+		}
+		
+		currentAppliance = DATA ? DATA.find(a => a.slug === slug) : null;
+		if(currentAppliance){ 
+			populateBrands(currentAppliance); 
+			brandSel.disabled = false; 
+			brandSel.focus(); 
+		}
 	});
 
-	brandSel.addEventListener('change',()=>{
-		const name=brandSel.options[brandSel.selectedIndex].textContent;
-		currentBrand = currentAppliance ? currentAppliance.brands.find(b=>b.name===name) : null;
+	// Enhanced brand selection
+	brandSel.addEventListener('change', () => {
+		const name = brandSel.options[brandSel.selectedIndex].textContent;
+		currentBrand = currentAppliance ? currentAppliance.brands.find(b => b.name === name) : null;
 		modelPool = currentBrand ? currentBrand.models : [];
-		modelInput.disabled = modelPool.length===0; submitBtn.disabled=true; modelInput.value=''; hideSuggestions(); if(!modelInput.disabled) modelInput.focus();
+		modelInput.disabled = modelPool.length === 0; 
+		submitBtn.disabled = true; 
+		modelInput.value = ''; 
+		hideSuggestions(); 
+		
+		// Add success animation
+		if(currentBrand) {
+			brandSel.classList.add('success');
+			setTimeout(() => brandSel.classList.remove('success'), 600);
+		}
+		
+		if(!modelInput.disabled) modelInput.focus();
 	});
 
-	modelInput.addEventListener('input',()=>{
-		const q=modelInput.value.trim();
-		if(q.length<1){ hideSuggestions(); submitBtn.disabled=true; submitBtn.classList.add('btn-disabled'); return; }
-		const matches=modelPool.filter(m=>m.toLowerCase().includes(q.toLowerCase())).slice(0,25);
+	// Enhanced model input with better suggestions
+	modelInput.addEventListener('input', () => {
+		const q = modelInput.value.trim();
+		if(q.length < 1){ 
+			hideSuggestions(); 
+			submitBtn.disabled = true; 
+			return; 
+		}
+		
+		const matches = modelPool.filter(m => 
+			m.toLowerCase().includes(q.toLowerCase())
+		).slice(0, 25);
+		
 		renderSuggestions(matches);
-		submitBtn.disabled = q.length < 3; submitBtn.classList.toggle('btn-disabled', submitBtn.disabled);
+		submitBtn.disabled = q.length < 3;
 	});
 
-	modelInput.addEventListener('keydown',e=>{
-		if(e.key==='ArrowDown'){ const first=sugg.querySelector('li'); if(first){ first.focus(); e.preventDefault(); }}
+	// Keyboard navigation
+	modelInput.addEventListener('keydown', e => {
+		if(e.key === 'ArrowDown'){ 
+			const first = sugg.querySelector('li'); 
+			if(first){ 
+				first.focus(); 
+				e.preventDefault(); 
+			}
+		}
+		if(e.key === 'Enter' && !submitBtn.disabled) {
+			submitBtn.click();
+		}
 	});
 
-	submitBtn.addEventListener('click',()=>{
+	// Enhanced submit with loading state
+	submitBtn.addEventListener('click', () => {
 		if(submitBtn.disabled) return;
-		const q=encodeURIComponent([currentBrand && currentBrand.name, modelInput.value.trim()].filter(Boolean).join(' '));
-		window.location.href='/search?q='+q;
+		
+		// Add loading state
+		form.classList.add('loading');
+		submitBtn.textContent = 'Searching...';
+		submitBtn.disabled = true;
+		
+		const q = encodeURIComponent([
+			currentBrand && currentBrand.name, 
+			modelInput.value.trim()
+		].filter(Boolean).join(' '));
+		
+		// Simulate loading then redirect
+		setTimeout(() => {
+			window.location.href = '/search?q=' + q;
+		}, 1000);
 	});
 
 	function renderSuggestions(items){
-		if(!items.length){ hideSuggestions(); return; }
-		sugg.innerHTML='';
-		items.forEach(m=>{ const li=document.createElement('li'); li.tabIndex=0; li.textContent=m; Object.assign(li.style,{padding:'6px 10px',cursor:'pointer'}); li.addEventListener('click',()=>selectModel(m)); li.addEventListener('keydown',e=>{ if(e.key==='Enter'){ selectModel(m);} }); sugg.appendChild(li); });
-		sugg.style.display='block';
+		if(!items.length){ 
+			hideSuggestions(); 
+			return; 
+		}
+		
+		sugg.innerHTML = '';
+		items.forEach(m => { 
+			const li = document.createElement('li'); 
+			li.tabIndex = 0; 
+			li.textContent = m; 
+			li.addEventListener('click', () => selectModel(m)); 
+			li.addEventListener('keydown', e => { 
+				if(e.key === 'Enter'){ 
+					selectModel(m);
+				}
+				if(e.key === 'ArrowDown') {
+					const next = li.nextElementSibling;
+					if(next) next.focus();
+				}
+				if(e.key === 'ArrowUp') {
+					const prev = li.previousElementSibling;
+					if(prev) prev.focus();
+					else modelInput.focus();
+				}
+			}); 
+			sugg.appendChild(li); 
+		});
+		sugg.style.display = 'block';
 	}
-	function hideSuggestions(){ sugg.style.display='none'; }
-	function selectModel(m){ modelInput.value=m; hideSuggestions(); submitBtn.disabled=false; submitBtn.classList.remove('btn-disabled'); submitBtn.focus(); }
-	document.addEventListener('click',e=>{ if(!wrapper.contains(e.target)) hideSuggestions(); });
+	
+	function hideSuggestions(){ 
+		sugg.style.display = 'none'; 
+	}
+	
+	function selectModel(m){ 
+		modelInput.value = m; 
+		hideSuggestions(); 
+		submitBtn.disabled = false; 
+		
+		// Add success animation
+		modelInput.classList.add('success');
+		setTimeout(() => modelInput.classList.remove('success'), 600);
+		
+		submitBtn.focus(); 
+	}
+	
+	// Close suggestions when clicking outside
+	document.addEventListener('click', e => { 
+		if(!wrapper.contains(e.target)) hideSuggestions(); 
+	});
+	
+	// Add form animations
+	function addFormAnimations() {
+		const inputs = document.querySelectorAll('.parts-select, .parts-input');
+		inputs.forEach((input, index) => {
+			input.style.animationDelay = `${index * 0.1}s`;
+		});
+	}
 });
 </script>

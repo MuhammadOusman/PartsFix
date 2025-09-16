@@ -1,176 +1,270 @@
 {%- comment -%}
-  Main Product Section - eSpares Style
+  Main Product Section - PartsFix Modern Style
   Product images, details, price, specifications, and add to cart
 {%- endcomment -%}
 
 <style>
-.espares-product-main {
-  padding: 30px 0;
-  background: #ffffff;
+:root {
+  --primary-orange: #ff6b35;
+  --primary-orange-light: #ff8a5e;
+  --primary-orange-dark: #e55a2b;
+  --accent-orange: #ffab47;
+  --pure-white: #ffffff;
+  --light-gray: #f8f9fa;
+  --border-gray: #e9ecef;
+  --text-dark: #2c3e50;
+  --text-muted: #6c757d;
+  --shadow-light: 0 2px 12px rgba(255, 107, 53, 0.1);
+  --shadow-medium: 0 4px 20px rgba(255, 107, 53, 0.15);
+  --border-radius: 12px;
+  --border-radius-small: 6px;
+  --transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
-.espares-product-container {
-  max-width: 1200px;
+.parts-product-main {
+  padding: 40px 0;
+  background: linear-gradient(135deg, var(--pure-white), var(--light-gray));
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.parts-product-container {
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 24px;
 }
 
-.espares-product-grid {
+.parts-product-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 60px;
+  gap: 80px;
   align-items: start;
 }
 
 /* Product Images */
-.espares-product-media {
+.parts-product-media {
   position: sticky;
   top: 20px;
 }
 
-.espares-main-image {
+.parts-main-image {
   width: 100%;
-  height: 400px;
+  height: 450px;
   object-fit: contain;
-  border: 1px solid #e9ecef;
-  border-radius: 8px;
-  margin-bottom: 15px;
+  border: 2px solid var(--border-gray);
+  border-radius: var(--border-radius);
+  margin-bottom: 20px;
   cursor: zoom-in;
+  transition: var(--transition);
+  box-shadow: var(--shadow-light);
 }
 
-.espares-thumbnail-grid {
+.parts-main-image:hover {
+  border-color: var(--primary-orange);
+  box-shadow: var(--shadow-medium);
+}
+
+.parts-thumbnail-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  gap: 12px;
 }
 
-.espares-thumbnail {
-  width: 80px;
-  height: 80px;
+.parts-thumbnail {
+  width: 90px;
+  height: 90px;
   object-fit: contain;
-  border: 2px solid #e9ecef;
-  border-radius: 4px;
+  border: 2px solid var(--border-gray);
+  border-radius: var(--border-radius-small);
   cursor: pointer;
-  transition: border-color 0.2s ease;
+  transition: var(--transition);
+  box-shadow: var(--shadow-light);
 }
 
-.espares-thumbnail:hover,
-.espares-thumbnail.active {
-  border-color: #007bff;
+.parts-thumbnail:hover,
+.parts-thumbnail.active {
+  border-color: var(--primary-orange);
+  transform: scale(1.05);
+  box-shadow: var(--shadow-medium);
 }
 
 /* Product Info */
-.espares-product-info h1 {
-  font-size: 1.8rem;
-  font-weight: 600;
-  color: #212529;
-  margin-bottom: 15px;
+.parts-product-info h1 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--text-dark);
+  margin-bottom: 20px;
   line-height: 1.3;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
-.espares-product-vendor {
-  color: #007bff;
-  font-weight: 500;
-  margin-bottom: 10px;
+.parts-product-vendor {
+  color: var(--primary-orange);
+  font-weight: 700;
+  margin-bottom: 12px;
   text-decoration: none;
+  font-size: 1.1rem;
+  transition: var(--transition);
 }
 
-.espares-product-vendor:hover {
+.parts-product-vendor:hover {
+  color: var(--primary-orange-dark);
   text-decoration: underline;
 }
 
-.espares-product-sku {
-  color: #6c757d;
-  font-size: 0.9rem;
-  margin-bottom: 15px;
-}
-
-.espares-product-price {
+.parts-product-sku {
+  color: var(--text-muted);
+  font-size: 0.95rem;
   margin-bottom: 20px;
-}
-
-.espares-current-price {
-  font-size: 2rem;
-  font-weight: 600;
-  color: #007bff;
-}
-
-.espares-compare-price {
-  font-size: 1.2rem;
-  color: #6c757d;
-  text-decoration: line-through;
-  margin-left: 10px;
-}
-
-.espares-savings {
-  display: inline-block;
-  background: #dc3545;
-  color: white;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 0.8rem;
   font-weight: 500;
-  margin-left: 10px;
 }
 
-.espares-product-form {
+.parts-product-price {
   margin-bottom: 30px;
+  padding: 20px;
+  background: var(--pure-white);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-light);
+  border: 2px solid transparent;
+  transition: var(--transition);
 }
 
-.espares-variant-select,
-.espares-quantity-input {
+.parts-product-price:hover {
+  border-color: var(--primary-orange);
+}
+
+.parts-current-price {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--primary-orange);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.parts-compare-price {
+  font-size: 1.4rem;
+  color: var(--text-muted);
+  text-decoration: line-through;
+  margin-left: 12px;
+  font-weight: 600;
+}
+
+.parts-savings {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--primary-orange), var(--primary-orange-dark));
+  color: var(--pure-white);
+  padding: 6px 12px;
+  border-radius: var(--border-radius-small);
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-left: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: var(--shadow-light);
+}
+
+.parts-product-form {
+  margin-bottom: 40px;
+  padding: 24px;
+  background: var(--pure-white);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-light);
+  border: 2px solid transparent;
+  transition: var(--transition);
+}
+
+.parts-product-form:hover {
+  border-color: var(--primary-orange);
+}
+
+.parts-variant-select,
+.parts-quantity-input {
   width: 100%;
-  padding: 12px;
-  border: 1px solid #dee2e6;
-  border-radius: 4px;
+  padding: 16px;
+  border: 2px solid var(--border-gray);
+  border-radius: var(--border-radius-small);
   font-size: 1rem;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  transition: var(--transition);
+  font-weight: 500;
 }
 
-.espares-add-to-cart {
+.parts-variant-select:focus,
+.parts-quantity-input:focus {
+  outline: none;
+  border-color: var(--primary-orange);
+  box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+}
+
+.parts-add-to-cart {
   width: 100%;
-  background: #ffc107;
-  color: #212529;
+  background: linear-gradient(135deg, var(--primary-orange), var(--primary-orange-light));
+  color: var(--pure-white);
   border: none;
-  padding: 15px 20px;
-  border-radius: 6px;
+  padding: 18px 24px;
+  border-radius: var(--border-radius);
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition);
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-medium);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.parts-add-to-cart::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.parts-add-to-cart:hover {
+  background: linear-gradient(135deg, var(--primary-orange-dark), var(--primary-orange));
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4);
+}
+
+.parts-add-to-cart:hover::before {
+  left: 100%;
+}
+
+.parts-buy-now {
+  width: 100%;
+  background: var(--text-dark);
+  color: var(--pure-white);
+  border: none;
+  padding: 16px 24px;
+  border-radius: var(--border-radius);
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
-  margin-bottom: 15px;
+  transition: var(--transition);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  box-shadow: var(--shadow-light);
 }
 
-.espares-add-to-cart:hover {
-  background: #e0a800;
+.parts-buy-now:hover {
+  background: #1a2332;
   transform: translateY(-1px);
+  box-shadow: var(--shadow-medium);
 }
 
-.espares-buy-now {
-  width: 100%;
-  background: #007bff;
-  color: white;
-  border: none;
-  padding: 12px 20px;
-  border-radius: 6px;
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.espares-buy-now:hover {
-  background: #0056b3;
-}
-
-.espares-delivery-info {
+.parts-delivery-info {
   background: #f8f9fa;
   border-radius: 6px;
   padding: 15px;
   margin: 20px 0;
 }
 
-.espares-delivery-item {
+.parts-delivery-item {
   display: flex;
   align-items: center;
   margin-bottom: 8px;
@@ -178,27 +272,27 @@
   color: #495057;
 }
 
-.espares-delivery-item:last-child {
+.parts-delivery-item:last-child {
   margin-bottom: 0;
 }
 
-.espares-delivery-icon {
+.parts-delivery-icon {
   width: 20px;
   height: 20px;
   margin-right: 10px;
   color: #28a745;
 }
 
-.espares-product-description {
+.parts-product-description {
   margin-top: 30px;
 }
 
-.espares-description-tabs {
+.parts-description-tabs {
   border-bottom: 1px solid #dee2e6;
   margin-bottom: 20px;
 }
 
-.espares-tab-button {
+.parts-tab-button {
   background: none;
   border: none;
   padding: 12px 20px;
@@ -210,34 +304,34 @@
   transition: all 0.2s ease;
 }
 
-.espares-tab-button.active {
+.parts-tab-button.active {
   color: #007bff;
   border-bottom-color: #007bff;
 }
 
-.espares-tab-content {
+.parts-tab-content {
   display: none;
   line-height: 1.6;
 }
 
-.espares-tab-content.active {
+.parts-tab-content.active {
   display: block;
 }
 
-.espares-specs-table {
+.parts-specs-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 15px;
 }
 
-.espares-specs-table th,
-.espares-specs-table td {
+.parts-specs-table th,
+.parts-specs-table td {
   padding: 10px;
   text-align: left;
   border-bottom: 1px solid #dee2e6;
 }
 
-.espares-specs-table th {
+.parts-specs-table th {
   background: #f8f9fa;
   font-weight: 600;
   width: 30%;
@@ -245,56 +339,56 @@
 
 /* Responsive */
 @media (max-width: 992px) {
-  .espares-product-grid {
+  .parts-product-grid {
     grid-template-columns: 1fr;
     gap: 30px;
   }
   
-  .espares-product-media {
+  .parts-product-media {
     position: static;
   }
 }
 
 @media (max-width: 768px) {
-  .espares-product-main {
+  .parts-product-main {
     padding: 20px 0;
   }
   
-  .espares-product-container {
+  .parts-product-container {
     padding: 0 15px;
   }
   
-  .espares-main-image {
+  .parts-main-image {
     height: 300px;
   }
   
-  .espares-product-info h1 {
+  .parts-product-info h1 {
     font-size: 1.5rem;
   }
   
-  .espares-current-price {
+  .parts-current-price {
     font-size: 1.6rem;
   }
 }
 </style>
 
-<div class="espares-product-main">
-  <div class="espares-product-container">
-    <div class="espares-product-grid">
+<div class="parts-product-main">
+  <div class="parts-product-container">
+    <div class="parts-product-grid">
       <!-- Product Images -->
-      <div class="espares-product-media">
+      <div class="parts-product-media">
         {%- if product.media.size > 0 -%}
           <img id="mainImage" 
-               class="espares-main-image" 
+               class="parts-main-image" 
                src="{{ product.featured_media | image_url: width: 600 }}" 
                alt="{{ product.featured_media.alt | escape }}"
                width="600" height="400"
                onclick="openImageModal(this.src)">
           
           {%- if product.media.size > 1 -%}
-            <div class="espares-thumbnail-grid">
+            <div class="parts-thumbnail-grid">
               {%- for media in product.media -%}
-                <img class="espares-thumbnail {% if forloop.first %}active{% endif %}" 
+                <img class="parts-thumbnail {% if forloop.first %}active{% endif %}" 
                      src="{{ media | image_url: width: 100 }}" 
                      alt="{{ media.alt | escape }}"
                      width="100" height="100"
@@ -305,25 +399,25 @@
         {%- else -%}
           <!-- Mock Images for Testing -->
           <img id="mainImage" 
-               class="espares-main-image" 
-               src="https://via.placeholder.com/600x400/f8f9fa/666?text=Product+Image" 
+               class="parts-main-image" 
+               src="https://via.placeholder.com/600x400/f8f9fa/ff6b35?text=Product+Image" 
                alt="Product Image"
                width="600" height="400"
                onclick="openImageModal(this.src)">
           
-          <div class="espares-thumbnail-grid">
-            <img class="espares-thumbnail active" 
-                 src="https://via.placeholder.com/100x100/f8f9fa/666?text=1" 
+          <div class="parts-thumbnail-grid">
+            <img class="parts-thumbnail active" 
+                 src="https://via.placeholder.com/100x100/f8f9fa/ff6b35?text=1" 
                  alt="Image 1"
                  width="100" height="100"
-                 onclick="changeMainImage(this, 'https://via.placeholder.com/600x400/f8f9fa/666?text=Product+Image')">
-            <img class="espares-thumbnail" 
-                 src="https://via.placeholder.com/100x100/f8f9fa/666?text=2" 
+                 onclick="changeMainImage(this, 'https://via.placeholder.com/600x400/f8f9fa/ff6b35?text=Product+Image')">
+            <img class="parts-thumbnail" 
+                 src="https://via.placeholder.com/100x100/f8f9fa/ff6b35?text=2" 
                  alt="Image 2"
                  width="100" height="100"
-                 onclick="changeMainImage(this, 'https://via.placeholder.com/600x400/f8f9fa/666?text=Side+View')">
-            <img class="espares-thumbnail" 
-                 src="https://via.placeholder.com/100x100/f8f9fa/666?text=3" 
+                 onclick="changeMainImage(this, 'https://via.placeholder.com/600x400/f8f9fa/ff6b35?text=Side+View')">
+            <img class="parts-thumbnail" 
+                 src="https://via.placeholder.com/100x100/f8f9fa/ff6b35?text=3" 
                  alt="Image 3"
                  width="100" height="100"
                  onclick="changeMainImage(this, 'https://via.placeholder.com/600x400/f8f9fa/666?text=Back+View')">
@@ -332,13 +426,13 @@
       </div>
 
       <!-- Product Info -->
-      <div class="espares-product-info">
+      <div class="parts-product-info">
         {%- if product.vendor != blank -%}
-          <a href="{{ routes.collections_url }}/{{ product.vendor | handleize }}" class="espares-product-vendor">
+          <a href="{{ routes.collections_url }}/{{ product.vendor | handleize }}" class="parts-product-vendor">
             {{ product.vendor }}
           </a>
         {%- else -%}
-          <a href="{{ routes.collections_url }}/universal-parts" class="espares-product-vendor">Universal Parts</a>
+          <a href="{{ routes.collections_url }}/universal-parts" class="parts-product-vendor">Universal Parts</a>
         {%- endif -%}
         
         <h1>
@@ -349,7 +443,7 @@
           {%- endif -%}
         </h1>
         
-        <div class="espares-product-sku">
+        <div class="parts-product-sku">
           {%- if product.selected_or_first_available_variant.sku != blank -%}
             SKU: {{ product.selected_or_first_available_variant.sku }}
           {%- else -%}
@@ -357,25 +451,25 @@
           {%- endif -%}
         </div>
         
-        <div class="espares-product-price">
+        <div class="parts-product-price">
           {%- if product.price -%}
-            <span class="espares-current-price">{{ product.selected_or_first_available_variant.price | money }}</span>
+            <span class="parts-current-price">{{ product.selected_or_first_available_variant.price | money }}</span>
             {%- if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price -%}
-              <span class="espares-compare-price">{{ product.selected_or_first_available_variant.compare_at_price | money }}</span>
-              <span class="espares-savings">
+              <span class="parts-compare-price">{{ product.selected_or_first_available_variant.compare_at_price | money }}</span>
+              <span class="parts-savings">
                 Save {{ product.selected_or_first_available_variant.compare_at_price | minus: product.selected_or_first_available_variant.price | money }}
               </span>
             {%- endif -%}
           {%- else -%}
-            <span class="espares-current-price">$24.99</span>
-            <span class="espares-compare-price">$34.99</span>
-            <span class="espares-savings">Save $10.00</span>
+            <span class="parts-current-price">$24.99</span>
+            <span class="parts-compare-price">$34.99</span>
+            <span class="parts-savings">Save $10.00</span>
           {%- endif -%}
         </div>
 
-        <form class="espares-product-form" action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data">
+        <form class="parts-product-form" action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data">
           {%- unless product.has_only_default_variant -%}
-            <select name="id" class="espares-variant-select">
+            <select name="id" class="parts-variant-select">
               {%- for variant in product.variants -%}
                 <option value="{{ variant.id }}"
                         {% if variant == product.selected_or_first_available_variant %}selected="selected"{% endif %}
@@ -393,9 +487,9 @@
             <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
           {%- endunless -%}
           
-          <input type="number" name="quantity" value="1" min="1" class="espares-quantity-input" id="quantity">
+          <input type="number" name="quantity" value="1" min="1" class="parts-quantity-input" id="quantity">
           
-          <button type="submit" class="espares-add-to-cart"
+          <button type="submit" class="parts-add-to-cart"
                   {% unless product.available %}disabled{% endunless %}>
             {%- if product.available -%}
               Add to Cart - {{ product.selected_or_first_available_variant.price | money }}
@@ -405,38 +499,38 @@
           </button>
         </form>
         
-        <button class="espares-buy-now" onclick="buyNow()">
+        <button class="parts-buy-now" onclick="buyNow()">
           Buy Now with Fast Checkout
         </button>
         
-        <div class="espares-delivery-info">
-          <div class="espares-delivery-item">
-            <span class="espares-delivery-icon">🚚</span>
+        <div class="parts-delivery-info">
+          <div class="parts-delivery-item">
+            <span class="parts-delivery-icon">🚚</span>
             <span>Free delivery on orders over $50</span>
           </div>
-          <div class="espares-delivery-item">
-            <span class="espares-delivery-icon">⚡</span>
+          <div class="parts-delivery-item">
+            <span class="parts-delivery-icon">⚡</span>
             <span>Next day delivery available</span>
           </div>
-          <div class="espares-delivery-item">
-            <span class="espares-delivery-icon">↩️</span>
+          <div class="parts-delivery-item">
+            <span class="parts-delivery-icon">↩️</span>
             <span>365 day returns policy</span>
           </div>
-          <div class="espares-delivery-item">
-            <span class="espares-delivery-icon">🔧</span>
+          <div class="parts-delivery-item">
+            <span class="parts-delivery-icon">🔧</span>
             <span>Expert fitting advice available</span>
           </div>
         </div>
 
-        <div class="espares-product-description">
-          <div class="espares-description-tabs">
-            <button class="espares-tab-button active" onclick="openTab(event, 'description')">Description</button>
-            <button class="espares-tab-button" onclick="openTab(event, 'specifications')">Specifications</button>
-            <button class="espares-tab-button" onclick="openTab(event, 'compatibility')">Compatibility</button>
-            <button class="espares-tab-button" onclick="openTab(event, 'fitting')">Fitting Guide</button>
+        <div class="parts-product-description">
+          <div class="parts-description-tabs">
+            <button class="parts-tab-button active" onclick="openTab(event, 'description')">Description</button>
+            <button class="parts-tab-button" onclick="openTab(event, 'specifications')">Specifications</button>
+            <button class="parts-tab-button" onclick="openTab(event, 'compatibility')">Compatibility</button>
+            <button class="parts-tab-button" onclick="openTab(event, 'fitting')">Fitting Guide</button>
           </div>
           
-          <div id="description" class="espares-tab-content active">
+          <div id="description" class="parts-tab-content active">
             {%- if product.description != blank -%}
               {{ product.description }}
             {%- else -%}
@@ -452,8 +546,8 @@
             {%- endif -%}
           </div>
           
-          <div id="specifications" class="espares-tab-content">
-            <table class="espares-specs-table">
+          <div id="specifications" class="parts-tab-content">
+            <table class="parts-specs-table">
               <tr><th>Material</th><td>High-grade EPDM Rubber</td></tr>
               <tr><th>Color</th><td>Black</td></tr>
               <tr><th>Dimensions</th><td>External: 34cm, Internal: 25cm</td></tr>
@@ -464,7 +558,7 @@
             </table>
           </div>
           
-          <div id="compatibility" class="espares-tab-content">
+          <div id="compatibility" class="parts-tab-content">
             <p><strong>Compatible Brands:</strong></p>
             <ul>
               <li>Bosch - WAW28*, WAW32*, WAG28*</li>
@@ -476,7 +570,7 @@
             <p><strong>Note:</strong> Please check your model number before ordering. If unsure, contact our expert team for advice.</p>
           </div>
           
-          <div id="fitting" class="espares-tab-content">
+          <div id="fitting" class="parts-tab-content">
             <p><strong>Tools Required:</strong> Screwdriver, pliers, towel</p>
             <p><strong>Estimated Time:</strong> 30-45 minutes</p>
             <ol>
@@ -501,7 +595,7 @@ function changeMainImage(thumbnail, newSrc) {
   document.getElementById('mainImage').src = newSrc;
   
   // Update active thumbnail
-  document.querySelectorAll('.espares-thumbnail').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.parts-thumbnail').forEach(t => t.classList.remove('active'));
   thumbnail.classList.add('active');
 }
 
@@ -518,12 +612,12 @@ function openImageModal(src) {
 
 function openTab(evt, tabName) {
   // Hide all tab contents
-  document.querySelectorAll('.espares-tab-content').forEach(content => {
+  document.querySelectorAll('.parts-tab-content').forEach(content => {
     content.classList.remove('active');
   });
   
   // Remove active class from all buttons
-  document.querySelectorAll('.espares-tab-button').forEach(button => {
+  document.querySelectorAll('.parts-tab-button').forEach(button => {
     button.classList.remove('active');
   });
   
@@ -534,7 +628,7 @@ function openTab(evt, tabName) {
 
 function buyNow() {
   // Add to cart and redirect to checkout
-  const form = document.querySelector('.espares-product-form');
+  const form = document.querySelector('.parts-product-form');
   const formData = new FormData(form);
   
   fetch('/cart/add.js', {

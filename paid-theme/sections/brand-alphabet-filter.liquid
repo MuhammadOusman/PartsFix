@@ -1,36 +1,36 @@
 {%- comment -%}
   Brand Alphabet Filter Section
-  A-Z brand navigation like eSpares shop.pl?letter=A
+  A-Z brand navigation like PartsFix shop.pl?letter=A
 {%- endcomment -%}
 
 <style>
-  .espares-brand-alphabet {
+  .parts-brand-alphabet {
     background: #ffffff;
     padding: 30px 0;
     border-bottom: 1px solid #e9ecef;
   }
   
-  .espares-brand-alphabet h1 {
+  .parts-brand-alphabet h1 {
     font-size: 2rem;
     font-weight: 700;
     color: #212529;
     margin-bottom: 20px;
   }
   
-  .espares-alphabet-filter-label {
+  .parts-alphabet-filter-label {
     font-weight: 600;
     margin-bottom: 15px;
     color: #495057;
   }
   
-  .espares-alphabet-list {
+  .parts-alphabet-list {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
     margin-bottom: 30px;
   }
   
-  .espares-alphabet-list-item {
+  .parts-alphabet-list-item {
     display: inline-block;
     min-width: 40px;
     height: 40px;
@@ -46,27 +46,27 @@
     cursor: pointer;
   }
   
-  .espares-alphabet-list-item:hover {
+  .parts-alphabet-list-item:hover {
     background: #e9ecef;
     color: #212529;
     text-decoration: none;
     transform: translateY(-1px);
   }
   
-  .espares-alphabet-list-item.selected {
+  .parts-alphabet-list-item.selected {
     background: #007bff;
     color: #ffffff;
     border-color: #007bff;
     box-shadow: 0 2px 4px rgba(0, 123, 255, 0.3);
   }
   
-  .espares-brand-results {
+  .parts-brand-results {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 15px;
   }
   
-  .espares-brand-item {
+  .parts-brand-item {
     background: #ffffff;
     border: 1px solid #dee2e6;
     border-radius: 6px;
@@ -77,35 +77,35 @@
     transform: scale(1);
   }
   
-  .espares-brand-item:hover {
+  .parts-brand-item:hover {
     border-color: #007bff;
     box-shadow: 0 2px 8px rgba(0, 123, 255, 0.1);
     transform: translateY(-2px) scale(1.02);
   }
   
-  .espares-brand-item[style*="display: none"] {
+  .parts-brand-item[style*="display: none"] {
     opacity: 0;
     transform: scale(0.8);
   }
   
-  .espares-brand-item a {
+  .parts-brand-item a {
     color: #007bff;
     text-decoration: none;
     font-weight: 500;
     font-size: 1.1rem;
   }
   
-  .espares-brand-item a:hover {
+  .parts-brand-item a:hover {
     color: #0056b3;
     text-decoration: underline;
   }
   
-  .espares-pagination {
+  .parts-pagination {
     margin-top: 40px;
     text-align: center;
   }
   
-  .espares-pagination ul {
+  .parts-pagination ul {
     display: inline-flex;
     list-style: none;
     margin: 0;
@@ -113,12 +113,12 @@
     gap: 8px;
   }
   
-  .espares-pagination li {
+  .parts-pagination li {
     display: inline-block;
   }
   
-  .espares-pagination a,
-  .espares-pagination span {
+  .parts-pagination a,
+  .parts-pagination span {
     display: block;
     padding: 10px 15px;
     border: 1px solid #dee2e6;
@@ -128,57 +128,57 @@
     transition: all 0.2s ease;
   }
   
-  .espares-pagination a:hover {
+  .parts-pagination a:hover {
     background: #e9ecef;
     border-color: #adb5bd;
   }
   
-  .espares-pagination .pagination-active span {
+  .parts-pagination .pagination-active span {
     background: #007bff;
     color: #ffffff;
     border-color: #007bff;
   }
   
   @media (max-width: 768px) {
-    .espares-brand-alphabet {
+    .parts-brand-alphabet {
       padding: 20px 0;
     }
     
-    .espares-alphabet-list {
+    .parts-alphabet-list {
       gap: 4px;
     }
     
-    .espares-alphabet-list-item {
+    .parts-alphabet-list-item {
       min-width: 35px;
       height: 35px;
       line-height: 35px;
       font-size: 14px;
     }
     
-    .espares-brand-results {
+    .parts-brand-results {
       grid-template-columns: 1fr;
       gap: 10px;
     }
     
-    .espares-brand-item {
+    .parts-brand-item {
       padding: 15px;
     }
   }
 </style>
 
-<div class="espares-brand-alphabet">
+<div class="parts-brand-alphabet">
   <div class="container">
     <h1>{{ section.settings.heading | default: "Select your brand" }}</h1>
     
-    <div class="espares-alphabet-filter-label">
+    <div class="parts-alphabet-filter-label">
       <strong>Filter:</strong>
     </div>
     
-    <div class="espares-alphabet-list">
+    <div class="parts-alphabet-list">
       {%- assign alphabet = "ALL,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z" | split: "," -%}
       
       {%- for letter in alphabet -%}
-        <button class="espares-alphabet-list-item {% if letter == 'ALL' %}selected{% endif %}" 
+        <button class="parts-alphabet-list-item {% if letter == 'ALL' %}selected{% endif %}" 
                 onclick="filterBrands('{{ letter }}')" data-letter="{{ letter }}">
           {{ letter }}
         </button>
@@ -186,13 +186,13 @@
     </div>
 
     {%- if section.settings.show_brand_grid -%}
-      <div class="espares-brand-results" id="brand-grid">
+      <div class="parts-brand-results" id="brand-grid">
         {%- comment -%} Complete brand list with first letter data attribute {%- endcomment -%}
         {%- assign all_brands = "ACEC,AEG,Beko,Bosch,Candy,DeLonghi,Dyson,Electrolux,Flymo,Hoover,Hotpoint,Indesit,Karcher,Kenwood,LG,Neff,Rangemaster,Samsung,Siemens,Smeg,Whirlpool,Zanussi" | split: "," -%}
         
         {%- for brand in all_brands -%}
           {%- assign first_letter = brand | slice: 0, 1 | upcase -%}
-          <div class="espares-brand-item" data-letter="{{ first_letter }}" data-brand="{{ brand | downcase }}">
+          <div class="parts-brand-item" data-letter="{{ first_letter }}" data-brand="{{ brand | downcase }}">
             <a href="{{ routes.collections_url }}/{{ brand | downcase | replace: ' ', '-' }}" 
                title="View {{ brand }} range">
               {{ brand }}
@@ -201,7 +201,7 @@
         {%- endfor -%}
       </div>
       
-      <div class="espares-no-results" id="no-results" style="display: none; text-align: center; padding: 40px 0; color: #666;">
+      <div class="parts-no-results" id="no-results" style="display: none; text-align: center; padding: 40px 0; color: #666;">
         <p>No brands found for the selected letter.</p>
       </div>
       
@@ -213,7 +213,7 @@
 <script>
 function filterBrands(letter) {
   // Remove selected class from all buttons
-  document.querySelectorAll('.espares-alphabet-list-item').forEach(btn => {
+  document.querySelectorAll('.parts-alphabet-list-item').forEach(btn => {
     btn.classList.remove('selected');
   });
   
@@ -221,7 +221,7 @@ function filterBrands(letter) {
   document.querySelector(`[data-letter="${letter}"]`).classList.add('selected');
   
   // Get all brand items
-  const brandItems = document.querySelectorAll('.espares-brand-item');
+  const brandItems = document.querySelectorAll('.parts-brand-item');
   const noResults = document.getElementById('no-results');
   let visibleCount = 0;
   
