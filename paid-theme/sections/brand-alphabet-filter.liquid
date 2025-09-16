@@ -43,18 +43,21 @@
     text-decoration: none;
     font-weight: 500;
     transition: all 0.2s ease;
+    cursor: pointer;
   }
   
   .espares-alphabet-list-item:hover {
     background: #e9ecef;
     color: #212529;
     text-decoration: none;
+    transform: translateY(-1px);
   }
   
   .espares-alphabet-list-item.selected {
     background: #007bff;
     color: #ffffff;
     border-color: #007bff;
+    box-shadow: 0 2px 4px rgba(0, 123, 255, 0.3);
   }
   
   .espares-brand-results {
@@ -68,14 +71,21 @@
     border: 1px solid #dee2e6;
     border-radius: 6px;
     padding: 20px;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
     text-align: center;
+    opacity: 1;
+    transform: scale(1);
   }
   
   .espares-brand-item:hover {
     border-color: #007bff;
     box-shadow: 0 2px 8px rgba(0, 123, 255, 0.1);
-    transform: translateY(-2px);
+    transform: translateY(-2px) scale(1.02);
+  }
+  
+  .espares-brand-item[style*="display: none"] {
+    opacity: 0;
+    transform: scale(0.8);
   }
   
   .espares-brand-item a {
@@ -165,25 +175,25 @@
     </div>
     
     <div class="espares-alphabet-list">
-      {%- assign alphabet = "2,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z" | split: "," -%}
-      {%- assign current_letter = request.path | split: "=" | last | upcase -%}
+      {%- assign alphabet = "ALL,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z" | split: "," -%}
       
       {%- for letter in alphabet -%}
-        <a class="espares-alphabet-list-item {% if current_letter == letter %}selected{% endif %}" 
-           href="{{ routes.collections_url }}/brands?letter={{ letter }}">
+        <button class="espares-alphabet-list-item {% if letter == 'ALL' %}selected{% endif %}" 
+                onclick="filterBrands('{{ letter }}')" data-letter="{{ letter }}">
           {{ letter }}
-        </a>
+        </button>
       {%- endfor -%}
     </div>
 
     {%- if section.settings.show_brand_grid -%}
-      <div class="espares-brand-results">
-        {%- comment -%} Sample brand data - in real implementation, this would be dynamic {%- endcomment -%}
-        {%- assign sample_brands = "Bosch,Samsung,Hotpoint,Indesit,Beko,Whirlpool,Electrolux,Zanussi,AEG,Neff,Siemens,LG,Candy,Hoover,Dyson,Karcher,Flymo,Rangemaster" | split: "," -%}
+      <div class="espares-brand-results" id="brand-grid">
+        {%- comment -%} Complete brand list with first letter data attribute {%- endcomment -%}
+        {%- assign all_brands = "ACEC,AEG,Beko,Bosch,Candy,DeLonghi,Dyson,Electrolux,Flymo,Hoover,Hotpoint,Indesit,Karcher,Kenwood,LG,Neff,Rangemaster,Samsung,Siemens,Smeg,Whirlpool,Zanussi" | split: "," -%}
         
-        {%- for brand in sample_brands limit: section.settings.brands_per_page -%}
-          <div class="espares-brand-item">
-            <a href="{{ routes.collections_url }}/{{ brand | downcase | replace: ' ', '-' }}-spares" 
+        {%- for brand in all_brands -%}
+          {%- assign first_letter = brand | slice: 0, 1 | upcase -%}
+          <div class="espares-brand-item" data-letter="{{ first_letter }}" data-brand="{{ brand | downcase }}">
+            <a href="{{ routes.collections_url }}/{{ brand | downcase | replace: ' ', '-' }}" 
                title="View {{ brand }} range">
               {{ brand }}
             </a>
@@ -191,29 +201,74 @@
         {%- endfor -%}
       </div>
       
-      {%- if section.settings.show_pagination -%}
-        <div class="espares-pagination">
-          <ul>
-            <li class="pagination-active">
-              <span>1</span>
-            </li>
-            <li>
-              <a href="#" onclick="return false;">2</a>
-            </li>
-            <li>
-              <a href="#" onclick="return false;">3</a>
-            </li>
-            <li class="pagination-next">
-              <a href="#" onclick="return false;">
-                <span>next</span>
-              </a>
-            </li>
-          </ul>
-        </div>
-      {%- endif -%}
+      <div class="espares-no-results" id="no-results" style="display: none; text-align: center; padding: 40px 0; color: #666;">
+        <p>No brands found for the selected letter.</p>
+      </div>
+      
+      {%- comment -%} Remove static pagination since we're using JS filtering {%- endcomment -%}
     {%- endif -%}
   </div>
 </div>
+
+<script>
+function filterBrands(letter) {
+  // Remove selected class from all buttons
+  document.querySelectorAll('.espares-alphabet-list-item').forEach(btn => {
+    btn.classList.remove('selected');
+  });
+  
+  // Add selected class to clicked button
+  document.querySelector(`[data-letter="${letter}"]`).classList.add('selected');
+  
+  // Get all brand items
+  const brandItems = document.querySelectorAll('.espares-brand-item');
+  const noResults = document.getElementById('no-results');
+  let visibleCount = 0;
+  
+  // Add a small delay for smooth animation
+  brandItems.forEach((item, index) => {
+    setTimeout(() => {
+      if (letter === 'ALL' || item.dataset.letter === letter) {
+        item.style.display = 'block';
+        item.style.opacity = '1';
+        item.style.transform = 'scale(1)';
+        visibleCount++;
+      } else {
+        item.style.opacity = '0';
+        item.style.transform = 'scale(0.8)';
+        setTimeout(() => {
+          item.style.display = 'none';
+        }, 300);
+      }
+    }, index * 20); // Staggered animation
+  });
+  
+  // Show/hide no results message after a delay
+  setTimeout(() => {
+    if (visibleCount === 0) {
+      noResults.style.display = 'block';
+    } else {
+      noResults.style.display = 'none';
+    }
+  }, 500);
+  
+  // Smooth scroll to results
+  setTimeout(() => {
+    document.getElementById('brand-grid').scrollIntoView({ 
+      behavior: 'smooth', 
+      block: 'start' 
+    });
+  }, 100);
+}
+
+// Initialize - show all brands by default
+document.addEventListener('DOMContentLoaded', function() {
+  // Small delay to ensure all elements are loaded
+  setTimeout(() => {
+    filterBrands('ALL');
+  }, 100);
+});
+</script>
 
 {% schema %}
 {

@@ -23,6 +23,7 @@
       "type": "popular-brands",
       "settings": {
         "title": "Popular Brands",
+        "view_all_url": "/pages/brands",
         "brands": "Beko|/collections/beko|brand-beko.png,Bosch|/collections/bosch|brand-bosch.png,DeLonghi|/collections/delonghi|brand-delonghi.png,Dyson|/collections/dyson|brand-dyson.png,Electrolux|/collections/electrolux|brand-electrolux.png,Flymo|/collections/flymo|brand-flymo.png,Hoover|/collections/hoover|brand-hoover.png,Hotpoint|/collections/hotpoint|brand-hotpoint.png,Indesit|/collections/indesit|brand-indesit.png,Karcher|/collections/karcher|brand-karcher.png,Kenwood|/collections/kenwood|brand-kenwood.png,Neff|/collections/neff|brand-neff.png,Rangemaster|/collections/rangemaster|brand-rangemaster.png,Samsung|/collections/samsung|brand-samsung.png,Smeg|/collections/smeg|brand-smeg.png,Stoves|/collections/stoves|brand-stoves.png,Whirlpool|/collections/whirlpool|brand-whirlpool.png,Zanussi|/collections/zanussi|brand-zanussi.png",
         "view_all_text": "View all brands"
       }

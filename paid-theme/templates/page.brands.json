@@ -12,13 +12,6 @@
         "show_pagination": true
       }
     },
-    "popular-brands-category": {
-      "type": "popular-brands",
-      "settings": {
-        "heading": "Popular Brands",
-        "show_view_all": false
-      }
-    },
     "spare-parts-categories-bottom": {
       "type": "spare-parts-categories",
       "settings": {
@@ -30,7 +23,6 @@
   "order": [
     "collection-breadcrumbs",
     "brand-alphabet-filter",
-    "popular-brands-category", 
     "spare-parts-categories-bottom"
   ]
 }

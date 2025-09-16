@@ -52,7 +52,7 @@
       "type": "popular-brands",
       "settings": {
         "title": "Popular Brands",
-        "view_all_url": "/collections/brands",
+        "view_all_url": "/pages/brands",
         "view_all_text": "View all brands",
         "brands": "Beko,Bosch,DeLonghi,Dyson,Electrolux,Flymo,Hoover,Hotpoint,Indesit,Karcher,Kenwood,Neff,Rangemaster,Samsung,Smeg,Stoves,Whirlpool,Zanussi"
       }
