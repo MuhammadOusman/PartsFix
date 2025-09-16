@@ -159,6 +159,7 @@
           {%- assign first_tab_rendered = false -%}
 
           {%- if tabs.size > 0 -%}
+            {%- assign tab_btns = '' -%}
             <div class="product-details__block" {{ block.shopify_attributes }}>
               {%- for i in tab_indices -%}
                 {%- liquid

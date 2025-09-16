@@ -25,7 +25,7 @@
             {%- assign brands = "AEG,Ariston,Balay,Bauknecht,Baumatic,Belling,Bosch,CDA,Candy,Caple,DeDietrich,Electrolux,Fagor,Hotpoint,Indesit,Karcher,Kenwood,Neff,Rangemaster,Samsung,Smeg,Stoves,Whirlpool,Zanussi" | split: ',' -%}
             
             {%- for brand in brands limit: 12 -%}
-              <a href="/collections/{{ brand | downcase | replace: ' ', '-' }}" class="brand-link">
+              <a href="{{ routes.collections_url }}/{{ brand | downcase | replace: ' ', '-' }}" class="brand-link">
                 {{ brand }}
               </a>
             {%- endfor -%}
@@ -84,7 +84,7 @@
           <h2>Select Your Brand</h2>
           <div class="main-brand-grid">
             {%- for brand in brands limit: 24 -%}
-              <a href="/collections/{{ brand | downcase | replace: ' ', '-' }}" class="main-brand-link">
+              <a href="{{ routes.collections_url }}/{{ brand | downcase | replace: ' ', '-' }}" class="main-brand-link">
                 {{ brand }}
               </a>
             {%- endfor -%}

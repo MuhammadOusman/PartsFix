@@ -878,7 +878,8 @@ body.list-view-enabled #listView { display: block !important; }
                   <div class="espares-product-card" onclick="location.href='/search?q={{ product_type | handleize }}'">
                     <img src="https://via.placeholder.com/300x200/f8f9fa/6c757d?text={{ product_type | url_encode }}" 
                          alt="{{ product_title }}" 
-                         class="espares-product-image">
+                         class="espares-product-image"
+                         width="300" height="200">
                     <div class="espares-product-title">{{ product_title | strip | truncate: 60 }}</div>
                     <p class="espares-product-sku">SKU: {{ product_sku }}</p>
                     <div class="espares-product-rating">
@@ -922,7 +923,8 @@ body.list-view-enabled #listView { display: block !important; }
                 <div class="espares-product-card" onclick="location.href='/search?q={{ product_type | handleize }}'">
                   <img src="https://via.placeholder.com/300x200/f8f9fa/6c757d?text={{ product_type | url_encode }}" 
                        alt="{{ product_title }}" 
-                       class="espares-product-image">
+                       class="espares-product-image"
+                       width="300" height="200">
                   <div class="espares-product-title">{{ product_title | strip | truncate: 60 }}</div>
                   <p class="espares-product-sku">SKU: {{ product_sku }}</p>
                   <div class="espares-product-rating">
@@ -972,7 +974,8 @@ body.list-view-enabled #listView { display: block !important; }
                   <div class="espares-product-list-item" onclick="location.href='/search?q={{ product_type | handleize }}'">
                     <img src="https://via.placeholder.com/120x120/f8f9fa/6c757d?text={{ product_type | url_encode }}" 
                          alt="{{ product_title }}" 
-                         class="espares-list-image">
+                         class="espares-list-image"
+                         width="120" height="120">
                     <div class="espares-list-details">
                       <h4 class="espares-list-title">{{ product_title | truncate: 80 }}</h4>
                       <p class="espares-list-description">High-quality genuine replacement part designed for optimal performance and durability. Professional-grade spare part backed by comprehensive warranty coverage.</p>
@@ -1014,7 +1017,8 @@ body.list-view-enabled #listView { display: block !important; }
                 <div class="espares-product-list-item" onclick="location.href='/search?q={{ product_type | handleize }}'">
                   <img src="https://via.placeholder.com/120x120/f8f9fa/6c757d?text={{ product_type | url_encode }}" 
                        alt="{{ product_title }}" 
-                       class="espares-list-image">
+                       class="espares-list-image"
+                       width="120" height="120">
                   <div class="espares-list-details">
                     <h4 class="espares-list-title">{{ product_title | truncate: 80 }}</h4>
                     <p class="espares-list-description">High-quality replacement part for your appliance. Genuine spare part with full warranty coverage and professional installation support.</p>

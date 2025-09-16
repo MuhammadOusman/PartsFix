@@ -6,7 +6,7 @@
     {%- if section.settings.logo %}
       "logo": {{ section.settings.logo | image_url: width: section.settings.logo.width | prepend: "https:" | json }},
     {%- endif %}
-    {% capture sameAs_json %}
+    {% capture same_as_json %}
       {%- if settings.social_facebook_url != blank -%}
         {{ settings.social_facebook_url | json }},
       {%- endif -%}
@@ -63,7 +63,7 @@
       {%- endif -%}
     {% endcapture %}
     "sameAs": [
-      {{ sameAs_json | remove_last: ',' }}
+      {{ same_as_json | remove_last: ',' }}
     ],
     "url": {{ shop.url | append: page.url | json }}
   }

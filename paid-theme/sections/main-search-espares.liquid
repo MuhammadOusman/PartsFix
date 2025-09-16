@@ -437,7 +437,7 @@
           {%- if search.performed -%}
             {%- for item in search.results -%}
               <div class="espares-product-card" onclick="location.href='{{ item.url }}'">
-                <img src="{{ item.featured_image | img_url: '300x300' }}" alt="{{ item.title }}" class="espares-product-image">
+                <img src="{{ item.featured_image | image_url: width: 300, height: 300 }}" alt="{{ item.title }}" class="espares-product-image" width="300" height="300">
                 <h4 class="espares-product-title">{{ item.title }}</h4>
                 <p class="espares-product-sku">SKU: {{ item.sku | default: "N/A" }}</p>
                 <p class="espares-product-price">{{ item.price | money }}</p>
@@ -455,7 +455,8 @@
               <div class="espares-product-card" onclick="location.href='/products/product-{{ forloop.index }}'">
                 <img src="https://via.placeholder.com/300x200/f8f9fa/6c757d?text={{ mock_products[index] | url_encode }}" 
                      alt="{{ mock_products[index] }}" 
-                     class="espares-product-image">
+                     class="espares-product-image"
+                     width="300" height="200">
                 <h4 class="espares-product-title">{{ mock_products[index] }}</h4>
                 <p class="espares-product-sku">SKU: {{ mock_skus[index] }}</p>
                 <p class="espares-product-price">{{ mock_prices[index] }}</p>
@@ -475,7 +476,7 @@
           {%- if search.performed -%}
             {%- for item in search.results -%}
               <div class="espares-product-list-item" onclick="location.href='{{ item.url }}'">
-                <img src="{{ item.featured_image | img_url: '120x120' }}" alt="{{ item.title }}" class="espares-list-image">
+                <img src="{{ item.featured_image | image_url: width: 120, height: 120 }}" alt="{{ item.title }}" class="espares-list-image" width="120" height="120">
                 <div class="espares-list-details">
                   <h4 class="espares-list-title">{{ item.title }}</h4>
                   <p class="espares-list-description">{{ item.description | strip_html | truncate: 150 }}</p>
@@ -491,7 +492,8 @@
               <div class="espares-product-list-item" onclick="location.href='/products/product-{{ forloop.index }}'">
                 <img src="https://via.placeholder.com/120x120/f8f9fa/6c757d?text={{ mock_products[index] | url_encode }}" 
                      alt="{{ mock_products[index] }}" 
-                     class="espares-list-image">
+                     class="espares-list-image"
+                     width="120" height="120">
                 <div class="espares-list-details">
                   <h4 class="espares-list-title">{{ mock_products[index] }}</h4>
                   <p class="espares-list-description">High-quality replacement part for your appliance. Genuine spare part with full warranty coverage.</p>

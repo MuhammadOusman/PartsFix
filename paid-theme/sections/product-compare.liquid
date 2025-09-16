@@ -171,7 +171,7 @@
       {%- endcase -%}
     {%- endfor -%}
 
-    <div data-compare-key="compare-actions" class="compare-col compare-col--{{ settings.compare_column_width }} compare-col--{{ product.id }} compare-col--{{ product.id }}--actions" {{ block.shopify_attributes }}>
+    <div data-compare-key="compare-actions" class="compare-col compare-col--{{ settings.compare_column_width }} compare-col--{{ product.id }} compare-col--{{ product.id }}--actions">
       <a href="{{ product.url }}" class="btn btn--primary btn--compare-view w-full">
         {{ 'products.compare.modal.view_product' | t }}
       </a>

@@ -140,9 +140,8 @@
     <h2>{{ section.settings.title | default: "Spare Parts By Category" }}</h2>
     <div class="categories-grid">
       {%- for category in categories -%}
-        {%- assign handle = category | downcase | replace: ' ', '-' | replace: '&', '' | replace: '--', '-' -%}
         <div class="category-item">
-          <a href="/collections/all" title="{{ category }}">
+          <a href="{{ routes.all_products_collection_url }}" title="{{ category }}">
             <div class="category-image">
               <img loading="lazy" src="https://via.placeholder.com/160x120/f8f9fa/666?text={{ category | url_encode }}" alt="{{ category }}" width="160" height="120"/>
             </div>

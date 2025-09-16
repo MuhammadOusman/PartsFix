@@ -310,27 +310,27 @@
       assign media_grouping_options = section.settings.media_grouping_option | replace: ', ', ',' | split: ','
       for option in product.options
         if media_grouping_options contains option
-          assign groupOptionName = option
-          assign groupOptionIndex = forloop.index0
-          assign groupOptionProperty = 'option' | append: forloop.index
-          assign sortedVariants = product.variants | sort: groupOptionProperty
+          assign group_option_name = option
+          assign group_option_index = forloop.index0
+          assign group_option_property = 'option' | append: forloop.index
+          assign sorted_variants = product.variants | sort: group_option_property
           break
         endif
       endfor
     -%}
-    {%- if groupOptionName -%}
+    {%- if group_option_name -%}
       <script class="js-data-variant-media" type="application/json">
         {
-          "groupOptionName": {{- groupOptionName | json -}},
-          "groupOptionIndex": {{- groupOptionIndex }},
+          "group_option_name": {{- group_option_name | json -}},
+          "group_option_index": {{- group_option_index }},
           "variantMedia": [
             {% capture data %}
-              {%- for variant in sortedVariants -%}
+              {%- for variant in sorted_variants -%}
                 {%- if variant.featured_media -%}
                   {
                     "variantId": {{- variant.id -}},
                     "mediaId": {{- variant.featured_media.id -}},
-                    "option": {{- variant.options[groupOptionIndex] | json -}}
+                    "option": {{- variant.options[group_option_index] | json -}}
                   },
                 {%- endif -%}
               {%- endfor -%}

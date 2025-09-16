@@ -70,7 +70,7 @@
   endif
 
   if section_bg_color and section_bg_color != settings.bg_color
-    assign section_bg_alpha = bg_color | color_extract: 'alpha'
+    assign section_bg_alpha = section_bg_color | color_extract: 'alpha'
     unless section_bg_alpha > 0
       assign section_bg_color = false
     endunless

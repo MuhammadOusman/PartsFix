@@ -206,7 +206,7 @@
           {%- for i in (0..4) -%}
             {%- assign category = mock_categories[i] -%}
             {%- if category -%}
-              <li><a href="/search?q={{ category | handleize }}">{{ category }}</a></li>
+              <li><a href="{{ routes.search_url }}?q={{ category | handleize }}">{{ category }}</a></li>
             {%- endif -%}
           {%- endfor -%}
         </ul>
@@ -223,7 +223,7 @@
           {%- for i in (0..4) -%}
             {%- assign brand = mock_brands[i] -%}
             {%- if brand -%}
-              <li><a href="/search?q={{ brand | handleize }}">{{ brand }}</a></li>
+              <li><a href="{{ routes.search_url }}?q={{ brand | handleize }}">{{ brand }}</a></li>
             {%- endif -%}
           {%- endfor -%}
         </ul>
@@ -253,7 +253,7 @@
         {%- for i in (0..15) -%}
           {%- assign product_type = mock_product_types[i] -%}
           {%- if product_type -%}
-            <a href="/search?q={{ product_type | handleize }}" class="espares-popular-tag">{{ product_type }}</a>
+            <a href="{{ routes.search_url }}?q={{ product_type | handleize }}" class="espares-popular-tag">{{ product_type }}</a>
           {%- endif -%}
         {%- endfor -%}
       </div>

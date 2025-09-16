@@ -480,18 +480,17 @@
             {%- endif -%}
           {%- endpaginate -%}
         {%- else -%}
-          {%- assign mock_products = section.settings.mock_products | default: '' -%}
-          {%- if mock_products == blank -%}
-            {%- assign mock_products = '[{"title":"Universal Cooker Element","price":19.99,"compare_at_price":24.99,"featured_image":"https://via.placeholder.com/280x200?text=Cooker+Element","url":"/products/universal-cooker-element"},{"title":"Fridge Door Seal","price":12.49,"compare_at_price":15.99,"featured_image":"https://via.placeholder.com/280x200?text=Fridge+Seal","url":"/products/fridge-door-seal"},{"title":"Vacuum Cleaner Filter","price":8.99,"compare_at_price":10.99,"featured_image":"https://via.placeholder.com/280x200?text=Vacuum+Filter","url":"/products/vacuum-cleaner-filter"}]' | parse_json -%}
-          {%- endif -%}
-          {%- for product in mock_products -%}
+          {%- assign mock_titles = "Universal Cooker Element,Fridge Door Seal,Vacuum Cleaner Filter" | split: "," -%}
+          {%- assign mock_prices = "19.99,12.49,8.99" | split: "," -%}
+          {%- assign mock_compare_prices = "24.99,15.99,10.99" | split: "," -%}
+          {%- for title in mock_titles -%}
             <div class="espares-product-card">
               <a href="/products/mock-product-{{ forloop.index }}">
-                <img class="espares-product-image" src="{{ product.featured_image }}" alt="{{ product.title }}" loading="lazy" width="280" height="200"/>
-                <h3 class="espares-product-title">{{ product.title }}</h3>
+                <img class="espares-product-image" src="https://via.placeholder.com/280x200/f8f9fa/666?text={{ title | url_encode }}" alt="{{ title }}" loading="lazy" width="280" height="200"/>
+                <h3 class="espares-product-title">{{ title }}</h3>
                 <div class="espares-product-price">
-                  ${{ product.price }}
-                  <span style="text-decoration: line-through; color: #6c757d; font-size: 0.9rem; margin-left: 8px;">${{ product.compare_at_price }}</span>
+                  ${{ mock_prices[forloop.index0] }}
+                  <span style="text-decoration: line-through; color: #6c757d; font-size: 0.9rem; margin-left: 8px;">${{ mock_compare_prices[forloop.index0] }}</span>
                 </div>
               </a>
               <a href="/products/mock-product-{{ forloop.index }}" class="espares-product-btn">View Details</a>

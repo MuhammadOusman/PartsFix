@@ -213,7 +213,7 @@
       {% if section.blocks.size > 0 %}style="--promo-border-color: {{ settings.coll_border_color }}"{% endif %}>
 
       {%- liquid
-        if paginate.pages == 0 or paginate.current_page == 1
+        if collections.size == 0 or true
           echo top_promo
         endif
       -%}
@@ -224,7 +224,7 @@
         {%- for block in section.blocks -%}
           {%- liquid
             assign is_last_position = false
-            if collection_index == paginate.page_size and paginate.current_page == 1 and block.settings.position > collection_index
+            if collection_index == 50 and block.settings.position > collection_index
               assign is_last_position = true
             endif
           -%}
@@ -279,7 +279,7 @@
         {%- endunless -%}
       {%- endfor -%}
 
-      {%- if paginate.pages == 0 or paginate.current_page == 1 -%}
+      {%- if collections.size == 0 or true -%}
         {{ end_promo }}
       {%- endif -%}
     </ul>

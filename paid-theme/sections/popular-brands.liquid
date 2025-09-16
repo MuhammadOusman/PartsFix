@@ -1,5 +1,3 @@
-{%- assign brands = section.settings.brands | split: ',' -%}
-
 <style>
 .espares-brands-section {
   padding: 60px 0;
@@ -151,7 +149,7 @@
     <div class="brands-grid">
       <!-- Default brands matching eSpares layout -->
       <div class="brand-card">
-        <a href="/collections/beko" title="Beko">
+        <a href="{{ routes.collections_url }}/beko" title="Beko">
           <div class="brand-logo">
             <img loading="lazy" src="https://via.placeholder.com/100x50/f8f9fa/1e9ae0?text=beko" alt="Beko" width="100" height="50"/>
           </div>
@@ -159,7 +157,7 @@
         </a>
       </div>
       <div class="brand-card">
-        <a href="/collections/bosch" title="Bosch">
+        <a href="{{ routes.collections_url }}/bosch" title="Bosch">
           <div class="brand-logo">
             <img loading="lazy" src="https://via.placeholder.com/100x50/f8f9fa/e60012?text=BOSCH" alt="Bosch" width="100" height="50"/>
           </div>
@@ -167,7 +165,7 @@
         </a>
       </div>
       <div class="brand-card">
-        <a href="/collections/delonghi" title="DeLonghi">
+        <a href="{{ routes.collections_url }}/delonghi" title="DeLonghi">
           <div class="brand-logo">
             <img loading="lazy" src="https://via.placeholder.com/100x50/f8f9fa/333?text=DeLonghi" alt="DeLonghi" width="100" height="50"/>
           </div>
@@ -175,7 +173,7 @@
         </a>
       </div>
       <div class="brand-card">
-        <a href="/collections/dyson" title="Dyson">
+        <a href="{{ routes.collections_url }}/dyson" title="Dyson">
           <div class="brand-logo">
             <img loading="lazy" src="https://via.placeholder.com/100x50/f8f9fa/666?text=dyson" alt="Dyson" width="100" height="50"/>
           </div>
@@ -183,7 +181,7 @@
         </a>
       </div>
       <div class="brand-card">
-        <a href="/collections/electrolux" title="Electrolux">
+        <a href="{{ routes.collections_url }}/electrolux" title="Electrolux">
           <div class="brand-logo">
             <img loading="lazy" src="https://via.placeholder.com/100x50/f8f9fa/0066cc?text=Electrolux" alt="Electrolux" width="100" height="50"/>
           </div>
@@ -191,7 +189,7 @@
         </a>
       </div>
       <div class="brand-card">
-        <a href="/collections/flymo" title="Flymo">
+        <a href="{{ routes.collections_url }}/flymo" title="Flymo">
           <div class="brand-logo">
             <img loading="lazy" src="https://via.placeholder.com/100x50/ff6600/fff?text=Flymo" alt="Flymo" width="100" height="50"/>
           </div>
@@ -199,7 +197,7 @@
         </a>
       </div>
       <div class="brand-card">
-        <a href="/collections/hoover" title="Hoover">
+        <a href="{{ routes.collections_url }}/hoover" title="Hoover">
           <div class="brand-logo">
             <img loading="lazy" src="https://via.placeholder.com/100x50/f8f9fa/333?text=Hoover" alt="Hoover" width="100" height="50"/>
           </div>
@@ -207,7 +205,7 @@
         </a>
       </div>
       <div class="brand-card">
-        <a href="/collections/hotpoint" title="Hotpoint">
+        <a href="{{ routes.collections_url }}/hotpoint" title="Hotpoint">
           <div class="brand-logo">
             <img loading="lazy" src="https://via.placeholder.com/100x50/f8f9fa/e60012?text=Hotpoint" alt="Hotpoint" width="100" height="50"/>
           </div>
@@ -215,7 +213,7 @@
         </a>
       </div>
       <div class="brand-card">
-        <a href="/collections/indesit" title="Indesit">
+        <a href="{{ routes.collections_url }}/indesit" title="Indesit">
           <div class="brand-logo">
             <img loading="lazy" src="https://via.placeholder.com/100x50/f8f9fa/0066ff?text=indesit" alt="Indesit" width="100" height="50"/>
           </div>
@@ -223,7 +221,7 @@
         </a>
       </div>
       <div class="brand-card">
-        <a href="/collections/karcher" title="Karcher">
+        <a href="{{ routes.collections_url }}/karcher" title="Karcher">
           <div class="brand-logo">
             <img loading="lazy" src="https://via.placeholder.com/100x50/ffdd00/333?text=KARCHER" alt="Karcher" width="100" height="50"/>
           </div>
@@ -231,7 +229,7 @@
         </a>
       </div>
       <div class="brand-card">
-        <a href="/collections/kenwood" title="Kenwood">
+        <a href="{{ routes.collections_url }}/kenwood" title="Kenwood">
           <div class="brand-logo">
             <img loading="lazy" src="https://via.placeholder.com/100x50/f8f9fa/333?text=KENWOOD" alt="Kenwood" width="100" height="50"/>
           </div>
@@ -239,7 +237,7 @@
         </a>
       </div>
       <div class="brand-card">
-        <a href="/collections/neff" title="Neff">
+        <a href="{{ routes.collections_url }}/neff" title="Neff">
           <div class="brand-logo">
             <img loading="lazy" src="https://via.placeholder.com/100x50/f8f9fa/e60012?text=NEFF" alt="Neff" width="100" height="50"/>
           </div>
@@ -247,7 +245,7 @@
         </a>
       </div>
       <div class="brand-card">
-        <a href="/collections/rangemaster" title="Rangemaster">
+        <a href="{{ routes.collections_url }}/rangemaster" title="Rangemaster">
           <div class="brand-logo">
             <img loading="lazy" src="https://via.placeholder.com/100x50/f8f9fa/666?text=rangemaster" alt="Rangemaster" width="100" height="50"/>
           </div>
@@ -255,7 +253,7 @@
         </a>
       </div>
       <div class="brand-card">
-        <a href="/collections/samsung" title="Samsung">
+        <a href="{{ routes.collections_url }}/samsung" title="Samsung">
           <div class="brand-logo">
             <img loading="lazy" src="https://via.placeholder.com/100x50/f8f9fa/333?text=SAMSUNG" alt="Samsung" width="100" height="50"/>
           </div>
@@ -263,7 +261,7 @@
         </a>
       </div>
       <div class="brand-card">
-        <a href="/collections/smeg" title="Smeg">
+        <a href="{{ routes.collections_url }}/smeg" title="Smeg">
           <div class="brand-logo">
             <img loading="lazy" src="https://via.placeholder.com/100x50/f8f9fa/333?text=smeg" alt="Smeg" width="100" height="50"/>
           </div>
@@ -271,7 +269,7 @@
         </a>
       </div>
       <div class="brand-card">
-        <a href="/collections/stoves" title="Stoves">
+        <a href="{{ routes.collections_url }}/stoves" title="Stoves">
           <div class="brand-logo">
             <img loading="lazy" src="https://via.placeholder.com/100x50/333/fff?text=STOVES" alt="Stoves" width="100" height="50"/>
           </div>
@@ -279,7 +277,7 @@
         </a>
       </div>
       <div class="brand-card">
-        <a href="/collections/whirlpool" title="Whirlpool">
+        <a href="{{ routes.collections_url }}/whirlpool" title="Whirlpool">
           <div class="brand-logo">
             <img loading="lazy" src="https://via.placeholder.com/100x50/f8f9fa/666?text=Whirlpool" alt="Whirlpool" width="100" height="50"/>
           </div>
@@ -287,7 +285,7 @@
         </a>
       </div>
       <div class="brand-card">
-        <a href="/collections/zanussi" title="Zanussi">
+        <a href="{{ routes.collections_url }}/zanussi" title="Zanussi">
           <div class="brand-logo">
             <img loading="lazy" src="https://via.placeholder.com/100x50/f8f9fa/e60012?text=ZANUSSI" alt="Zanussi" width="100" height="50"/>
           </div>
