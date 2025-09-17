@@ -1,56 +1,170 @@
+/* PartsFix Search Suggestions Styling */
+:root {
+  --partsfix-orange: #ff6b35;
+  --partsfix-orange-light: #ff8a5e;
+  --partsfix-orange-dark: #e55a2b;
+  --partsfix-accent: #ffab47;
+  --partsfix-dark: #2c3e50;
+  --partsfix-dark-light: #34495e;
+  --partsfix-white: #ffffff;
+  --partsfix-light-gray: #f8f9fa;
+  --partsfix-border-gray: #e9ecef;
+  --partsfix-text-dark: #2c3e50;
+  --partsfix-text-muted: #6c757d;
+}
+
 .predictive-result--suggestion {
-  padding: 8px var(--gutter);
+  padding: 12px var(--gutter);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  margin-bottom: 4px;
+}
+
+.predictive-result--suggestion:hover {
+  background: linear-gradient(135deg, var(--partsfix-light-gray), rgba(255, 107, 53, 0.05));
+  transform: translateX(4px);
+  border-left: 3px solid var(--partsfix-orange);
+  padding-left: calc(var(--gutter) + 8px);
 }
 
 .predictive-search__scroller--suggestions .predictive-search__suggestions {
   padding-bottom: calc(3 * var(--space-unit));
-  border-bottom: 1px solid rgba(var(--text-color)/0.09);
-  background-color: rgba(var(--text-color)/0.04);
+  border-bottom: 1px solid var(--partsfix-border-gray);
+  background: linear-gradient(135deg, var(--partsfix-white) 0%, var(--partsfix-light-gray) 100%);
+  border-radius: 12px;
+  margin: 8px;
+  box-shadow: 0 2px 12px rgba(255, 107, 53, 0.1);
 }
 
 .predictive-search__scroller--suggestions {
-  border-top: 1px solid rgba(var(--text-color)/0.09);
+  border-top: 1px solid var(--partsfix-border-gray);
+  background: var(--partsfix-white);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(255, 107, 53, 0.15);
 }
 
 .predictive-search__scroller--suggestions-only {
-  padding-top: 5px;
-  padding-bottom: 15px;
+  padding-top: 8px;
+  padding-bottom: 20px;
 }
+
 .predictive-search__scroller--suggestions-only .predictive-result__title {
   display: none;
+}
+
+/* Add PartsFix styling to suggestion items */
+.predictive-result--suggestion .predictive-search__item {
+  color: var(--partsfix-text-dark);
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.predictive-result--suggestion:hover .predictive-search__item {
+  color: var(--partsfix-orange);
+  font-weight: 600;
+}
+
+.predictive-result--suggestion::before {
+  content: '🔍';
+  margin-right: 8px;
+  opacity: 0.6;
+  transition: all 0.3s ease;
+}
+
+.predictive-result--suggestion:hover::before {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* Style the search result titles */
+.predictive-result__title {
+  color: var(--partsfix-dark);
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 12px;
+  padding: 8px 16px;
+  background: linear-gradient(90deg, var(--partsfix-orange), var(--partsfix-accent));
+  color: white;
+  border-radius: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 @media (max-width: 768.98px) {
   .predictive-search__scroller--suggestions {
     margin-top: calc(4 * var(--space-unit));
+    margin: 8px;
+    border-radius: 12px;
+  }
+  
+  .predictive-result--suggestion {
+    padding: 10px 12px;
+    margin-bottom: 2px;
   }
 }
+
 @media (min-width: 1024px) {
   .header__grid--left-logo .predictive-result__list-suggestions {
     position: sticky;
     top: 12px;
     padding-bottom: calc(8 * var(--space-unit));
   }
+  
   .header__grid--left-logo .predictive-search__scroller--suggestions .predictive-search__results {
     flex-direction: row-reverse;
   }
+  
   .header__grid--left-logo .predictive-search__scroller--suggestions .predictive-search__suggestions {
     flex: 0 0 222px;
     padding-bottom: 0;
     border-top: 0;
     border-bottom: 0;
-    border-left: 1px solid rgba(var(--text-color)/0.05);
+    border-left: 2px solid var(--partsfix-orange);
+    background: linear-gradient(135deg, var(--partsfix-white) 0%, var(--partsfix-light-gray) 100%);
   }
+  
   .predictive-search__scroller--suggestions-only {
     padding-bottom: 0;
   }
+  
   .predictive-result--suggestion {
     padding-right: var(--gutter-md);
     padding-left: var(--gutter-md);
   }
 }
+
 @media (min-width: 1280px) {
   .header__grid--left-logo .predictive-search__scroller--suggestions .predictive-search__suggestions {
     flex-basis: 300px;
   }
+}
+
+/* Additional PartsFix enhancements */
+.predictive-search__item-vendor {
+  color: var(--partsfix-orange);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.predictive-search__item-price {
+  color: var(--partsfix-orange);
+  font-weight: 700;
+}
+
+.predictive-search__loading-state {
+  background: linear-gradient(135deg, var(--partsfix-light-gray), var(--partsfix-white));
+  border-radius: 12px;
+  margin: 8px;
+  padding: 20px;
+  text-align: center;
+  color: var(--partsfix-text-muted);
+}
+
+/* Hover effects for search results */
+.predictive-search__item:hover {
+  background: rgba(255, 107, 53, 0.05);
+  border-radius: 8px;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(255, 107, 53, 0.2);
 }

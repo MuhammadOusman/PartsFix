@@ -1,0 +1,626 @@
+<style>
+:root {
+  --primary-orange: #ff6b35;
+  --primary-orange-light: #ff8a5e;
+  --primary-orange-dark: #e55a2b;
+  --accent-orange: #ffab47;
+  --pure-white: #ffffff;
+  --light-gray: #f8f9fa;
+  --border-gray: #e9ecef;
+  --text-dark: #2c3e50;
+  --text-muted: #6c757d;
+  --shadow-light: 0 4px 12px rgba(255, 107, 53, 0.08);
+  --shadow-medium: 0 6px 20px rgba(255, 107, 53, 0.12);
+  --border-radius: 12px;
+  --border-radius-small: 6px;
+  --transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.terms-page {
+  padding: 60px 0;
+  background: linear-gradient(135deg, var(--light-gray) 0%, var(--pure-white) 100%);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.terms-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.terms-header {
+  text-align: center;
+  margin-bottom: 60px;
+  position: relative;
+}
+
+.terms-header::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary-orange), var(--accent-orange));
+  border-radius: 2px;
+}
+
+.terms-title {
+  font-size: 3.2rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--primary-orange), var(--accent-orange));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+
+.terms-subtitle {
+  font-size: 1.2rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.last-updated {
+  background: var(--light-gray);
+  padding: 12px 24px;
+  border-radius: var(--border-radius-small);
+  border-left: 4px solid var(--primary-orange);
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  display: inline-block;
+}
+
+.terms-content {
+  background: var(--pure-white);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-light);
+  padding: 60px 50px;
+  border: 2px solid var(--border-gray);
+  position: relative;
+  overflow: hidden;
+}
+
+.terms-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary-orange), var(--accent-orange));
+}
+
+.terms-nav {
+  background: var(--light-gray);
+  border-radius: var(--border-radius-small);
+  padding: 24px;
+  margin-bottom: 40px;
+  border: 2px solid var(--border-gray);
+}
+
+.terms-nav h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 16px;
+}
+
+.terms-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 8px;
+}
+
+.terms-nav li {
+  margin: 0;
+}
+
+.terms-nav a {
+  display: block;
+  padding: 8px 12px;
+  color: var(--text-muted);
+  text-decoration: none;
+  border-radius: var(--border-radius-small);
+  transition: var(--transition);
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.terms-nav a:hover {
+  background: var(--pure-white);
+  color: var(--primary-orange);
+  transform: translateX(4px);
+}
+
+.terms-section {
+  margin-bottom: 50px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid var(--border-gray);
+}
+
+.terms-section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.terms-section h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 24px;
+  position: relative;
+  padding-bottom: 12px;
+}
+
+.terms-section h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 50px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary-orange), var(--accent-orange));
+  border-radius: 2px;
+}
+
+.terms-section h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--primary-orange);
+  margin: 32px 0 16px 0;
+}
+
+.terms-section h4 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin: 24px 0 12px 0;
+}
+
+.terms-section p {
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-bottom: 20px;
+  font-size: 1.05rem;
+  font-weight: 500;
+}
+
+.terms-section ul,
+.terms-section ol {
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-bottom: 20px;
+  padding-left: 0;
+  list-style: none;
+}
+
+.terms-section li {
+  margin-bottom: 12px;
+  position: relative;
+  padding-left: 24px;
+  font-size: 1.05rem;
+  font-weight: 500;
+}
+
+.terms-section ul li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--primary-orange);
+  font-weight: 700;
+  font-size: 1.3rem;
+}
+
+.terms-section ol {
+  counter-reset: item;
+}
+
+.terms-section ol li::before {
+  content: counter(item) '.';
+  counter-increment: item;
+  position: absolute;
+  left: 0;
+  color: var(--primary-orange);
+  font-weight: 700;
+}
+
+.terms-section strong {
+  color: var(--text-dark);
+  font-weight: 700;
+}
+
+.highlight-box {
+  background: linear-gradient(135deg, var(--light-gray) 0%, var(--pure-white) 100%);
+  border: 2px solid var(--border-gray);
+  border-left: 4px solid var(--primary-orange);
+  border-radius: var(--border-radius-small);
+  padding: 24px;
+  margin: 24px 0;
+}
+
+.highlight-box h4 {
+  color: var(--primary-orange);
+  margin-top: 0;
+  margin-bottom: 12px;
+}
+
+.highlight-box p {
+  margin-bottom: 0;
+}
+
+.warning-box {
+  background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(255, 171, 71, 0.05) 100%);
+  border: 2px solid rgba(255, 107, 53, 0.2);
+  border-left: 4px solid var(--primary-orange);
+  border-radius: var(--border-radius-small);
+  padding: 24px;
+  margin: 24px 0;
+}
+
+.warning-box h4 {
+  color: var(--primary-orange-dark);
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+
+.contact-box {
+  background: linear-gradient(135deg, var(--primary-orange), var(--accent-orange));
+  color: var(--pure-white);
+  border-radius: var(--border-radius);
+  padding: 40px;
+  text-align: center;
+  margin-top: 60px;
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-box::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.contact-box h3 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 1;
+}
+
+.contact-box p {
+  font-size: 1.1rem;
+  margin-bottom: 24px;
+  opacity: 0.95;
+  position: relative;
+  z-index: 1;
+}
+
+.contact-box a {
+  display: inline-block;
+  background: var(--pure-white);
+  color: var(--primary-orange);
+  padding: 12px 24px;
+  border-radius: var(--border-radius-small);
+  text-decoration: none;
+  font-weight: 700;
+  transition: var(--transition);
+  position: relative;
+  z-index: 1;
+}
+
+.contact-box a:hover {
+  background: var(--light-gray);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-medium);
+}
+
+@media (max-width: 768px) {
+  .terms-page {
+    padding: 40px 0;
+  }
+
+  .terms-container {
+    padding: 0 16px;
+  }
+
+  .terms-title {
+    font-size: 2.4rem;
+  }
+
+  .terms-content {
+    padding: 40px 24px;
+  }
+
+  .terms-nav ul {
+    grid-template-columns: 1fr;
+  }
+
+  .terms-section h2 {
+    font-size: 1.6rem;
+  }
+
+  .contact-box {
+    padding: 30px 20px;
+  }
+}
+</style>
+
+<div class="terms-page">
+  <div class="terms-container">
+    <div class="terms-header">
+      <h1 class="terms-title">Terms of Service</h1>
+      <p class="terms-subtitle">Please read these terms carefully before using our services.</p>
+      <div class="last-updated">Last updated: {{ 'now' | date: '%B %d, %Y' }}</div>
+    </div>
+
+    <div class="terms-content">
+      <div class="terms-nav">
+        <h3>Quick Navigation</h3>
+        <ul>
+          <li><a href="#acceptance">Acceptance of Terms</a></li>
+          <li><a href="#services">Our Services</a></li>
+          <li><a href="#account">User Accounts</a></li>
+          <li><a href="#orders">Orders & Payment</a></li>
+          <li><a href="#shipping">Shipping & Delivery</a></li>
+          <li><a href="#returns">Returns & Refunds</a></li>
+          <li><a href="#warranty">Warranty</a></li>
+          <li><a href="#conduct">User Conduct</a></li>
+          <li><a href="#intellectual">Intellectual Property</a></li>
+          <li><a href="#liability">Limitation of Liability</a></li>
+          <li><a href="#termination">Termination</a></li>
+          <li><a href="#governing">Governing Law</a></li>
+        </ul>
+      </div>
+
+      <section id="acceptance" class="terms-section">
+        <h2>1. Acceptance of Terms</h2>
+        <p>By accessing and using the PartsFix website, mobile application, or any of our services, you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to abide by the above, please do not use this service.</p>
+        
+        <div class="highlight-box">
+          <h4>Important</h4>
+          <p>These terms constitute a legally binding agreement between you and PartsFix. Please read them carefully and contact us if you have any questions.</p>
+        </div>
+      </section>
+
+      <section id="services" class="terms-section">
+        <h2>2. Our Services</h2>
+        
+        <h3>What We Provide</h3>
+        <p>PartsFix provides an online platform for purchasing appliance spare parts, accessories, and related services. Our services include:</p>
+        <ul>
+          <li>Online catalog of spare parts and accessories</li>
+          <li>Part identification and compatibility tools</li>
+          <li>Customer support and technical assistance</li>
+          <li>Order processing and delivery services</li>
+          <li>Installation guides and technical resources</li>
+        </ul>
+
+        <h3>Service Availability</h3>
+        <p>We strive to ensure our services are available 24/7, but we do not guarantee uninterrupted access. We may temporarily suspend access for maintenance, updates, or other operational reasons.</p>
+      </section>
+
+      <section id="account" class="terms-section">
+        <h2>3. User Accounts</h2>
+        
+        <h3>Account Creation</h3>
+        <p>To access certain features of our service, you may be required to create an account. You agree to:</p>
+        <ul>
+          <li>Provide accurate, current, and complete information</li>
+          <li>Maintain and update your account information</li>
+          <li>Keep your password secure and confidential</li>
+          <li>Accept responsibility for all activities under your account</li>
+          <li>Notify us immediately of any unauthorized use</li>
+        </ul>
+
+        <h3>Account Restrictions</h3>
+        <p>You must be at least 18 years old to create an account. Accounts are for personal or business use only and may not be shared or transferred.</p>
+      </section>
+
+      <section id="orders" class="terms-section">
+        <h2>4. Orders & Payment</h2>
+        
+        <h3>Order Process</h3>
+        <p>When you place an order through our website:</p>
+        <ol>
+          <li>You make an offer to purchase the products at the listed price</li>
+          <li>We send you an order confirmation email</li>
+          <li>We accept your offer when we dispatch the products</li>
+          <li>A contract is formed between you and PartsFix</li>
+        </ol>
+
+        <h3>Pricing and Payment</h3>
+        <ul>
+          <li>All prices are displayed in British Pounds (GBP) and include VAT where applicable</li>
+          <li>Prices may change without notice, but confirmed orders are honored at the original price</li>
+          <li>Payment is due at the time of order placement</li>
+          <li>We accept major credit cards, debit cards, and PayPal</li>
+          <li>All payments are processed securely through certified payment providers</li>
+        </ul>
+
+        <div class="warning-box">
+          <h4>Order Accuracy</h4>
+          <p>Please verify all order details before submitting. While we strive to accommodate changes, modifications to confirmed orders may not always be possible.</p>
+        </div>
+      </section>
+
+      <section id="shipping" class="terms-section">
+        <h2>5. Shipping & Delivery</h2>
+        
+        <h3>Delivery Times</h3>
+        <p>We aim to dispatch orders within 1-2 business days. Delivery times vary based on location and shipping method:</p>
+        <ul>
+          <li><strong>Standard Delivery:</strong> 2-5 business days</li>
+          <li><strong>Express Delivery:</strong> 1-2 business days</li>
+          <li><strong>Same Day Delivery:</strong> Available in select areas</li>
+        </ul>
+
+        <h3>Delivery Terms</h3>
+        <ul>
+          <li>Delivery address must be accessible to our courier partners</li>
+          <li>Someone must be available to receive the delivery</li>
+          <li>Risk of loss passes to you upon delivery</li>
+          <li>Delivery times are estimates and not guaranteed</li>
+        </ul>
+      </section>
+
+      <section id="returns" class="terms-section">
+        <h2>6. Returns & Refunds</h2>
+        
+        <h3>Return Policy</h3>
+        <p>You may return most items within 30 days of delivery for a full refund, provided:</p>
+        <ul>
+          <li>Items are in original condition and packaging</li>
+          <li>You have the original receipt or order confirmation</li>
+          <li>Items are not custom-made or personalized</li>
+          <li>Hygiene items remain unopened and sealed</li>
+        </ul>
+
+        <h3>Exclusions</h3>
+        <p>The following items cannot be returned:</p>
+        <ul>
+          <li>Custom or made-to-order parts</li>
+          <li>Items showing signs of installation or use</li>
+          <li>Electrical items with broken seals</li>
+          <li>Consumable items (batteries, filters, etc.)</li>
+        </ul>
+
+        <h3>Refund Process</h3>
+        <p>Refunds are processed within 5-10 business days after we receive the returned item. Refunds are issued to the original payment method.</p>
+      </section>
+
+      <section id="warranty" class="terms-section">
+        <h2>7. Warranty</h2>
+        
+        <h3>Product Warranty</h3>
+        <p>We provide warranties as specified by the manufacturer. Generally:</p>
+        <ul>
+          <li>Genuine parts carry manufacturer warranties (typically 1-2 years)</li>
+          <li>Compatible parts carry our own warranty (typically 1 year)</li>
+          <li>Warranty covers defects in materials and workmanship</li>
+          <li>Warranty does not cover misuse, wear, or accidental damage</li>
+        </ul>
+
+        <h3>Warranty Claims</h3>
+        <p>To make a warranty claim, contact our customer service team with your order number and description of the issue. We may require photos or return of the defective item.</p>
+      </section>
+
+      <section id="conduct" class="terms-section">
+        <h2>8. User Conduct</h2>
+        
+        <p>You agree not to use our services to:</p>
+        <ul>
+          <li>Violate any laws, regulations, or third-party rights</li>
+          <li>Post false, misleading, or defamatory content</li>
+          <li>Interfere with the operation of our website or services</li>
+          <li>Attempt to gain unauthorized access to our systems</li>
+          <li>Use our services for commercial purposes without permission</li>
+          <li>Engage in fraudulent or deceptive practices</li>
+        </ul>
+      </section>
+
+      <section id="intellectual" class="terms-section">
+        <h2>9. Intellectual Property</h2>
+        
+        <h3>Our Rights</h3>
+        <p>All content on our website, including text, graphics, logos, images, and software, is owned by PartsFix or our licensors and is protected by copyright and other intellectual property laws.</p>
+
+        <h3>Your Rights</h3>
+        <p>You may view, download, and print content for personal, non-commercial use only. You may not:</p>
+        <ul>
+          <li>Reproduce, distribute, or display content for commercial purposes</li>
+          <li>Modify or create derivative works based on our content</li>
+          <li>Remove copyright notices or other proprietary markings</li>
+        </ul>
+      </section>
+
+      <section id="liability" class="terms-section">
+        <h2>10. Limitation of Liability</h2>
+        
+        <div class="warning-box">
+          <h4>Important Legal Notice</h4>
+          <p>Please read this section carefully as it limits our liability to you.</p>
+        </div>
+
+        <h3>Service Disclaimer</h3>
+        <p>Our services are provided "as is" without warranties of any kind. We do not guarantee that our services will be uninterrupted, error-free, or completely secure.</p>
+
+        <h3>Liability Limits</h3>
+        <p>To the maximum extent permitted by law, our total liability to you for any claim arising from your use of our services is limited to the amount you paid for the specific product or service giving rise to the claim.</p>
+
+        <h3>Excluded Damages</h3>
+        <p>We are not liable for indirect, incidental, special, consequential, or punitive damages, including lost profits, data, or business opportunities.</p>
+      </section>
+
+      <section id="termination" class="terms-section">
+        <h2>11. Termination</h2>
+        
+        <h3>Termination by You</h3>
+        <p>You may stop using our services at any time. If you have an account, you may delete it through your account settings or by contacting us.</p>
+
+        <h3>Termination by Us</h3>
+        <p>We may suspend or terminate your access to our services if you violate these terms or engage in harmful conduct. We will provide notice when reasonably possible.</p>
+
+        <h3>Effect of Termination</h3>
+        <p>Upon termination, your right to use our services ceases immediately. Provisions relating to intellectual property, disclaimers, and limitations of liability survive termination.</p>
+      </section>
+
+      <section id="governing" class="terms-section">
+        <h2>12. Governing Law</h2>
+        
+        <p>These terms are governed by the laws of England and Wales. Any disputes arising from these terms or your use of our services will be subject to the exclusive jurisdiction of the courts of England and Wales.</p>
+
+        <h3>Contact for Legal Matters</h3>
+        <p>For legal inquiries or to report violations of these terms, please contact:</p>
+        <p><strong>Legal Department</strong><br>
+        PartsFix Limited<br>
+        Unit 2, Broughton Trade Centre<br>
+        Salford, M7 1UH, United Kingdom<br>
+        Email: legal@partsfix.co.uk</p>
+      </section>
+
+      <div class="contact-box">
+        <h3>Questions About These Terms?</h3>
+        <p>If you have any questions about these Terms of Service, please don't hesitate to contact us.</p>
+        <a href="/pages/contact">Contact Our Legal Team</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Smooth scrolling for navigation links
+document.addEventListener('DOMContentLoaded', function() {
+  const navLinks = document.querySelectorAll('.terms-nav a[href^="#"]');
+  
+  navLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      const targetId = this.getAttribute('href').substring(1);
+      const targetElement = document.getElementById(targetId);
+      
+      if (targetElement) {
+        targetElement.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    });
+  });
+});
+</script>

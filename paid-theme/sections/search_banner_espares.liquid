@@ -9,10 +9,42 @@
 {%- assign mock_brands = "Bosch|Samsung|Whirlpool|LG|Hotpoint|Beko|Siemens|Miele|AEG|Electrolux|Indesit|Zanussi|Candy|Hoover|Dyson" | split: "|" -%}
 
 <style>
+:root {
+  --primary-orange: #ff6b35;
+  --primary-orange-light: #ff8a5e;
+  --primary-orange-dark: #e55a2b;
+  --accent-orange: #ffab47;
+  --dark-gradient-start: #2c3e50;
+  --dark-gradient-end: #34495e;
+  --pure-white: #ffffff;
+  --light-gray: #f8f9fa;
+  --border-gray: #e9ecef;
+  --text-dark: #2c3e50;
+  --text-muted: #6c757d;
+  --shadow-light: 0 2px 12px rgba(255, 107, 53, 0.1);
+  --shadow-medium: 0 4px 20px rgba(255, 107, 53, 0.15);
+  --border-radius: 16px;
+  --border-radius-small: 8px;
+  --transition: all 0.3s ease;
+}
+
 .espares-search-banner {
-  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+  background: linear-gradient(135deg, var(--dark-gradient-start) 0%, var(--dark-gradient-end) 100%);
   color: white;
-  padding: 40px 0;
+  padding: 50px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.espares-search-banner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent 30%, rgba(255, 107, 53, 0.1) 70%);
+  pointer-events: none;
 }
 
 .espares-search-container {
@@ -20,67 +52,117 @@
   margin: 0 auto;
   padding: 0 20px;
   text-align: center;
+  position: relative;
+  z-index: 1;
 }
 
 .espares-search-title {
-  font-size: 2.5rem;
-  font-weight: 600;
+  font-size: 2.8rem;
+  font-weight: 700;
   margin-bottom: 15px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  background: linear-gradient(45deg, white, var(--accent-orange));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .espares-search-subtitle {
-  font-size: 1.1rem;
-  opacity: 0.9;
-  margin-bottom: 30px;
+  font-size: 1.2rem;
+  opacity: 0.95;
+  margin-bottom: 35px;
+  font-weight: 500;
 }
 
 .espares-search-form {
-  max-width: 600px;
-  margin: 0 auto 30px;
+  max-width: 650px;
+  margin: 0 auto 35px;
   position: relative;
 }
 
 .espares-search-input {
   width: 100%;
-  padding: 15px 60px 15px 20px;
+  padding: 18px 70px 18px 24px;
   font-size: 1.1rem;
-  border: none;
-  border-radius: 8px;
+  border: 3px solid transparent;
+  border-radius: var(--border-radius);
   outline: none;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  box-shadow: var(--shadow-medium);
+  transition: var(--transition);
+  background: var(--pure-white);
+  color: var(--text-dark);
+  font-weight: 500;
+}
+
+.espares-search-input:focus {
+  border-color: var(--primary-orange);
+  box-shadow: 0 0 0 4px rgba(255, 107, 53, 0.2), var(--shadow-medium);
+  transform: translateY(-2px);
+}
+
+.espares-search-input::placeholder {
+  color: var(--text-muted);
+  font-weight: 400;
 }
 
 .espares-search-button {
   position: absolute;
-  right: 5px;
-  top: 5px;
-  bottom: 5px;
-  background: #ffc107;
-  color: #212529;
+  right: 6px;
+  top: 6px;
+  bottom: 6px;
+  background: linear-gradient(135deg, var(--primary-orange), var(--primary-orange-light));
+  color: white;
   border: none;
-  padding: 0 20px;
-  border-radius: 6px;
-  font-weight: 600;
+  padding: 0 24px;
+  border-radius: var(--border-radius-small);
+  font-weight: 700;
   cursor: pointer;
-  transition: background 0.2s ease;
+  transition: var(--transition);
+  box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1rem;
 }
 
 .espares-search-button:hover {
-  background: #e0a800;
+  background: linear-gradient(135deg, var(--primary-orange-dark), var(--primary-orange));
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.4);
+}
+
+.espares-search-button:active {
+  transform: translateY(0);
 }
 
 .espares-search-tips {
   display: flex;
   justify-content: center;
-  gap: 30px;
-  font-size: 0.9rem;
-  opacity: 0.8;
+  gap: 40px;
+  font-size: 0.95rem;
+  opacity: 0.9;
+  flex-wrap: wrap;
 }
 
 .espares-search-tip {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--border-radius-small);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: var(--transition);
+}
+
+.espares-search-tip:hover {
+  background: rgba(255, 107, 53, 0.2);
+  transform: translateY(-2px);
+}
+
+.espares-search-tip span:first-child {
+  font-size: 1.2rem;
 }
 
 .espares-search-autocomplete {
@@ -89,46 +171,74 @@
   left: 0;
   right: 0;
   background: white;
-  border-radius: 8px;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-  margin-top: 5px;
+  border-radius: var(--border-radius);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+  margin-top: 8px;
   z-index: 1000;
   display: none;
+  border: 1px solid var(--border-gray);
+  overflow: hidden;
 }
 
 .espares-autocomplete-item {
-  padding: 12px 20px;
-  color: #212529;
-  border-bottom: 1px solid #f1f1f1;
+  padding: 14px 24px;
+  color: var(--text-dark);
+  border-bottom: 1px solid var(--border-gray);
   cursor: pointer;
-  transition: background 0.2s ease;
+  transition: var(--transition);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .espares-autocomplete-item:hover {
-  background: #f8f9fa;
+  background: linear-gradient(135deg, var(--light-gray), rgba(255, 107, 53, 0.05));
+  color: var(--primary-orange);
+  padding-left: 28px;
 }
 
 .espares-autocomplete-item:last-child {
   border-bottom: none;
 }
 
+.espares-autocomplete-item::before {
+  content: '🔍';
+  opacity: 0.6;
+  transition: var(--transition);
+}
+
+.espares-autocomplete-item:hover::before {
+  opacity: 1;
+}
+
 @media (max-width: 768px) {
   .espares-search-banner {
-    padding: 30px 0;
+    padding: 40px 0;
   }
   
   .espares-search-title {
-    font-size: 2rem;
+    font-size: 2.2rem;
   }
   
   .espares-search-tips {
     flex-direction: column;
     gap: 15px;
+    align-items: center;
   }
   
   .espares-search-input {
-    padding: 12px 50px 12px 15px;
+    padding: 15px 60px 15px 20px;
     font-size: 1rem;
+  }
+  
+  .espares-search-button {
+    padding: 0 20px;
+    font-size: 0.9rem;
+  }
+  
+  .espares-search-form {
+    max-width: 100%;
   }
 }
 </style>
@@ -137,11 +247,24 @@
 <div class="espares-search-banner">
   <div class="espares-search-container">
     <h1 class="espares-search-title">
-      {%- if search.performed -%}
-        {%- if search.results_count > 0 -%}
-          {{ search.results_count }} results for "{{ search.terms }}"
-        {%- else -%}
+      {%- if search.performed and search.terms != "" -%}
+        {%- comment -%} Check if we should show no results (same logic as main search) {%- endcomment -%}
+        {%- assign search_term = search.terms | downcase -%}
+        {%- assign matching_products = 0 -%}
+        
+        {%- for product_type in mock_product_types -%}
+          {%- assign product_type_lower = product_type | downcase -%}
+          {%- if product_type_lower contains search_term or search_term contains product_type_lower -%}
+            {%- assign matching_products = matching_products | plus: 1 -%}
+          {%- endif -%}
+        {%- endfor -%}
+        
+        {%- if matching_products == 0 -%}
           No results for "{{ search.terms }}"
+        {%- else -%}
+          {%- assign random_multiplier = search_term.size | modulo: 5 | plus: 1 -%}
+          {%- assign final_count = matching_products | times: random_multiplier | plus: 12 -%}
+          {{ final_count }} results for "{{ search.terms }}"
         {%- endif -%}
       {%- else -%}
         Find the right part for your appliance
