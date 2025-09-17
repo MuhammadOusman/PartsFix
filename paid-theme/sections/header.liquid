@@ -86,7 +86,7 @@
   <nav class="parts-navigation" aria-label="Primary">
     <div class="parts-nav-content">
       {%- comment -%} Static mega menu data {%- endcomment -%}
-      {%- assign mega_menu_categories = "Kitchen Appliances|Washers & Dryers|Floorcare|Garden|Sound & Vision|Household|Advice Centre" | split: "|" -%}
+      {%- assign mega_menu_categories = "Kitchen Appliances|Washers & Dryers|Floorcare|Garden|Sound & Vision|Household" | split: "|" -%}
       <ul class="parts-nav-list" role="menubar">
         {%- for top_name in mega_menu_categories -%}
           {%- case top_name -%}
@@ -102,20 +102,18 @@
               {%- assign children = "TV / Projector|DVD / Video / Home Cinema|Audio / HiFi|Accessories|Shop By Brand" | split: "|" -%}
             {%- when 'Household' -%}
               {%- assign children = "Lighting & Bulbs|Batteries & Chargers|Appliance Cleaning|Breakfast|Bakeware|General Accessories" | split: "|" -%}
-            {%- when 'Advice Centre' -%}
-              {%- assign children = "How To Videos|Help & Support|Find Your Model Number|Safety Information" | split: "|" -%}
             {%- else -%}
               {%- assign children = blank -%}
           {%- endcase -%}
           <li class="parts-nav-item has-mega" role="none">
-            <a href="{{ routes.collections_url }}/{{ top_name | handleize }}" class="parts-nav-link" role="menuitem" aria-haspopup="true" aria-expanded="false">{{ top_name }}</a>
+            <a href="#" class="parts-nav-link" role="menuitem" aria-haspopup="true" aria-expanded="false">{{ top_name }}</a>
             <div class="parts-mega" data-mega="{{ top_name | handleize }}" hidden>
               <div class="parts-mega-inner">
                 <div class="parts-mega-col">
                   <h3 class="parts-mega-heading">Spare Parts</h3>
                   <ul class="parts-mega-links">
                     {%- for c in children -%}
-                      <li><a href="{{ routes.collections_url }}/{{ c | handleize }}" title="{{ c }}">{{ c }}</a></li>
+                      <li><a href="#" title="{{ c }}">{{ c }}</a></li>
                     {%- endfor -%}
                   </ul>
                 </div>
@@ -125,9 +123,9 @@
                     <ul class="parts-mega-brands">
                       {%- assign top_brands = 'Bosch,Hotpoint,Beko,Indesit,Zanussi,Neff,Samsung,Siemens' | split: ',' -%}
                       {%- for b in top_brands -%}
-                        <li><a href="{{ routes.collections_url }}/{{ b | handleize }}" title="{{ b }}">{{ b }}</a></li>
+                        <li><a href="#" title="{{ b }}">{{ b }}</a></li>
                       {%- endfor -%}
-                      <li class="view-all"><a href="/pages/brands" title="All Brands">View all &raquo;</a></li>
+                      <li class="view-all"><a href="#" title="All Brands">View all &raquo;</a></li>
                     </ul>
                   </div>
                 {%- endif -%}
@@ -159,7 +157,7 @@
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
   }
   .parts-navigation { 
-    background: linear-gradient(135deg, var(--light-gray), var(--pure-white)); 
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%) !important; 
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
   }
   .parts-nav-list { 
@@ -172,7 +170,7 @@
   .parts-nav-link { 
     display: block; 
     padding: 16px 20px; 
-    color: var(--text-dark); 
+    color: var(--pure-white) !important; 
     text-decoration: none; 
     font-weight: 600; 
     font-size: 16px; 
@@ -191,11 +189,13 @@
     top: 100%; 
     left: 0; 
     right: 0; 
-    background: var(--pure-white); 
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%); 
     border-top: 3px solid var(--primary-orange); 
-    box-shadow: var(--shadow-medium); 
+    box-shadow: var(--shadow-heavy); 
     padding: 32px 40px; 
     border-radius: 0 0 var(--border-radius) var(--border-radius);
+    z-index: 9999;
+    margin-top: 2px;
   }
   .parts-mega-inner { 
     max-width: 1400px; 
@@ -208,7 +208,7 @@
     margin: 0 0 16px; 
     font-size: 18px; 
     font-weight: 800; 
-    color: var(--text-dark); 
+    color: var(--pure-white); 
     text-transform: uppercase; 
     letter-spacing: 1px; 
   }
@@ -224,7 +224,7 @@
     margin: 0 0 8px; 
   }
   .parts-mega-links a, .parts-mega-brands a { 
-    color: var(--text-dark); 
+    color: var(--pure-white); 
     text-decoration: none; 
     font-size: 15px; 
     font-weight: 500;

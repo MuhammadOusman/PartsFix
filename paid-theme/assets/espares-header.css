@@ -256,7 +256,7 @@
 
 /* Navigation menu */
 .parts-navigation {
-  background: linear-gradient(135deg, var(--light-gray), var(--pure-white));
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%) !important;
   border-bottom: 2px solid var(--border-gray);
   position: relative;
 }
@@ -284,6 +284,7 @@
   padding: 0;
   flex-wrap: wrap;
   gap: 8px;
+  justify-content: center;
 }
 
 .parts-nav-item {
@@ -293,7 +294,7 @@
 .parts-nav-link {
   display: block;
   padding: 16px 20px;
-  color: var(--text-dark);
+  color: var(--pure-white) !important;
   text-decoration: none;
   font-weight: 600;
   font-size: 16px;
